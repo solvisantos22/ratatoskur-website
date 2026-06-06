@@ -1,0 +1,11 @@
+{
+  "nav": { "how": "How it works", "why": "Why", "research": "Research", "team": "Team", "updates": "Updates", "contact": "Contact us" },
+  "hero": {
+    "eyebrow": "AI math coach, in Icelandic",
+    "title": "The math coach that reads your handwriting",
+    "subtitle": "Upload a problem, solve it by hand, and get the right help: a hint, a check, or the full solution. Never the answer too soon.",
+    "ctaContact": "Contact us",
+    "ctaHow": "See how it works"
+  },
+  "footer": { "rights": "Ratatoskur", "fundedBy": "Supported by Tækniþróunarsjóður Fræ", "github": "GitHub" }
+}

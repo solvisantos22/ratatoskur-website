@@ -1,0 +1,11 @@
+{
+  "nav": { "how": "Hvernig það virkar", "why": "Af hverju", "research": "Rannsóknir", "team": "Teymi", "updates": "Fréttir", "contact": "Hafðu samband" },
+  "hero": {
+    "eyebrow": "Stærðfræðiaðstoð með gervigreind, á íslensku",
+    "title": "Aðstoðin sem les skriftina þína",
+    "subtitle": "Hladdu upp dæmi, leystu það með skrift og fáðu rétta hjálp: vísbendingu, yfirferð eða fulla lausn. Aldrei svarið of snemma.",
+    "ctaContact": "Hafðu samband",
+    "ctaHow": "Sjá hvernig það virkar"
+  },
+  "footer": { "rights": "Ratatoskur", "fundedBy": "Stutt af Tækniþróunarsjóði Fræ", "github": "GitHub" }
+}
