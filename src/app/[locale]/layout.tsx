@@ -2,6 +2,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { fraunces, inter } from '@/app/fonts';
+import { Nav } from '@/components/Nav';
+import { Footer } from '@/components/Footer';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -23,7 +25,11 @@ export default async function LocaleLayout({
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <Nav />
+          <div style={{ flex: 1 }}>{children}</div>
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
