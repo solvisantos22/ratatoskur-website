@@ -1,0 +1,37 @@
+:root {
+  /* Brand (identity-preserving, from the shipped app) */
+  --espresso: oklch(0.27 0.05 48);     /* #3C1D11 */
+  --orange:   oklch(0.72 0.16 55);     /* #ED8228 */
+  --rust:     oklch(0.50 0.12 45);     /* #A45124 */
+
+  /* Semantic surface + ink (no --cream/--parchment naming) */
+  --bg:        oklch(0.93 0.018 75);   /* warm off-white, brand hue */
+  --surface:   oklch(0.96 0.012 80);
+  --surface-2: oklch(0.89 0.02 72);
+  --ink:       var(--espresso);        /* headings */
+  --ink-2:     oklch(0.38 0.04 50);    /* body; verified >=4.5:1 on --bg */
+  --muted:     oklch(0.45 0.03 55);    /* secondary; must still clear 4.5:1 */
+
+  --accent:    var(--orange);
+  --accent-2:  var(--rust);
+  --on-accent: oklch(0.96 0.012 80);   /* cream text on brown CTA */
+  --cta:       oklch(0.30 0.045 45);   /* brown CTA fill */
+  --cta-hover: oklch(0.34 0.05 45);
+
+  /* Radii (cards 12-16px; no over-rounding) */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* Motion (emil-design-eng curves) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 160ms;
+  --dur-ui: 220ms;
+  --dur-reveal: 280ms;
+
+  /* z-index scale */
+  --z-nav: 100;
+  --z-overlay: 200;
+}
