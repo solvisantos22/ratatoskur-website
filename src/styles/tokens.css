@@ -34,4 +34,8 @@
   /* z-index scale */
   --z-nav: 100;
   --z-overlay: 200;
+
+  /* Font stacks */
+  --font-display-stack: var(--font-display), Georgia, 'Times New Roman', serif;
+  --font-body-stack: var(--font-body), system-ui, -apple-system, sans-serif;
 }
