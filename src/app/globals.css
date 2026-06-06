@@ -33,3 +33,7 @@ a { color: inherit; }
 
 body { font-family: var(--font-body-stack); font-size: 1.0625rem; line-height: 1.6; }
 h1, h2, h3 { font-family: var(--font-display-stack); }
+
+@media (max-width: 820px) {
+  section[data-hero] { grid-template-columns: 1fr !important; }
+}
