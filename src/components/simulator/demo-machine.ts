@@ -25,6 +25,8 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       if (state.paused) return state;
 
       const index = sequence.indexOf(state.stage);
+      if (index === -1) return state;
+
       const stage = sequence[Math.min(index + 1, sequence.length - 1)];
 
       return {

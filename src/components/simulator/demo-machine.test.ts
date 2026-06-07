@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { initialDemoState, reduceDemo } from './demo-machine';
+import type { DemoState } from './demo-types';
 
 describe('demo machine', () => {
   test('guided sequence runs from idle to interactive and marks the guided run complete', () => {
@@ -63,5 +64,55 @@ describe('demo machine', () => {
     });
 
     expect(selected.mode).toBe('hint');
+  });
+
+  test('ADVANCE ignores malformed runtime stages', () => {
+    const malformed = {
+      ...initialDemoState,
+      stage: 'persisted-unknown-stage',
+    } as unknown as DemoState;
+
+    expect(reduceDemo(malformed, { type: 'ADVANCE' })).toEqual(malformed);
+  });
+
+  test('repeated ADVANCE from interactive stays interactive and keeps guided run complete', () => {
+    const interactive = reduceDemo(initialDemoState, { type: 'SKIP' });
+
+    expect(reduceDemo(interactive, { type: 'ADVANCE' })).toEqual(interactive);
+  });
+
+  test('START after SKIP stays interactive', () => {
+    const interactive = reduceDemo(initialDemoState, { type: 'SKIP' });
+
+    expect(reduceDemo(interactive, { type: 'START' })).toEqual(interactive);
+  });
+
+  test('REPLAY from a non-interactive stage starts writing and increments runId', () => {
+    const confirming = reduceDemo(
+      reduceDemo(reduceDemo(initialDemoState, { type: 'START' }), {
+        type: 'ADVANCE',
+      }),
+      { type: 'ADVANCE' },
+    );
+    const replayed = reduceDemo({ ...confirming, runId: 3 }, { type: 'REPLAY' });
+
+    expect(replayed.stage).toBe('writing');
+    expect(replayed.runId).toBe(4);
+  });
+
+  test('SELECT_MODE after interactive can select check solution and reveal', () => {
+    const interactive = reduceDemo(initialDemoState, { type: 'SKIP' });
+
+    const checkSolution = reduceDemo(interactive, {
+      type: 'SELECT_MODE',
+      mode: 'check_solution',
+    });
+    expect(checkSolution.mode).toBe('check_solution');
+
+    const reveal = reduceDemo(checkSolution, {
+      type: 'SELECT_MODE',
+      mode: 'reveal',
+    });
+    expect(reveal.mode).toBe('reveal');
   });
 });
