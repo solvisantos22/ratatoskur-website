@@ -11,6 +11,8 @@ import {
 import { initialDemoState, reduceDemo } from './demo-machine';
 import type { DemoMode, DemoStage } from './demo-types';
 
+type DrawingPolicyAction = 'replay' | 'skip';
+
 export const stageDuration: Partial<Record<DemoStage, number>> = {
   writing: 2400,
   'checking-reading': 900,
@@ -18,15 +20,25 @@ export const stageDuration: Partial<Record<DemoStage, number>> = {
   responding: 2200,
 };
 
+export function shouldClearDrawingForAction(
+  action: DrawingPolicyAction,
+): boolean {
+  return action === 'replay';
+}
+
 export function useDemoController() {
   const [state, dispatch] = useReducer(reduceDemo, initialDemoState);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [clearDrawingSignal, setClearDrawingSignal] = useState(0);
-  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [rootElement, setRootElement] = useState<HTMLDivElement | null>(null);
   const hasStartedRef = useRef(false);
   const inViewRef = useRef(false);
   const manualPausedRef = useRef(false);
   const reducedMotionRef = useRef(false);
+
+  const rootRef = useCallback((node: HTMLDivElement | null) => {
+    setRootElement(node);
+  }, []);
 
   const clearDrawing = useCallback(() => {
     setClearDrawingSignal((signal) => signal + 1);
@@ -44,13 +56,15 @@ export function useDemoController() {
 
   const replay = useCallback(() => {
     manualPausedRef.current = false;
+    if (shouldClearDrawingForAction('replay')) clearDrawing();
     dispatch({ type: 'REPLAY' });
-  }, []);
+  }, [clearDrawing]);
 
   const skip = useCallback(() => {
     manualPausedRef.current = false;
+    if (shouldClearDrawingForAction('skip')) clearDrawing();
     dispatch({ type: 'SKIP' });
-  }, []);
+  }, [clearDrawing]);
 
   const selectMode = useCallback((mode: DemoMode) => {
     dispatch({ type: 'SELECT_MODE', mode });
@@ -75,16 +89,24 @@ export function useDemoController() {
     };
 
     handleChange();
-    media.addEventListener('change', handleChange);
+
+    if (typeof media.addEventListener === 'function') {
+      media.addEventListener('change', handleChange);
+
+      return () => {
+        media.removeEventListener('change', handleChange);
+      };
+    }
+
+    media.addListener(handleChange);
 
     return () => {
-      media.removeEventListener('change', handleChange);
+      media.removeListener(handleChange);
     };
   }, []);
 
   useEffect(() => {
-    const element = rootRef.current;
-    if (!element) return;
+    if (!rootElement) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -124,12 +146,12 @@ export function useDemoController() {
       { threshold: [0, 0.2, 0.55, 1] },
     );
 
-    observer.observe(element);
+    observer.observe(rootElement);
 
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [rootElement]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
