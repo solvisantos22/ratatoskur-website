@@ -7,5 +7,41 @@
     "ctaContact": "Hafðu samband",
     "ctaHow": "Sjá hvernig það virkar"
   },
-  "footer": { "rights": "Ratatoskur", "fundedBy": "Stutt af Tækniþróunarsjóði Fræ", "github": "GitHub" }
+  "footer": { "rights": "Ratatoskur", "fundedBy": "Stutt af Tækniþróunarsjóði Fræ", "github": "GitHub" },
+  "how": {
+    "title": "Hvernig það virkar",
+    "lead": "Þrjú skref, í eigin bók nemandans.",
+    "s1Title": "Hladdu upp dæminu",
+    "s1Body": "Taktu mynd af verkefninu eða veldu það úr safninu þínu.",
+    "s2Title": "Leystu það með skrift",
+    "s2Body": "Skrifaðu alla lausnina með Apple Pencil. Margar síður, þinn eigin ferill.",
+    "s3Title": "Fáðu rétta hjálp",
+    "s3Body": "Veldu vísbendingu, yfirferð eða birtingu. Ef skriftin er óskýr, spyr Ratatoskur áður en hann giskar."
+  },
+  "why": {
+    "title": "Endurgjöf meðan þú leysir, ekki á eftir",
+    "p1": "Flestar lausnir leysa dæmið fyrir þig. Ratatoskur fylgir ferlinu þínu: hann les dæmið og handskrifaða lausnina þína, og svarar á þeim stigi sem þú biður um.",
+    "p2": "Vísbendingar hreyfa án þess að spilla. Yfirferðir grípa ranga beygju snemma. Birting er til staðar þegar þú vilt fulla leiðina. Nemandinn heldur eignarrétti á lausninni.",
+    "p3": "Og það virkar á íslensku, þar sem góð stærðfræðikennsluhjálp er af skornum skammti."
+  },
+  "hood": {
+    "title": "Undir hettunni",
+    "lead": "Byggt fyrir raunverulegar skólastofur, með friðhelgi í huga.",
+    "i1Title": "Les dæmi og handskrift",
+    "i1Body": "Líkanið sér bæði mynd af verkefninu og fjölsíðulausnina frá nemandanum.",
+    "i2Title": "Stillingsmiðuð endurgjöf",
+    "i2Body": "Vísbending, yfirferð og birting eru aðskilin hegðun, ekki ein fyrirspurn með mismunandi merki.",
+    "i3Title": "Samþykkismeðvituð gögn",
+    "i3Body": "Nemendur velja hvað má nota í greiningar og gagnasafnsvinnu við skráningu.",
+    "i4Title": "Greiningar fyrir kennara",
+    "i4Body": "Tilraunir, algeng mistök og nýtni endurgjafar eru fylgst með fyrir kennara og rannsakendur."
+  },
+  "team": {
+    "title": "Teymið",
+    "lead": "Tveir hönnuðir sem vinna að Ratatoskur.",
+    "m1Name": "Sölvi Santos",
+    "m1Role": "Vara og verkfræði",
+    "m2Name": "Jóhannes Reykdal Einarsson",
+    "m2Role": "Vara og verkfræði"
+  }
 }

@@ -7,5 +7,41 @@
     "ctaContact": "Contact us",
     "ctaHow": "See how it works"
   },
-  "footer": { "rights": "Ratatoskur", "fundedBy": "Supported by Tækniþróunarsjóður Fræ", "github": "GitHub" }
+  "footer": { "rights": "Ratatoskur", "fundedBy": "Supported by Tækniþróunarsjóður Fræ", "github": "GitHub" },
+  "how": {
+    "title": "How it works",
+    "lead": "Three steps, in the student's own notebook.",
+    "s1Title": "Upload the problem",
+    "s1Body": "Snap a photo of the exercise or pick one from your library.",
+    "s2Title": "Solve it by hand",
+    "s2Body": "Write your full solution with Apple Pencil. Multiple pages, your own process.",
+    "s3Title": "Get the right help",
+    "s3Body": "Choose Hint, Check, or Reveal. If your handwriting is unclear, Ratatoskur asks before guessing."
+  },
+  "why": {
+    "title": "Feedback while you solve, not after",
+    "p1": "Most tools solve the problem for you. Ratatoskur stays with your process: it reads the problem and your handwritten work, then responds at the level you ask for.",
+    "p2": "Hints nudge without spoiling. Checks catch a wrong turn early. Reveal is there when you want the full path. The student keeps ownership of the solving.",
+    "p3": "And it works in Icelandic, where good math-tutoring tools are scarce."
+  },
+  "hood": {
+    "title": "Under the hood",
+    "lead": "Built for real classrooms, with privacy in mind.",
+    "i1Title": "Reads problem and handwriting",
+    "i1Body": "The model sees both the exercise image and the student's multi-page solution.",
+    "i2Title": "Mode-specific feedback",
+    "i2Body": "Hint, Check, and Reveal are distinct behaviors, not one prompt with different labels.",
+    "i3Title": "Consent-aware data",
+    "i3Body": "Students choose what may be used for analytics and dataset work at registration.",
+    "i4Title": "Analytics for teachers",
+    "i4Body": "Attempts, common errors, and feedback usefulness are tracked for teachers and researchers."
+  },
+  "team": {
+    "title": "The team",
+    "lead": "Two builders working on Ratatoskur.",
+    "m1Name": "Sölvi Santos",
+    "m1Role": "Product & engineering",
+    "m2Name": "Jóhannes Reykdal Einarsson",
+    "m2Role": "Product & engineering"
+  }
 }
