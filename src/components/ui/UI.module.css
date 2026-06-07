@@ -1,0 +1,95 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--brand-espresso);
+  line-height: 1;
+}
+
+.logoImage {
+  display: block;
+  flex: none;
+  width: auto;
+  height: auto;
+}
+
+.wordmark {
+  font-family: var(--font-display-stack);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.05rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.espresso {
+  background: var(--brand-espresso);
+  color: var(--reading);
+}
+
+.orange {
+  background: var(--brand-orange);
+  color: var(--brand-espresso);
+}
+
+.quiet {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--brand-espresso);
+}
+
+.button:active:not([aria-disabled='true']) {
+  transform: scale(0.98);
+}
+
+.button[aria-disabled='true'] {
+  opacity: 0.52;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .espresso:hover {
+    background: var(--ink);
+  }
+
+  .orange:hover {
+    background: var(--brand-rust);
+    color: var(--reading);
+  }
+
+  .quiet:hover {
+    border-color: var(--brand-rust);
+    background: var(--paper-deep);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:active:not([aria-disabled='true']) {
+    transform: none;
+  }
+}

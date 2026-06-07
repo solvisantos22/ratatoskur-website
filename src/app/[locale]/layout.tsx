@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { fraunces, inter } from '@/app/fonts';
+import { bodyFont, displayFont } from '@/app/fonts';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import '../globals.css';
@@ -22,7 +22,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
