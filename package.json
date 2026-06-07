@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
+    "motion": "^12.40.0",
     "next": "16.2.7",
     "next-intl": "^4.13.0",
     "next-mdx-remote": "^6.0.0",

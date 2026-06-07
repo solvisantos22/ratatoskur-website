@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Third-party agent skill scripts — not part of the app source:
     ".agents/**",
+    ".cursor/**",
+    ".superpowers/**",
+    ".references/**",
   ]),
 ]);
 
