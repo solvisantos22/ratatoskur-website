@@ -1,6 +1,11 @@
 import { describe, expect, test } from 'vitest';
 
-import { appendPoint, normalizePointer } from './canvas-model';
+import {
+  appendPoint,
+  isActivePointer,
+  shouldStartPointer,
+  normalizePointer,
+} from './canvas-model';
 
 describe('canvas model', () => {
   test('normalizes pointer coordinates into the drawing surface', () => {
@@ -40,5 +45,16 @@ describe('canvas model', () => {
     );
 
     expect(point).toEqual({ x: 0, y: 0 });
+  });
+
+  test('starts a pointer only when no pointer is active', () => {
+    expect(shouldStartPointer(null)).toBe(true);
+    expect(shouldStartPointer(8)).toBe(false);
+  });
+
+  test('matches events against the active pointer', () => {
+    expect(isActivePointer(8, 8)).toBe(true);
+    expect(isActivePointer(9, 8)).toBe(false);
+    expect(isActivePointer(8, null)).toBe(false);
   });
 });

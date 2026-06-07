@@ -32,3 +32,14 @@ export function normalizePointer(pointer: PointerLike, rect: RectLike): Point {
 export function appendPoint(stroke: readonly Point[], point: Point): Point[] {
   return [...stroke, point];
 }
+
+export function shouldStartPointer(activePointerId: number | null) {
+  return activePointerId === null;
+}
+
+export function isActivePointer(
+  pointerId: number,
+  activePointerId: number | null,
+) {
+  return activePointerId !== null && pointerId === activePointerId;
+}

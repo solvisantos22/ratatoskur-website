@@ -1,12 +1,19 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import { appendPoint, normalizePointer, type Point } from './canvas-model';
+import {
+  appendPoint,
+  isActivePointer,
+  normalizePointer,
+  shouldStartPointer,
+  type Point,
+} from './canvas-model';
 
 type DrawingCanvasProps = {
   ariaLabel: string;
   privacyText?: string;
+  keyboardHelpText?: string;
   clearSignal: number;
 };
 
@@ -23,7 +30,14 @@ function drawStrokes(
   size: SurfaceSize,
 ) {
   const context = canvas.getContext('2d');
-  if (!context || size.width <= 0 || size.height <= 0) {
+  if (!context) {
+    return;
+  }
+
+  if (size.width <= 0 || size.height <= 0) {
+    canvas.width = 1;
+    canvas.height = 1;
+    context.clearRect(0, 0, 1, 1);
     return;
   }
 
@@ -72,13 +86,18 @@ function drawStrokes(
 export function DrawingCanvas({
   ariaLabel,
   privacyText = 'Drawing stays on this device.',
+  keyboardHelpText = 'Drawing is optional; use the mode controls to explore feedback without drawing.',
   clearSignal,
 }: DrawingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const firstClearSignalRef = useRef(clearSignal);
+  const lastClearSignalRef = useRef(clearSignal);
+  const activePointerIdRef = useRef<number | null>(null);
   const activeStrokeIndexRef = useRef<number | null>(null);
   const [strokes, setStrokes] = useState<Point[][]>([]);
   const [surfaceSize, setSurfaceSize] = useState<SurfaceSize>(emptySize);
+  const idPrefix = useId();
+  const descriptionId = `${idPrefix}-drawing-canvas-description`;
+  const helpId = `${idPrefix}-drawing-canvas-keyboard-help`;
 
   const measure = useCallback(() => {
     const canvas = canvasRef.current;
@@ -99,7 +118,9 @@ export function DrawingCanvas({
     measure();
 
     if (typeof ResizeObserver === 'undefined') {
-      return;
+      window.addEventListener('resize', measure);
+
+      return () => window.removeEventListener('resize', measure);
     }
 
     const observer = new ResizeObserver((entries) => {
@@ -127,11 +148,13 @@ export function DrawingCanvas({
   }, [strokes, surfaceSize]);
 
   useEffect(() => {
-    if (clearSignal === firstClearSignalRef.current) {
+    if (clearSignal === lastClearSignalRef.current) {
       return;
     }
 
+    lastClearSignalRef.current = clearSignal;
     setStrokes([]);
+    activePointerIdRef.current = null;
     activeStrokeIndexRef.current = null;
   }, [clearSignal]);
 
@@ -150,8 +173,13 @@ export function DrawingCanvas({
   }, []);
 
   const handlePointerDown = (event: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!shouldStartPointer(activePointerIdRef.current)) {
+      return;
+    }
+
     const canvas = event.currentTarget;
     canvas.setPointerCapture?.(event.pointerId);
+    activePointerIdRef.current = event.pointerId;
 
     const point = normalizePointer(event, canvas.getBoundingClientRect());
     setStrokes((currentStrokes) => {
@@ -161,7 +189,7 @@ export function DrawingCanvas({
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
-    if (activeStrokeIndexRef.current === null) {
+    if (!isActivePointer(event.pointerId, activePointerIdRef.current)) {
       return;
     }
 
@@ -170,7 +198,22 @@ export function DrawingCanvas({
     );
   };
 
-  const stopDrawing = () => {
+  const stopDrawing = (
+    event: React.PointerEvent<HTMLCanvasElement>,
+    releaseCapture: boolean,
+  ) => {
+    if (!isActivePointer(event.pointerId, activePointerIdRef.current)) {
+      return;
+    }
+
+    if (
+      releaseCapture &&
+      event.currentTarget.hasPointerCapture?.(event.pointerId)
+    ) {
+      event.currentTarget.releasePointerCapture?.(event.pointerId);
+    }
+
+    activePointerIdRef.current = null;
     activeStrokeIndexRef.current = null;
   };
 
@@ -184,12 +227,13 @@ export function DrawingCanvas({
     >
       <canvas
         ref={canvasRef}
+        aria-describedby={`${descriptionId} ${helpId}`}
         aria-label={ariaLabel}
-        onPointerCancel={stopDrawing}
+        onPointerCancel={(event) => stopDrawing(event, true)}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerUp={stopDrawing}
-        onLostPointerCapture={stopDrawing}
+        onPointerUp={(event) => stopDrawing(event, true)}
+        onLostPointerCapture={(event) => stopDrawing(event, false)}
         style={{
           background: '#fff8ec',
           border: '1px solid rgba(60, 29, 17, 0.24)',
@@ -201,6 +245,7 @@ export function DrawingCanvas({
         }}
       />
       <p
+        id={descriptionId}
         style={{
           color: '#684b3b',
           fontSize: '0.85rem',
@@ -209,6 +254,17 @@ export function DrawingCanvas({
         }}
       >
         {privacyText}
+      </p>
+      <p
+        id={helpId}
+        style={{
+          color: '#684b3b',
+          fontSize: '0.85rem',
+          lineHeight: 1.45,
+          margin: 0,
+        }}
+      >
+        {keyboardHelpText}
       </p>
     </div>
   );
