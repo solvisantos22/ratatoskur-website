@@ -2,13 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-// Lazily resolve the initial state on the client only.
-function getInitialState(): 'idle' | 'pre' | 'in' {
-  if (typeof window === 'undefined') return 'idle';
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'in';
-  return 'pre';
-}
-
 export function Reveal({
   children,
   delay = 0,
@@ -21,13 +14,25 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
-  // 'idle' = SSR/no-JS default: fully visible (never ships blank).
-  // Client resolves to 'in' (reduced-motion) or 'pre' (will animate) synchronously.
-  const [state, setState] = useState<'idle' | 'pre' | 'in'>(getInitialState);
+  // 'idle' = SSR/no-JS default: fully visible (never ships blank). Server AND
+  // client both start at 'idle', so there is no hydration mismatch; the
+  // reduced-motion check and the reveal happen after hydration, in the effect.
+  const [state, setState] = useState<'idle' | 'pre' | 'in'>('idle');
 
+  /* eslint-disable react-hooks/set-state-in-effect --
+     Motion is decided on the client AFTER hydration to avoid a hydration
+     mismatch (server and client both render the 'idle' visible state).
+     Setting state in this effect is intentional and correct here. */
   useEffect(() => {
     const el = ref.current;
-    if (!el || state === 'in') return;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Reduced motion: reveal immediately, no movement.
+      setState('in');
+      return;
+    }
+    // Enhancement only: hide post-hydration, then reveal when scrolled into view.
+    setState('pre');
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -41,7 +46,8 @@ export function Reveal({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [state]);
+  }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const Component = Tag as React.ElementType;
   return (
