@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ratatoskur — Project Hub Website
 
-## Getting Started
+**EN:** This is the public-facing project hub for Ratatoskur, an AI math coach that grades handwritten student work. The site is built with Next.js (App Router) and serves as a bilingual (English / Icelandic) landing page, devlog, and research overview for the product.
 
-First, run the development server:
+**IS:** Þetta er opinbert kynningarvefsvæði fyrir Ratatoskur, gervigreindarkennara sem leiðréttir handskrifaðar stærðfræðilausnir nemenda. Vefurinn er tvítyngdur (enska / íslenska) og inniheldur kynningarsíður, þróunardagbók og rannsóknaryfirlit.
+
+---
+
+## Develop
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Opens at `http://localhost:3000` (or the next free port). The dev server uses Turbopack for fast rebuilds.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Test
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test
+```
 
-## Learn More
+Runs 13 Vitest tests covering: i18n key parity between `en.json` and `is.json`, contact form Zod schema, the `/api/contact` route handler (including honeypot and missing-key behaviour), and the MDX updates loader.
 
-To learn more about Next.js, take a look at the following resources:
+## Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Lint
 
-## Deploy on Vercel
+```bash
+npm run lint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Environment
+
+Copy `.env.example` to `.env.local` and fill in the values:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Required | Description |
+|---|---|---|
+| `RESEND_API_KEY` | Yes (for email) | API key from [resend.com](https://resend.com). Without it the contact form returns 503 and the UI falls back to a mailto link. |
+| `CONTACT_TO_EMAIL` | No | Address that receives submissions. Defaults to the value baked into the route handler. |
+| `CONTACT_FROM_EMAIL` | No | Sender address — must be a Resend-verified domain. Defaults to `onboarding@resend.dev`. |
+
+---
+
+## Content locations
+
+| Content | Location |
+|---|---|
+| UI copy (EN) | `messages/en.json` |
+| UI copy (IS) | `messages/is.json` |
+| Devlog posts | `content/updates/*.mdx` (frontmatter: `title`, `date`, `summary`) |
+| Research page | `content/research/en.mdx` and `content/research/is.mdx` |
+
+Keys in `en.json` and `is.json` must stay in parity — this is enforced by a Vitest test that will fail the CI gate if they diverge.
+
+---
+
+## i18n
+
+English is the default locale. Icelandic is available via the header language toggle. All page routes are under `/[locale]` (e.g. `/en`, `/is`, `/en/updates`). The next-intl middleware (`src/middleware.ts`) handles locale detection and redirection automatically.
+
+> Note: the Icelandic copy is a draft and is pending review by a native speaker before launch.
+
+---
+
+## Stack
+
+- **Next.js 16** (App Router) + **TypeScript**
+- **Tailwind CSS v4**
+- **next-intl** — i18n routing and translations
+- **next-mdx-remote** + **gray-matter** — MDX content loading
+- **Resend** — transactional email for the contact form
+- **Zod** — contact form schema validation
+- **Vitest** — unit and integration tests
+
+Deployed to **Vercel**.
+
+---
+
+## Related repositories
+
+- [ratatoskur_backend](https://github.com/solvisantos22/ratatoskur_backend) — API server
+- [ratatoskur_ios](https://github.com/solvisantos22/ratatoskur_ios) — iOS app
