@@ -43,5 +43,18 @@
     "m1Role": "Product & engineering",
     "m2Name": "Jóhannes Reykdal Einarsson",
     "m2Role": "Product & engineering"
+  },
+  "contact": {
+    "title": "Bring Ratatoskur to your school",
+    "lead": "We are running early pilots with schools and teachers. If that is you, get in touch.",
+    "name": "Name",
+    "email": "Email",
+    "organization": "School or role",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Thanks. We will be in touch.",
+    "error": "Something went wrong. Please email us directly.",
+    "mailto": "Or email us at"
   }
 }

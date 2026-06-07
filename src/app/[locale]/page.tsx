@@ -3,6 +3,7 @@ import { HowItWorks } from '@/components/sections/HowItWorks';
 import { WhyItMatters } from '@/components/sections/WhyItMatters';
 import { UnderTheHood } from '@/components/sections/UnderTheHood';
 import { Team } from '@/components/sections/Team';
+import { Contact } from '@/components/sections/Contact';
 
 export default function HomePage() {
   return (
@@ -12,7 +13,7 @@ export default function HomePage() {
       <WhyItMatters />
       <UnderTheHood />
       <Team />
-      {/* <Contact /> added in Phase 5 */}
+      <Contact />
     </main>
   );
 }

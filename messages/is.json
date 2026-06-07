@@ -43,5 +43,18 @@
     "m1Role": "Vara og verkfræði",
     "m2Name": "Jóhannes Reykdal Einarsson",
     "m2Role": "Vara og verkfræði"
+  },
+  "contact": {
+    "title": "Kynstu Ratatoskur í skólanum þínum",
+    "lead": "Við erum að keyra snemmbærar tilraunir með skóla og kennara. Ef þetta á við þig, hafðu samband.",
+    "name": "Nafn",
+    "email": "Tölvupóstur",
+    "organization": "Skóli eða hlutverk",
+    "message": "Skilaboð",
+    "send": "Senda skilaboð",
+    "sending": "Sending…",
+    "success": "Takk. Við höfum samband.",
+    "error": "Eitthvað fór úrskeiðis. Vinsamlegast sendu okkur tölvupóst beint.",
+    "mailto": "Eða sendu okkur tölvupóst á"
   }
 }
