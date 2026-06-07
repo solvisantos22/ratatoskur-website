@@ -7,7 +7,7 @@
     "ctaContact": "Contact us",
     "ctaHow": "See how it works"
   },
-  "footer": { "rights": "Ratatoskur", "fundedBy": "Supported by Tækniþróunarsjóður Fræ", "github": "GitHub" },
+  "footer": { "rights": "Ratatoskur", "github": "GitHub" },
   "how": {
     "title": "How it works",
     "lead": "Three steps, in the student's own notebook.",
@@ -33,8 +33,8 @@
     "i2Body": "Hint, Check, and Reveal are distinct behaviors, not one prompt with different labels.",
     "i3Title": "Consent-aware data",
     "i3Body": "Students choose what may be used for analytics and dataset work at registration.",
-    "i4Title": "Analytics for teachers",
-    "i4Body": "Attempts, common errors, and feedback usefulness are tracked for teachers and researchers."
+    "i4Title": "Future teacher insights",
+    "i4Body": "With consent, attempts and feedback can help shape future tools for teachers and researchers."
   },
   "team": {
     "title": "The team",

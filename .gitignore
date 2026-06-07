@@ -43,6 +43,7 @@ next-env.d.ts
 # project-specific
 .superpowers/
 .agents/
+.references/
 .env
 .env.local
 .env*.local

@@ -15,8 +15,9 @@ export function Footer() {
           <a href={GITHUB_BACKEND} target="_blank" rel="noreferrer">{t('github')} (backend)</a>
           <a href={GITHUB_IOS} target="_blank" rel="noreferrer">{t('github')} (iOS)</a>
         </nav>
-        <span style={{ marginLeft: 'auto', color: 'var(--muted)', fontSize: 13 }}>{t('fundedBy')}</span>
-        <LanguageToggle />
+        <div style={{ marginLeft: 'auto' }}>
+          <LanguageToggle />
+        </div>
       </div>
     </footer>
   );

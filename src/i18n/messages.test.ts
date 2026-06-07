@@ -14,3 +14,10 @@ function flatKeys(obj: Record<string, unknown>, prefix = ''): string[] {
 test('en and is message files have identical key sets', () => {
   expect(flatKeys(is).sort()).toEqual(flatKeys(en).sort());
 });
+
+test('public copy does not claim current funding or current teacher analytics', () => {
+  expect(en.footer).not.toHaveProperty('fundedBy');
+  expect(is.footer).not.toHaveProperty('fundedBy');
+  expect(en.hood.i4Title).toBe('Future teacher insights');
+  expect(is.hood.i4Title).toBe('Framtíðarsýn fyrir kennara');
+});

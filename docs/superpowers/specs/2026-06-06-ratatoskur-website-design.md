@@ -51,10 +51,10 @@ Copy is drafted in English from the real docs (PRODUCT_BRIEF, FRAE_SPROTI_STRATE
 1. **Hero** — serif headline ("The math coach that reads your *handwriting*"), one-line subhead, **Contact us** (brown, primary) + "See how it works" (text link to the How-it-works anchor), and an iPhone showing the real mode picker.
 2. **How it works** — a genuine 3-step sequence (numbering is earned here): ① Upload a problem ② Solve it by hand with Apple Pencil ③ Get the right help — Hint / Check / Reveal. Includes the "confirm unclear handwriting" detail. Carried by real app visuals.
 3. **Why it matters** — feedback *while* solving rather than after; never revealing too much too soon; preserving the student's process; the Icelandic-language gap.
-4. **Under the hood** — light credibility, not a spec sheet: reads problem + handwriting, mode-specific AI feedback, consent-aware evaluation data, analytics for teachers/researchers.
+4. **Under the hood** — light credibility, not a spec sheet: reads problem + handwriting, mode-specific AI feedback, consent-aware evaluation data, and a foundation for future teacher/researcher insights.
 5. **Team** — Sölvi Santos & Jóhannes Reykdal Einarsson.
 6. **Contact** — "Bring Ratatoskur to your school." Short form + email (see §8).
-7. **Footer** — diamond logo, section nav, GitHub/docs links, Tækniþróunarsjóður Fræ acknowledgment, language toggle.
+7. **Footer** — diamond logo, section nav, GitHub/docs links, language toggle.
 
 **Optional deeper pages (in scope for v1):**
 - **Updates** — MDX devlog (validation progress, milestones).

@@ -422,7 +422,7 @@ Create `messages/en.json`:
     "ctaContact": "Contact us",
     "ctaHow": "See how it works"
   },
-  "footer": { "rights": "Ratatoskur", "fundedBy": "Supported by Tækniþróunarsjóður Fræ", "github": "GitHub" }
+  "footer": { "rights": "Ratatoskur", "github": "GitHub" }
 }
 ```
 
@@ -437,7 +437,7 @@ Create `messages/is.json` (draft; flag for team review):
     "ctaContact": "Hafðu samband",
     "ctaHow": "Sjá hvernig það virkar"
   },
-  "footer": { "rights": "Ratatoskur", "fundedBy": "Stutt af Tækniþróunarsjóði Fræ", "github": "GitHub" }
+  "footer": { "rights": "Ratatoskur", "github": "GitHub" }
 }
 ```
 
@@ -667,7 +667,7 @@ export function Nav() {
 }
 ```
 
-- [ ] **Step 2: Build the Footer (logo, links, public GitHub repos, Fræ acknowledgment, toggle)**
+- [ ] **Step 2: Build the Footer (logo, links, public GitHub repos, toggle)**
 
 `src/components/Footer.tsx`:
 ```tsx
@@ -688,8 +688,9 @@ export function Footer() {
           <a href={GITHUB_BACKEND} target="_blank" rel="noreferrer">{t('github')} (backend)</a>
           <a href={GITHUB_IOS} target="_blank" rel="noreferrer">{t('github')} (iOS)</a>
         </nav>
-        <span style={{ marginLeft: 'auto', color: 'var(--muted)', fontSize: 13 }}>{t('fundedBy')}</span>
-        <LanguageToggle />
+        <div style={{ marginLeft: 'auto' }}>
+          <LanguageToggle />
+        </div>
       </div>
     </footer>
   );
@@ -1081,8 +1082,8 @@ Add to `messages/en.json` and IS equivalent:
   "i2Body": "Hint, Check, and Reveal are distinct behaviors, not one prompt with different labels.",
   "i3Title": "Consent-aware data",
   "i3Body": "Students choose what may be used for analytics and dataset work at registration.",
-  "i4Title": "Analytics for teachers",
-  "i4Body": "Attempts, common errors, and feedback usefulness are tracked for teachers and researchers."
+  "i4Title": "Future teacher insights",
+  "i4Body": "With consent, attempts and feedback can help shape future tools for teachers and researchers."
 }
 ```
 
@@ -1937,7 +1938,7 @@ git commit -m "docs: README + Vercel deploy notes; wire real repo links"
 
 ## Self-review checklist (completed by plan author)
 
-**Spec coverage:** Hub purpose (Tasks 15, 18) · bilingual EN/IS (Tasks 5–6) · sitemap home + updates + research (Tasks 15, 20, 21) · all six home sections (Tasks 10–14, 18) · contact via Resend + mailto (Tasks 16–18) · Next.js/Tailwind/next-intl/MDX/fonts (Tasks 0–5, 19–20) · design tokens & identity-preserving palette (Task 2) · motion per emil + impeccable (Tasks 8, 22, 23) · logo/favicon (Task 4) · GitHub footer links (Tasks 7, 24) · Fræ acknowledgment (Task 7) · verification incl. i18n parity, contrast, Lighthouse (Tasks 5, 23, 24). All spec sections map to a task.
+**Spec coverage:** Hub purpose (Tasks 15, 18) · bilingual EN/IS (Tasks 5–6) · sitemap home + updates + research (Tasks 15, 20, 21) · all six home sections (Tasks 10–14, 18) · contact via Resend + mailto (Tasks 16–18) · Next.js/Tailwind/next-intl/MDX/fonts (Tasks 0–5, 19–20) · design tokens & identity-preserving palette (Task 2) · motion per emil + impeccable (Tasks 8, 22, 23) · logo/favicon (Task 4) · GitHub footer links (Tasks 7, 24) · verification incl. i18n parity, contrast, Lighthouse (Tasks 5, 23, 24). All spec sections map to a task.
 
 **Placeholder scan:** No "TBD/implement later". The two `GITHUB_*` constants in Task 7 are explicitly resolved in Task 24 Step 2. IS copy is drafted (not blank) and flagged for team review per the spec.
 
