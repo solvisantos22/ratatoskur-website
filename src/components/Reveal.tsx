@@ -2,6 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+// Lazily resolve the initial state on the client only.
+function getInitialState(): 'idle' | 'pre' | 'in' {
+  if (typeof window === 'undefined') return 'idle';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'in';
+  return 'pre';
+}
+
 export function Reveal({
   children,
   delay = 0,
@@ -15,16 +22,12 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLElement>(null);
   // 'idle' = SSR/no-JS default: fully visible (never ships blank).
-  const [state, setState] = useState<'idle' | 'pre' | 'in'>('idle');
+  // Client resolves to 'in' (reduced-motion) or 'pre' (will animate) synchronously.
+  const [state, setState] = useState<'idle' | 'pre' | 'in'>(getInitialState);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setState('in');
-      return;
-    }
-    setState('pre');
+    if (!el || state === 'in') return;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -38,7 +41,7 @@ export function Reveal({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [state]);
 
   const Component = Tag as React.ElementType;
   return (
