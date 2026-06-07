@@ -58,14 +58,8 @@
   color: var(--brand-espresso);
 }
 
-.button:active:not([aria-disabled='true']) {
+.button:active {
   transform: scale(0.98);
-}
-
-.button[aria-disabled='true'] {
-  opacity: 0.52;
-  cursor: not-allowed;
-  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -89,7 +83,7 @@
     transition: none;
   }
 
-  .button:active:not([aria-disabled='true']) {
+  .button:active {
     transform: none;
   }
 }

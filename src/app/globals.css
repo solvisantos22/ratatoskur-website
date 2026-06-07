@@ -51,7 +51,8 @@ textarea {
 
 :focus-visible {
   outline: 3px solid var(--focus);
-  outline-offset: 3px;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 7px var(--brand-espresso);
 }
 
 .press {
@@ -80,5 +81,12 @@ textarea {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+    box-shadow: none;
   }
 }
