@@ -52,9 +52,6 @@ function drawStrokes(
     canvas.height = backingHeight;
   }
 
-  canvas.style.width = `${size.width}px`;
-  canvas.style.height = `${size.height}px`;
-
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   context.clearRect(0, 0, size.width, size.height);
   context.lineCap = 'round';
