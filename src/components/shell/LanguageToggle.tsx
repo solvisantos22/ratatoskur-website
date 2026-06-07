@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { routing, type Locale } from '@/i18n/routing';
+import { composePathWithQueryAndHash } from './menu-utils';
 import styles from './Shell.module.css';
 
 export function LanguageToggle() {
@@ -12,8 +13,12 @@ export function LanguageToggle() {
   const t = useTranslations('language');
 
   function switchLocale(nextLocale: Locale) {
-    const hash = window.location.hash;
-    router.replace(`${pathname}${hash}`, { locale: nextLocale });
+    const href = composePathWithQueryAndHash(
+      pathname,
+      window.location.search,
+      window.location.hash,
+    );
+    router.replace(href, { locale: nextLocale });
   }
 
   return (
