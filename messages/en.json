@@ -1,5 +1,21 @@
 {
-  "nav": { "how": "How it works", "why": "Why", "research": "Research", "team": "Team", "updates": "Updates", "contact": "Contact us" },
+  "nav": {
+    "demo": "Try it",
+    "how": "How it works",
+    "why": "Why",
+    "research": "Research",
+    "team": "Team",
+    "updates": "Updates",
+    "contact": "Contact us",
+    "primaryLabel": "Primary navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "is": "Icelandic"
+  },
   "hero": {
     "eyebrow": "AI math coach, in Icelandic",
     "title": "The math coach that reads your handwriting",
@@ -7,7 +23,15 @@
     "ctaContact": "Contact us",
     "ctaHow": "See how it works"
   },
-  "footer": { "rights": "Ratatoskur", "github": "GitHub" },
+  "footer": {
+    "rights": "Ratatoskur",
+    "github": "GitHub",
+    "home": "Home",
+    "navigationLabel": "Footer navigation",
+    "repositoriesLabel": "Source code",
+    "backend": "Backend on GitHub",
+    "ios": "iOS app on GitHub"
+  },
   "how": {
     "title": "How it works",
     "lead": "Three steps, in the student's own notebook.",

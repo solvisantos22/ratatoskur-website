@@ -1,9 +1,11 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
 import { bodyFont, displayFont } from '@/app/fonts';
-import { Nav } from '@/components/Nav';
-import { Footer } from '@/components/Footer';
+import { SiteFooter } from '@/components/shell/SiteFooter';
+import { SiteHeader } from '@/components/shell/SiteHeader';
+import shellStyles from '@/components/shell/Shell.module.css';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -19,16 +21,18 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   if (!routing.locales.includes(locale as 'en' | 'is')) notFound();
+  const validatedLocale = locale as Locale;
+
   return (
     <html
-      lang={locale}
+      lang={validatedLocale}
       className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
-          <Nav />
-          <div style={{ flex: 1 }}>{children}</div>
-          <Footer />
+          <SiteHeader locale={validatedLocale} />
+          <div className={shellStyles.siteMain}>{children}</div>
+          <SiteFooter locale={validatedLocale} />
         </NextIntlClientProvider>
       </body>
     </html>

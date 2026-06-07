@@ -8,15 +8,18 @@ export function LogoMark({
   compact?: boolean;
   priority?: boolean;
 }) {
+  const size = compact ? 42 : 54;
+
   return (
     <span className={styles.logo}>
       <Image
         src="/ratatoskur-logo.svg"
         alt=""
-        width={compact ? 42 : 54}
-        height={compact ? 42 : 54}
+        width={size}
+        height={size}
         preload={priority}
         className={styles.logoImage}
+        style={{ width: size, height: size }}
       />
       {!compact && <span className={styles.wordmark}>Ratatoskur</span>}
     </span>

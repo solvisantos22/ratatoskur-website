@@ -1,5 +1,21 @@
 {
-  "nav": { "how": "Hvernig það virkar", "why": "Af hverju", "research": "Rannsóknir", "team": "Teymi", "updates": "Fréttir", "contact": "Hafðu samband" },
+  "nav": {
+    "demo": "Prófaðu",
+    "how": "Hvernig það virkar",
+    "why": "Af hverju",
+    "research": "Rannsóknir",
+    "team": "Teymi",
+    "updates": "Fréttir",
+    "contact": "Hafðu samband",
+    "primaryLabel": "Aðalvalmynd",
+    "openMenu": "Opna valmynd",
+    "closeMenu": "Loka valmynd"
+  },
+  "language": {
+    "label": "Tungumál",
+    "en": "Enska",
+    "is": "Íslenska"
+  },
   "hero": {
     "eyebrow": "Stærðfræðiaðstoð með gervigreind, á íslensku",
     "title": "Aðstoðin sem les skriftina þína",
@@ -7,7 +23,15 @@
     "ctaContact": "Hafðu samband",
     "ctaHow": "Sjá hvernig það virkar"
   },
-  "footer": { "rights": "Ratatoskur", "github": "GitHub" },
+  "footer": {
+    "rights": "Ratatoskur",
+    "github": "GitHub",
+    "home": "Heim",
+    "navigationLabel": "Valmynd í síðufæti",
+    "repositoriesLabel": "Frumkóði",
+    "backend": "Bakendi á GitHub",
+    "ios": "iOS app á GitHub"
+  },
   "how": {
     "title": "Hvernig það virkar",
     "lead": "Þrjú skref, í eigin bók nemandans.",
