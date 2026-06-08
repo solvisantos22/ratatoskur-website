@@ -35,28 +35,4 @@
   --z-menu: 70;
   --z-dialog: 90;
 
-  /* Temporary aliases keep the current pages stable until their planned migration. */
-  --espresso: var(--brand-espresso);
-  --orange: var(--brand-orange);
-  --rust: var(--brand-rust);
-  --bg: var(--paper);
-  --surface: var(--reading);
-  --surface-2: var(--paper-deep);
-  --ink-2: var(--ink-soft);
-  --muted: var(--ink-soft);
-  --accent: var(--brand-orange);
-  --accent-2: var(--brand-rust);
-  --on-accent: var(--reading);
-  --cta: var(--brand-espresso);
-  --cta-hover: var(--ink);
-  --r-sm: var(--radius-sm);
-  --r-md: var(--radius-md);
-  --r-lg: var(--radius-lg);
-  --r-pill: 999px;
-  --ease-in-out: var(--ease-standard);
-  --dur-press: var(--duration-fast);
-  --dur-ui: var(--duration-ui);
-  --dur-reveal: var(--duration-scene);
-  --z-nav: var(--z-header);
-  --z-overlay: var(--z-menu);
 }
