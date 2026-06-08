@@ -4,7 +4,7 @@ import { initialDemoState, reduceDemo } from './demo-machine';
 import type { DemoState } from './demo-types';
 
 describe('demo machine', () => {
-  test('guided sequence reaches confirmation, waits for confirmation, then reaches interactive', () => {
+  test('guided sequence walks through confirmation, hint, check, reveal, then ends', () => {
     let state = reduceDemo(initialDemoState, { type: 'START' });
     expect(state.stage).toBe('writing');
 
@@ -19,12 +19,37 @@ describe('demo machine', () => {
 
     state = reduceDemo(state, { type: 'CONFIRM_READING' });
     expect(state.stage).toBe('responding');
+    expect(state.mode).toBe('hint');
+    expect(state.responseOpen).toBe(true);
+
+    state = reduceDemo(state, { type: 'ADVANCE' });
+    expect(state.stage).toBe('responding');
+    expect(state.mode).toBe('check_solution');
+    expect(state.responseOpen).toBe(true);
+
+    state = reduceDemo(state, { type: 'ADVANCE' });
+    expect(state.stage).toBe('responding');
+    expect(state.mode).toBe('reveal');
     expect(state.responseOpen).toBe(true);
 
     state = reduceDemo(state, { type: 'ADVANCE' });
     expect(state.stage).toBe('interactive');
     expect(state.guidedRunComplete).toBe(true);
     expect(state.responseOpen).toBe(false);
+  });
+
+  test('timeline controls move backward and forward one step at a time', () => {
+    const writing = reduceDemo(initialDemoState, { type: 'START' });
+    expect(writing.stage).toBe('writing');
+    expect(writing.timelineIndex).toBe(1);
+
+    const checking = reduceDemo(writing, { type: 'NEXT_STEP' } as never);
+    expect(checking.stage).toBe('checking-reading');
+    expect(checking.timelineIndex).toBe(2);
+
+    const rewound = reduceDemo(checking, { type: 'PREVIOUS_STEP' } as never);
+    expect(rewound.stage).toBe('writing');
+    expect(rewound.timelineIndex).toBe(1);
   });
 
   test('pause blocks ADVANCE until RESUME', () => {
@@ -61,6 +86,7 @@ describe('demo machine', () => {
     expect(replayed.paused).toBe(false);
     expect(replayed.guidedRunComplete).toBe(false);
     expect(replayed.runId).toBe(8);
+    expect(replayed.timelineIndex).toBe(1);
   });
 
   test('SELECT_MODE before work is visible keeps the idle state', () => {
@@ -74,7 +100,7 @@ describe('demo machine', () => {
     expect(selected.responseOpen).toBe(false);
   });
 
-  test('SELECT_MODE during the guided writing opens an interactive response', () => {
+  test('SELECT_MODE during the guided writing jumps to that response step', () => {
     const writing = reduceDemo(initialDemoState, { type: 'START' });
 
     const selected = reduceDemo(writing, {
@@ -82,7 +108,7 @@ describe('demo machine', () => {
       mode: 'reveal',
     });
 
-    expect(selected.stage).toBe('interactive');
+    expect(selected.stage).toBe('responding');
     expect(selected.mode).toBe('reveal');
     expect(selected.guidedRunComplete).toBe(true);
     expect(selected.responseOpen).toBe(true);
@@ -151,7 +177,7 @@ describe('demo machine', () => {
       type: 'DISMISS_RESPONSE',
     } as never);
 
-    expect(dismissed.stage).toBe('interactive');
+    expect(dismissed.stage).toBe('responding');
     expect(dismissed.mode).toBe('reveal');
     expect(dismissed.responseOpen).toBe(false);
   });

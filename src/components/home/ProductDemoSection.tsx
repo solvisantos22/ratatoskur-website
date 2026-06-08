@@ -15,7 +15,7 @@ const copy: Record<
   en: {
     title: 'Try the notebook Ratatoskur students see',
     lead:
-      'Watch the guided example, draw on the page, or choose a feedback mode to see how the app responds.',
+      'Watch the guided example move from written work to handwriting confirmation and three kinds of feedback.',
     modeIntro: 'One written solution can become three kinds of help.',
     modes: [
       {
@@ -35,7 +35,7 @@ const copy: Record<
   is: {
     title: 'Prófaðu vinnubókina sem nemendur sjá',
     lead:
-      'Skoðaðu leiðsagða dæmið, skrifaðu á síðuna eða veldu ham til að sjá hvernig appið svarar.',
+      'Skoðaðu leiðsagða dæmið fara frá skrifaðri lausn yfir í staðfestingu á rithönd og þrenns konar endurgjöf.',
     modeIntro: 'Ein skrifuð lausn getur orðið að þrenns konar aðstoð.',
     modes: [
       {

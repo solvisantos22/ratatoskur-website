@@ -10,10 +10,10 @@ type ScriptedInkProps = {
   runId: number;
 };
 
-const paths = [
-  'M36 78 C58 65 84 64 106 74 C126 83 129 101 115 113 C101 127 73 122 68 103 C64 88 78 72 103 60 M142 61 L176 119 M176 61 L142 119 M217 73 C237 69 255 69 274 74 M219 101 C239 99 257 99 276 103 M322 59 L322 121 M311 70 C318 62 328 58 338 60 M376 76 C394 66 420 65 437 77 C454 89 448 109 431 118 C414 127 388 123 378 108 C367 91 380 77 403 72',
-  'M39 177 C60 163 88 163 108 174 C126 184 128 202 114 214 C99 227 74 222 68 204 C63 188 78 172 103 161 M142 162 L176 220 M176 162 L142 220 M222 181 C241 178 260 178 278 182 M222 204 C242 202 260 202 279 206 M323 166 C344 155 372 160 379 178 C386 197 367 214 342 216 C317 218 302 201 313 185 C322 173 344 172 362 181',
-  'M57 263 L95 263 M77 244 L77 302 M142 252 C158 238 186 240 196 255 C208 273 190 293 163 295 C142 297 128 285 130 270 C132 256 148 248 170 247 M237 259 C255 256 273 256 291 260 M238 284 C256 282 274 282 292 286 M337 241 C328 258 316 276 306 292 M337 241 L337 304 M309 281 L372 281',
+const solutionLines = [
+  { text: '2x + 3 = 11', x: 76, y: 106, rotate: -1.4 },
+  { text: '2x = 8', x: 104, y: 184, rotate: 0.8 },
+  { text: 'x = 4', x: 134, y: 262, rotate: -0.6 },
 ];
 
 export function ScriptedInk({
@@ -28,32 +28,42 @@ export function ScriptedInk({
       aria-hidden="true"
       className={styles.scriptedInk}
       focusable="false"
-      viewBox="0 0 470 340"
+      viewBox="0 0 620 340"
     >
-      {paths.map((path, index) =>
+      <g className={styles.scriptedGuides}>
+        <line x1="58" x2="540" y1="122" y2="122" />
+        <line x1="58" x2="540" y1="200" y2="200" />
+        <line x1="58" x2="540" y1="278" y2="278" />
+      </g>
+      {solutionLines.map((line, index) =>
         shouldAnimate ? (
-          <motion.path
-            key={`${runId}-${index}`}
-            animate={{ strokeDashoffset: 0 }}
-            className={styles.inkPath}
-            d={path}
-            initial={{ strokeDashoffset: 1 }}
-            pathLength="1"
-            style={{ strokeDasharray: 1 }}
+          <motion.text
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            className={styles.scriptedLine}
+            initial={{ opacity: 0, y: 14, filter: 'blur(3px)' }}
+            key={`${runId}-${line.text}`}
+            style={{ transformOrigin: `${line.x}px ${line.y}px` }}
+            transform={`rotate(${line.rotate} ${line.x} ${line.y})`}
             transition={{
-              delay: index * 0.42,
-              duration: 0.78,
+              delay: index * 0.52,
+              duration: 0.5,
               ease: [0.22, 1, 0.36, 1],
             }}
-          />
+            x={line.x}
+            y={line.y}
+          >
+            {line.text}
+          </motion.text>
         ) : (
-          <path
-            className={styles.inkPath}
-            d={path}
-            key={`${runId}-${index}`}
-            pathLength="1"
-            style={{ strokeDasharray: 1, strokeDashoffset: 0 }}
-          />
+          <text
+            className={styles.scriptedLine}
+            key={`${runId}-${line.text}`}
+            transform={`rotate(${line.rotate} ${line.x} ${line.y})`}
+            x={line.x}
+            y={line.y}
+          >
+            {line.text}
+          </text>
         ),
       )}
     </svg>

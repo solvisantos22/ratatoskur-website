@@ -5,7 +5,6 @@ import { useReducedMotion } from 'motion/react';
 
 import { demoCopy } from './demo-content';
 import type { DemoMode, DemoStage } from './demo-types';
-import { DrawingCanvas } from './DrawingCanvas';
 import { ReadingConfirmation } from './ReadingConfirmation';
 import { ScriptedInk } from './ScriptedInk';
 import { TutorResponse } from './TutorResponse';
@@ -18,8 +17,6 @@ type NotebookShellProps = {
   stage: DemoStage;
   mode: DemoMode;
   runId: number;
-  drawingMode: boolean;
-  clearSignal: number;
   onModeChange: (mode: DemoMode) => void;
   onConfirm?: () => void;
   onDismissResponse: () => void;
@@ -55,9 +52,6 @@ const copy: Record<
     actions: string;
     locked: string;
     chooseModeHint: string;
-    canvasLabel: string;
-    privacy: string;
-    keyboardHelp: string;
     scriptedLabel: string;
   }
 > = {
@@ -67,7 +61,7 @@ const copy: Record<
     problemLabel: 'Problem image',
     paperLabel: 'Student work',
     pageCount: 'Page 1 of 1',
-    toolbar: 'Drawing tools demo',
+    toolbar: 'Notebook tools',
     pen: 'Pen selected',
     highlighter: 'Highlighter',
     eraser: 'Eraser',
@@ -75,10 +69,6 @@ const copy: Record<
     actions: 'Choose feedback mode',
     locked: 'Mode controls unlock once work is on the page.',
     chooseModeHint: 'Choose a mode to request a fresh response.',
-    canvasLabel: 'Practice canvas for the Ratatoskur demo',
-    privacy: 'Custom drawing stays on this device.',
-    keyboardHelp:
-      'Drawing is optional. Use the mode controls to explore feedback without drawing.',
     scriptedLabel: 'Scripted handwritten solution',
   },
   is: {
@@ -87,7 +77,7 @@ const copy: Record<
     problemLabel: 'Mynd af dæmi',
     paperLabel: 'Lausn nemanda',
     pageCount: 'Blað 1 af 1',
-    toolbar: 'Prufustýringar fyrir ritflöt',
+    toolbar: 'Verkfæri í vinnubók',
     pen: 'Penni valinn',
     highlighter: 'Yfirstrikari',
     eraser: 'Strokleður',
@@ -95,10 +85,6 @@ const copy: Record<
     actions: 'Veldu endurgjöf',
     locked: 'Hamir opnast þegar vinna birtist á síðunni.',
     chooseModeHint: 'Veldu ham til að biðja um nýtt svar.',
-    canvasLabel: 'Æfingaflötur fyrir Ratatoskur prufu',
-    privacy: 'Eigin teikning helst á þessu tæki.',
-    keyboardHelp:
-      'Teikning er valfrjáls. Notaðu hamina til að skoða endurgjöf án þess að teikna.',
     scriptedLabel: 'Handskrifuð sýnilausn',
   },
 };
@@ -120,8 +106,6 @@ export function NotebookShell({
   stage,
   mode,
   runId,
-  drawingMode,
-  clearSignal,
   onModeChange,
   onConfirm,
   onDismissResponse,
@@ -165,14 +149,7 @@ export function NotebookShell({
           </div>
 
           <div className={styles.writingSurface}>
-            {drawingMode ? (
-              <DrawingCanvas
-                ariaLabel={text.canvasLabel}
-                clearSignal={clearSignal}
-                keyboardHelpText={text.keyboardHelp}
-                privacyText={text.privacy}
-              />
-            ) : shouldShowInk(stage) ? (
+            {shouldShowInk(stage) ? (
               <div
                 aria-label={text.scriptedLabel}
                 className={styles.scriptedInkWrap}

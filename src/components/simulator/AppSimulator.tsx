@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { DemoControls } from './DemoControls';
 import type { DemoMode, DemoStage } from './demo-types';
@@ -25,7 +25,8 @@ const copy: Record<
 > = {
   en: {
     sectionLabel: 'Interactive Ratatoskur app demo',
-    caption: 'Interactive illustration. Draw if you want, then choose Hint, Check, or Reveal.',
+    caption:
+      'A guided app walkthrough: written work, handwriting recognition, confirmation, then Hint, Check, and Reveal.',
     stageLabels: {
       idle: 'Ready to begin',
       writing: 'Writing the student solution',
@@ -42,7 +43,8 @@ const copy: Record<
   },
   is: {
     sectionLabel: 'Gagnvirk Ratatoskur prufa',
-    caption: 'Gagnvirk skýring. Skrifaðu ef þú vilt og veldu svo Vísbendingu, Yfirferð eða Lausn.',
+    caption:
+      'Leiddu prufuna áfram: skrifuð lausn, lestur á rithönd, staðfesting og svo vísbending, yfirferð og lausn.',
     stageLabels: {
       idle: 'Tilbúið að byrja',
       writing: 'Sýnir lausn nemanda',
@@ -64,26 +66,23 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
     state,
     rootRef,
     reducedMotion,
+    canGoPrevious,
+    canGoNext,
+    totalSteps,
     pause,
     resume,
     replay,
-    skip,
+    previousStep,
+    nextStep,
     confirmReading,
     dismissResponse,
     selectMode,
-    clearDrawingSignal,
-    clearDrawing,
   } = useDemoController();
-  const [drawingMode, setDrawingMode] = useState(false);
   const text = copy[locale];
 
   const announcement = useMemo(() => {
     return `${text.stageLabels[state.stage]}. ${text.modeLabels[state.mode]}.`;
   }, [state.mode, state.stage, text.modeLabels, text.stageLabels]);
-
-  const handleToggleDrawing = () => {
-    setDrawingMode((current) => !current);
-  };
 
   const handleModeChange = (mode: DemoMode) => {
     selectMode(mode);
@@ -101,8 +100,6 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
       </div>
       <div className={styles.simulatorLayout}>
         <NotebookShell
-          clearSignal={clearDrawingSignal}
-          drawingMode={drawingMode}
           locale={locale}
           mode={state.mode}
           onConfirm={confirmReading}
@@ -113,16 +110,18 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
           stage={state.stage}
         />
         <DemoControls
-          drawingMode={drawingMode}
+          canGoNext={canGoNext}
+          canGoPrevious={canGoPrevious}
+          currentStep={state.timelineIndex + 1}
           locale={locale}
-          onClearDrawing={clearDrawing}
+          onNextStep={nextStep}
           onPause={pause}
+          onPreviousStep={previousStep}
           onReplay={replay}
           onResume={resume}
-          onSkip={skip}
-          onToggleDrawing={handleToggleDrawing}
           paused={state.paused}
           reducedMotion={reducedMotion}
+          totalSteps={totalSteps}
         />
       </div>
     </section>

@@ -11,6 +11,7 @@ export type DemoMode = 'hint' | 'check_solution' | 'reveal';
 export type DemoState = {
   stage: DemoStage;
   mode: DemoMode;
+  timelineIndex: number;
   paused: boolean;
   guidedRunComplete: boolean;
   runId: number;
@@ -20,6 +21,8 @@ export type DemoState = {
 export type DemoAction =
   | { type: 'START' }
   | { type: 'ADVANCE' }
+  | { type: 'NEXT_STEP' }
+  | { type: 'PREVIOUS_STEP' }
   | { type: 'PAUSE' }
   | { type: 'RESUME' }
   | { type: 'CONFIRM_READING' }

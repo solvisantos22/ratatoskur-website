@@ -11,13 +11,13 @@ export type DemoCopy = {
 export const demoCopy: Record<'en' | 'is', DemoCopy> = {
   en: {
     problem: 'Solve the equation: 2x + 3 = 11',
-    interpretedReading: '2x + 3 = 11',
+    interpretedReading: '2x + 3 = 11; 2x = 8; x = 4',
     confidence: '68% reading confidence',
     handwritingLines: ['2x + 3 = 11', '2x = 8', 'x = 4'],
     responses: {
       hint: {
         title: 'You are on the right track.',
-        body: 'Next, divide both sides by 2 to isolate x.',
+        body: 'Your subtraction step is right. The final move is to divide both sides by 2 to isolate x.',
       },
       check_solution: {
         title: 'The solution is correct.',
@@ -31,13 +31,13 @@ export const demoCopy: Record<'en' | 'is', DemoCopy> = {
   },
   is: {
     problem: 'Leystu jöfnuna: 2x + 3 = 11',
-    interpretedReading: '2x + 3 = 11',
+    interpretedReading: '2x + 3 = 11; 2x = 8; x = 4',
     confidence: '68% lestraröryggi',
     handwritingLines: ['2x + 3 = 11', '2x = 8', 'x = 4'],
     responses: {
       hint: {
         title: 'Þú ert á réttri leið.',
-        body: 'Næst skaltu deila báðum megin með 2 til að einangra x.',
+        body: 'Frádráttarskrefið er rétt. Síðasta skrefið er að deila báðum megin með 2 til að einangra x.',
       },
       check_solution: {
         title: 'Lausnin er rétt.',

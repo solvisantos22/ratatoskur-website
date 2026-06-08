@@ -8,27 +8,18 @@ import {
   useState,
 } from 'react';
 
-import { initialDemoState, reduceDemo } from './demo-machine';
+import { demoTimeline, initialDemoState, reduceDemo } from './demo-machine';
 import type { DemoMode, DemoStage } from './demo-types';
 
-type DrawingPolicyAction = 'replay' | 'skip';
-
 export const stageDuration: Partial<Record<DemoStage, number>> = {
-  writing: 2400,
+  writing: 2600,
   'checking-reading': 900,
   responding: 2200,
 };
 
-export function shouldClearDrawingForAction(
-  action: DrawingPolicyAction,
-): boolean {
-  return action === 'replay';
-}
-
 export function useDemoController() {
   const [state, dispatch] = useReducer(reduceDemo, initialDemoState);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [clearDrawingSignal, setClearDrawingSignal] = useState(0);
   const [rootElement, setRootElement] = useState<HTMLDivElement | null>(null);
   const hasStartedRef = useRef(false);
   const inViewRef = useRef(false);
@@ -37,10 +28,6 @@ export function useDemoController() {
 
   const rootRef = useCallback((node: HTMLDivElement | null) => {
     setRootElement(node);
-  }, []);
-
-  const clearDrawing = useCallback(() => {
-    setClearDrawingSignal((signal) => signal + 1);
   }, []);
 
   const pause = useCallback(() => {
@@ -55,15 +42,23 @@ export function useDemoController() {
 
   const replay = useCallback(() => {
     manualPausedRef.current = false;
-    if (shouldClearDrawingForAction('replay')) clearDrawing();
     dispatch({ type: 'REPLAY' });
-  }, [clearDrawing]);
+  }, []);
 
   const skip = useCallback(() => {
     manualPausedRef.current = false;
-    if (shouldClearDrawingForAction('skip')) clearDrawing();
     dispatch({ type: 'SKIP' });
-  }, [clearDrawing]);
+  }, []);
+
+  const previousStep = useCallback(() => {
+    manualPausedRef.current = true;
+    dispatch({ type: 'PREVIOUS_STEP' });
+  }, []);
+
+  const nextStep = useCallback(() => {
+    manualPausedRef.current = true;
+    dispatch({ type: 'NEXT_STEP' });
+  }, []);
 
   const selectMode = useCallback((mode: DemoMode) => {
     dispatch({ type: 'SELECT_MODE', mode });
@@ -207,20 +202,23 @@ export function useDemoController() {
     return () => {
       window.clearTimeout(timeout);
     };
-  }, [reducedMotion, state.paused, state.stage, state.runId]);
+  }, [reducedMotion, state.paused, state.stage, state.timelineIndex, state.runId]);
 
   return {
     state,
     rootRef,
     reducedMotion,
+    canGoPrevious: state.timelineIndex > 0,
+    canGoNext: state.timelineIndex < demoTimeline.length - 1,
+    totalSteps: demoTimeline.length,
     pause,
     resume,
     replay,
     skip,
+    previousStep,
+    nextStep,
     confirmReading,
     dismissResponse,
     selectMode,
-    clearDrawingSignal,
-    clearDrawing,
   };
 }

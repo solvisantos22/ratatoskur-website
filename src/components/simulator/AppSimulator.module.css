@@ -186,6 +186,21 @@
   width: 100%;
 }
 
+.scriptedGuides line {
+  stroke: color-mix(in oklch, var(--brand-espresso) 11%, transparent);
+  stroke-dasharray: 7 12;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.scriptedLine {
+  fill: var(--brand-espresso);
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: clamp(3rem, 7.2vw, 4.35rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
 .inkPath {
   fill: none;
   stroke: var(--brand-espresso);
@@ -207,7 +222,6 @@
 
 .modeButtons button,
 .controlButton,
-.feedbackButton,
 .responseClose {
   border: 0;
   border-radius: 999px;
@@ -278,8 +292,7 @@
 }
 
 .modeButtons button:not(:disabled):active,
-.controlButton:not(:disabled):active,
-.feedbackButton:active {
+.controlButton:not(:disabled):active {
   transform: scale(0.98);
 }
 
@@ -393,31 +406,6 @@
   width: 1.8rem;
 }
 
-.feedbackControls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.feedbackButton {
-  align-items: center;
-  background: color-mix(in oklch, var(--paper-deep) 62%, white);
-  color: var(--brand-espresso);
-  display: inline-flex;
-  gap: 0.35rem;
-  padding: 0.54rem 0.68rem;
-}
-
-.feedbackButton[aria-pressed="true"] {
-  background: var(--brand-espresso);
-  color: var(--reading);
-}
-
-.selectedFeedback {
-  font-size: 0.72rem;
-  opacity: 0.76;
-}
-
 .demoControls {
   align-content: start;
   background: color-mix(in oklch, var(--brand-espresso) 88%, black);
@@ -428,6 +416,33 @@
   gap: 0.8rem;
   padding: 0.9rem;
   width: min(100%, 64rem);
+}
+
+.timelineStatus {
+  display: grid;
+  flex: 1 1 100%;
+  gap: 0.42rem;
+}
+
+.timelineStatus span {
+  color: color-mix(in oklch, var(--reading) 82%, transparent);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.timelineRail {
+  background: color-mix(in oklch, var(--reading) 13%, transparent);
+  border-radius: 999px;
+  height: 0.48rem;
+  overflow: hidden;
+}
+
+.timelineRail span {
+  background: linear-gradient(90deg, var(--brand-orange), var(--reading));
+  border-radius: inherit;
+  display: block;
+  height: 100%;
+  transition: width var(--duration-ui) var(--ease-out);
 }
 
 .controlRow {
@@ -448,11 +463,6 @@
 .controlButton:disabled {
   cursor: not-allowed;
   opacity: 0.45;
-}
-
-.activeControl {
-  background: var(--brand-orange);
-  color: var(--brand-espresso);
 }
 
 .reducedMotionNote {
@@ -477,7 +487,6 @@
 @media (hover: hover) and (pointer: fine) {
   .modeButtons button:not(:disabled):hover,
   .controlButton:not(:disabled):hover,
-  .feedbackButton:hover,
   .responseClose:hover {
     transform: translateY(-1px);
   }
@@ -519,18 +528,15 @@
 
   .modeButtons button,
   .controlButton,
-  .feedbackButton,
   .responseClose {
     transition: none;
   }
 
   .modeButtons button:not(:disabled):hover,
   .controlButton:not(:disabled):hover,
-  .feedbackButton:hover,
   .responseClose:hover,
   .modeButtons button:not(:disabled):active,
   .controlButton:not(:disabled):active,
-  .feedbackButton:active,
   .responseClose:active {
     transform: none;
   }
@@ -552,7 +558,6 @@
 
   .controlButton,
   .responseClose,
-  .feedbackButton,
   .modeButtons button,
   .toolbar span {
     border: 1px solid ButtonText;

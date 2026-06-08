@@ -7,74 +7,92 @@ type Locale = 'en' | 'is';
 type DemoControlsProps = {
   locale: Locale;
   paused: boolean;
-  drawingMode: boolean;
   reducedMotion: boolean;
+  currentStep: number;
+  totalSteps: number;
+  canGoPrevious: boolean;
+  canGoNext: boolean;
   onPause: () => void;
   onResume: () => void;
   onReplay: () => void;
-  onSkip: () => void;
-  onToggleDrawing: () => void;
-  onClearDrawing: () => void;
+  onPreviousStep: () => void;
+  onNextStep: () => void;
 };
 
 const copy: Record<
   Locale,
   {
     label: string;
+    step: (current: number, total: number) => string;
+    previous: string;
+    next: string;
     pause: string;
     resume: string;
     replay: string;
-    skip: string;
-    draw: string;
-    example: string;
-    clear: string;
     reduced: string;
   }
 > = {
   en: {
-    label: 'Demo controls',
+    label: 'Demo timeline controls',
+    step: (current, total) => `Step ${current} of ${total}`,
+    previous: 'Previous step',
+    next: 'Next step',
     pause: 'Pause',
     resume: 'Resume',
-    replay: 'Replay',
-    skip: 'Skip guided demo',
-    draw: 'Try drawing',
-    example: 'Return to example',
-    clear: 'Clear drawing',
-    reduced: 'Reduced motion is on. The demo opens in interactive mode.',
+    replay: 'Replay walkthrough',
+    reduced:
+      'Reduced motion is on. Use the timeline controls to step through the walkthrough.',
   },
   is: {
-    label: 'Stýringar fyrir prufu',
+    label: 'Stýringar fyrir tímalínu',
+    step: (current, total) => `Skref ${current} af ${total}`,
+    previous: 'Fyrra skref',
+    next: 'Næsta skref',
     pause: 'Stöðva',
     resume: 'Halda áfram',
-    replay: 'Spila aftur',
-    skip: 'Sleppa leiðsögn',
-    draw: 'Prófa að skrifa',
-    example: 'Til baka í dæmi',
-    clear: 'Hreinsa teikningu',
-    reduced: 'Minni hreyfing er virk. Prufan opnast í gagnvirkum ham.',
+    replay: 'Spila ferlið aftur',
+    reduced:
+      'Minni hreyfing er virk. Notaðu tímalínuna til að fara í gegnum prufuna.',
   },
 };
 
 export function DemoControls({
   locale,
   paused,
-  drawingMode,
   reducedMotion,
+  currentStep,
+  totalSteps,
+  canGoPrevious,
+  canGoNext,
   onPause,
   onResume,
   onReplay,
-  onSkip,
-  onToggleDrawing,
-  onClearDrawing,
+  onPreviousStep,
+  onNextStep,
 }: DemoControlsProps) {
   const text = copy[locale];
+  const progress = Math.max(0, Math.min(100, (currentStep / totalSteps) * 100));
 
   return (
     <div aria-label={text.label} className={styles.demoControls} role="group">
       {reducedMotion ? (
         <p className={styles.reducedMotionNote}>{text.reduced}</p>
       ) : null}
+      <div className={styles.timelineStatus}>
+        <span>{text.step(currentStep, totalSteps)}</span>
+        <div aria-hidden="true" className={styles.timelineRail}>
+          <span style={{ width: `${progress}%` }} />
+        </div>
+      </div>
       <div className={styles.controlRow}>
+        <button
+          className={styles.controlButton}
+          disabled={!canGoPrevious}
+          onClick={onPreviousStep}
+          type="button"
+        >
+          {text.previous}
+        </button>
         <button
           className={styles.controlButton}
           onClick={paused ? onResume : onPause}
@@ -84,31 +102,18 @@ export function DemoControls({
         </button>
         <button
           className={styles.controlButton}
+          disabled={!canGoNext}
+          onClick={onNextStep}
+          type="button"
+        >
+          {text.next}
+        </button>
+        <button
+          className={styles.controlButton}
           onClick={onReplay}
           type="button"
         >
           {text.replay}
-        </button>
-        <button className={styles.controlButton} onClick={onSkip} type="button">
-          {text.skip}
-        </button>
-      </div>
-      <div className={styles.controlRow}>
-        <button
-          aria-pressed={drawingMode}
-          className={`${styles.controlButton} ${drawingMode ? styles.activeControl : ''}`}
-          onClick={onToggleDrawing}
-          type="button"
-        >
-          {drawingMode ? text.example : text.draw}
-        </button>
-        <button
-          className={styles.controlButton}
-          disabled={!drawingMode}
-          onClick={onClearDrawing}
-          type="button"
-        >
-          {text.clear}
         </button>
       </div>
     </div>
