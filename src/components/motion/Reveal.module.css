@@ -27,6 +27,18 @@
   transform: translateY(14px) scale(0.985);
 }
 
+.reveal[data-ready="true"][data-variant="focus"][data-visible="false"] {
+  opacity: 0.01;
+  transform: translateY(12px) scale(0.992);
+  filter: blur(7px);
+}
+
+.reveal[data-ready="true"][data-variant="trace"][data-visible="false"] {
+  opacity: 0.01;
+  transform: translateY(8px);
+  filter: blur(2px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal[data-ready="true"],

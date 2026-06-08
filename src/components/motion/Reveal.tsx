@@ -14,7 +14,7 @@ type RevealProps = HTMLAttributes<HTMLElement> & {
   as?: 'article' | 'div' | 'li';
   children: ReactNode;
   delay?: number;
-  variant?: 'rise' | 'lift' | 'sheet';
+  variant?: 'rise' | 'lift' | 'sheet' | 'focus' | 'trace';
 };
 
 export function Reveal({

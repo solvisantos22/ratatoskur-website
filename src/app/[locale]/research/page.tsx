@@ -110,7 +110,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
             <h1 className={styles.title}>{title}</h1>
             {summary ? <p className={styles.lead}>{summary}</p> : null}
           </Reveal>
-          <Reveal className={styles.researchBoard} delay={90} variant="sheet" aria-label={text.visualLabel}>
+          <Reveal className={styles.researchBoard} delay={90} variant="focus" aria-label={text.visualLabel}>
             <span className={styles.boardLabel}>{text.visualLabel}</span>
             <h2>{text.visualTitle}</h2>
             <p>{text.visualLead}</p>
@@ -129,7 +129,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
         </header>
 
         <div className={`${styles.layout} ${styles.researchLayout}`}>
-          <Reveal as="article" className={styles.article} aria-labelledby="research-title" variant="lift">
+          <Reveal as="article" className={styles.article} aria-labelledby="research-title" variant="sheet">
             <p className={styles.articleMeta}>{locale === 'is' ? 'Aðferð og mat' : 'Method and evaluation'}</p>
             <h2 id="research-title" className={styles.sectionLabel}>
               {text.articleLabel}

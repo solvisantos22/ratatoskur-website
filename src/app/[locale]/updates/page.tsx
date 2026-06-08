@@ -69,7 +69,7 @@ export default async function UpdatesPage({ params }: { params: Promise<{ locale
             <h1 className={styles.title}>{pageCopy.title}</h1>
             <p className={styles.lead}>{pageCopy.lead}</p>
           </Reveal>
-          <Reveal className={styles.journalSignal} delay={90} variant="sheet" aria-label={pageCopy.signal}>
+          <Reveal className={styles.journalSignal} delay={90} variant="focus" aria-label={pageCopy.signal}>
             <span>{pageCopy.signal}</span>
             <p>{pageCopy.signalLead}</p>
           </Reveal>
@@ -83,7 +83,7 @@ export default async function UpdatesPage({ params }: { params: Promise<{ locale
             {posts.length > 0 ? (
               <ul className={styles.updatesList}>
                 {posts.map((post, index) => (
-                  <Reveal as="li" delay={index * 80} key={post.slug} className={styles.updateItem} variant="lift">
+                  <Reveal as="li" delay={index * 80} key={post.slug} className={styles.updateItem} variant="sheet">
                     <Link href={`/updates/${post.slug}`} className={styles.updateLink}>
                       <time className={styles.updateDate} dateTime={post.date}>
                         <span>{pageCopy.entry}</span>
