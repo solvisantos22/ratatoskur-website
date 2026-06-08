@@ -12,9 +12,9 @@ const copy: Record<
   }
 > = {
   en: {
-    title: 'A high-level flow built around the student page',
+    title: 'How feedback stays tied to the work',
     lead:
-      'The product starts with the artifact students already create: a problem image and handwritten work. The feedback is shaped by the selected mode, then Ratatoskur asks for confirmation when it needs to know the student has read the response.',
+      'Ratatoskur starts with the problem image and the handwritten page. The selected mode shapes the response, and the app pauses when it needs the student to read before moving on.',
     steps: [
       {
         title: 'Problem image',
