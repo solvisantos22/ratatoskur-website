@@ -1,7 +1,11 @@
 import { notFound } from 'next/navigation';
 import { Hero } from '@/components/home/Hero';
+import { IcelandicContext } from '@/components/home/IcelandicContext';
+import { MethodSection } from '@/components/home/MethodSection';
+import { ModeStories } from '@/components/home/ModeStories';
 import styles from '@/components/home/Home.module.css';
 import { ProductDemoSection } from '@/components/home/ProductDemoSection';
+import { TeamSection } from '@/components/home/TeamSection';
 import { routing } from '@/i18n/routing';
 import type { Locale } from '@/i18n/routing';
 
@@ -14,6 +18,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <main className={styles.home}>
       <Hero locale={validatedLocale} />
       <ProductDemoSection locale={validatedLocale} />
+      <ModeStories locale={validatedLocale} />
+      <MethodSection locale={validatedLocale} />
+      <IcelandicContext locale={validatedLocale} />
+      <TeamSection locale={validatedLocale} />
     </main>
   );
 }
