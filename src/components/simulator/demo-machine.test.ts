@@ -4,7 +4,7 @@ import { initialDemoState, reduceDemo } from './demo-machine';
 import type { DemoState } from './demo-types';
 
 describe('demo machine', () => {
-  test('guided sequence runs from idle to interactive and marks the guided run complete', () => {
+  test('guided sequence reaches confirmation, waits for confirmation, then reaches interactive', () => {
     let state = reduceDemo(initialDemoState, { type: 'START' });
     expect(state.stage).toBe('writing');
 
@@ -15,6 +15,9 @@ describe('demo machine', () => {
     expect(state.stage).toBe('confirming');
 
     state = reduceDemo(state, { type: 'ADVANCE' });
+    expect(state.stage).toBe('confirming');
+
+    state = reduceDemo(state, { type: 'CONFIRM_READING' });
     expect(state.stage).toBe('responding');
 
     state = reduceDemo(state, { type: 'ADVANCE' });
@@ -130,6 +133,17 @@ describe('demo machine', () => {
 
     expect(confirmed.stage).toBe('responding');
     expect(confirmed.guidedRunComplete).toBe(false);
+  });
+
+  test('ADVANCE from confirmation waits for user confirmation', () => {
+    const confirming = reduceDemo(
+      reduceDemo(reduceDemo(initialDemoState, { type: 'START' }), {
+        type: 'ADVANCE',
+      }),
+      { type: 'ADVANCE' },
+    );
+
+    expect(reduceDemo(confirming, { type: 'ADVANCE' })).toEqual(confirming);
   });
 
   test('CONFIRM_READING outside the confirmation stage preserves state', () => {

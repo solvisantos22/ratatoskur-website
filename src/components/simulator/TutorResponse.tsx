@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { demoCopy } from './demo-content';
 import type { DemoMode } from './demo-types';
@@ -58,8 +58,58 @@ export function TutorResponse({ locale, mode, open }: TutorResponseProps) {
   const [selectedFeedback, setSelectedFeedback] = useState<
     'up' | 'down' | null
   >(null);
+  const reducedMotion = useReducedMotion();
   const data = demoCopy[locale].responses[mode];
   const text = copy[locale];
+
+  const content = (
+    <>
+      <div className={styles.responseTopline}>
+        <span>{text.verdict}</span>
+        <strong>{modeLabels[locale][mode]}</strong>
+      </div>
+      <h3>{data.title}</h3>
+      <p>{data.body}</p>
+      <div
+        aria-label={text.feedbackLabel}
+        className={styles.feedbackControls}
+        role="group"
+      >
+        <button
+          aria-pressed={selectedFeedback === 'up'}
+          className={styles.feedbackButton}
+          onClick={() => setSelectedFeedback('up')}
+          type="button"
+        >
+          <span aria-hidden="true">+</span>
+          {text.helpful}
+          {selectedFeedback === 'up' ? (
+            <span className={styles.selectedFeedback}>{text.selected}</span>
+          ) : null}
+        </button>
+        <button
+          aria-pressed={selectedFeedback === 'down'}
+          className={styles.feedbackButton}
+          onClick={() => setSelectedFeedback('down')}
+          type="button"
+        >
+          <span aria-hidden="true">-</span>
+          {text.notHelpful}
+          {selectedFeedback === 'down' ? (
+            <span className={styles.selectedFeedback}>{text.selected}</span>
+          ) : null}
+        </button>
+      </div>
+    </>
+  );
+
+  if (reducedMotion) {
+    return open ? (
+      <aside aria-label={data.title} className={styles.responseCard}>
+        {content}
+      </aside>
+    ) : null;
+  }
 
   return (
     <AnimatePresence initial={false} mode="wait">
@@ -73,42 +123,7 @@ export function TutorResponse({ locale, mode, open }: TutorResponseProps) {
           initial={{ opacity: 0, y: 18, filter: 'blur(4px)' }}
           transition={{ bounce: 0, duration: 0.38, type: 'spring' }}
         >
-          <div className={styles.responseTopline}>
-            <span>{text.verdict}</span>
-            <strong>{modeLabels[locale][mode]}</strong>
-          </div>
-          <h3>{data.title}</h3>
-          <p>{data.body}</p>
-          <div
-            aria-label={text.feedbackLabel}
-            className={styles.feedbackControls}
-            role="group"
-          >
-            <button
-              aria-pressed={selectedFeedback === 'up'}
-              className={styles.feedbackButton}
-              onClick={() => setSelectedFeedback('up')}
-              type="button"
-            >
-              <span aria-hidden="true">+</span>
-              {text.helpful}
-              {selectedFeedback === 'up' ? (
-                <span className={styles.selectedFeedback}>{text.selected}</span>
-              ) : null}
-            </button>
-            <button
-              aria-pressed={selectedFeedback === 'down'}
-              className={styles.feedbackButton}
-              onClick={() => setSelectedFeedback('down')}
-              type="button"
-            >
-              <span aria-hidden="true">-</span>
-              {text.notHelpful}
-              {selectedFeedback === 'down' ? (
-                <span className={styles.selectedFeedback}>{text.selected}</span>
-              ) : null}
-            </button>
-          </div>
+          {content}
         </motion.aside>
       ) : null}
     </AnimatePresence>

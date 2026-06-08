@@ -89,7 +89,7 @@ const copy: Record<
     eraser: 'Strokleður',
     ruler: 'Reglustika',
     actions: 'Veldu endurgjöf',
-    locked: 'Hamir opnast eftir leiðsagna lesturinn.',
+    locked: 'Hamir opnast eftir staðfestingu á lestri.',
     canvasLabel: 'Æfingaflötur fyrir Ratatoskur prufu',
     privacy: 'Eigin teikning helst á þessu tæki.',
     keyboardHelp:
@@ -166,7 +166,7 @@ export function NotebookShell({
                 keyboardHelpText={text.keyboardHelp}
                 privacyText={text.privacy}
               />
-            ) : (
+            ) : shouldShowInk(stage) ? (
               <div
                 aria-label={text.scriptedLabel}
                 className={styles.scriptedInkWrap}
@@ -178,11 +178,9 @@ export function NotebookShell({
                   runId={runId}
                 />
               </div>
-            )}
-
-            {!drawingMode && !shouldShowInk(stage) ? (
+            ) : (
               <div className={styles.emptyPaper} />
-            ) : null}
+            )}
 
             <ReadingConfirmation
               key={runId}
@@ -190,7 +188,12 @@ export function NotebookShell({
               onConfirm={onConfirm}
               open={confirmationOpen}
             />
-            <TutorResponse locale={locale} mode={mode} open={responseOpen} />
+            <TutorResponse
+              key={`${locale}-${mode}`}
+              locale={locale}
+              mode={mode}
+              open={responseOpen}
+            />
           </div>
 
           <div aria-label={text.toolbar} className={styles.toolbar} role="toolbar">

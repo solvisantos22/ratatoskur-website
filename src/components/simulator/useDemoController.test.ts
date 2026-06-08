@@ -10,9 +10,12 @@ describe('demo controller policy', () => {
     expect(stageDuration).toEqual({
       writing: 2400,
       'checking-reading': 900,
-      confirming: 2200,
       responding: 2200,
     });
+  });
+
+  it('does not schedule automatic advancement for the confirmation stage', () => {
+    expect(stageDuration.confirming).toBeUndefined();
   });
 
   it('clears drawing only when replaying the guided sequence', () => {

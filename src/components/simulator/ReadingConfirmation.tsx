@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { demoCopy } from './demo-content';
 import styles from './AppSimulator.module.css';
@@ -46,6 +46,7 @@ export function ReadingConfirmation({
   onConfirm,
 }: ReadingConfirmationProps) {
   const [dismissed, setDismissed] = useState(false);
+  const reducedMotion = useReducedMotion();
   const text = copy[locale];
   const data = demoCopy[locale];
 
@@ -53,6 +54,36 @@ export function ReadingConfirmation({
     setDismissed(true);
     onConfirm?.();
   };
+
+  const content = (
+    <>
+      <div className={styles.sheetHeader}>
+        <p className={styles.sheetKicker}>{data.confidence}</p>
+        <h3>{text.title}</h3>
+      </div>
+      <p className={styles.confirmQuestion}>{text.intro}</p>
+      <div className={styles.readingCard}>
+        <span>{text.readingLabel}</span>
+        <strong>{data.interpretedReading}</strong>
+      </div>
+      <p className={styles.sheetReason}>{text.reason}</p>
+      <button
+        className={`${styles.controlButton} ${styles.primaryControl}`}
+        onClick={handleConfirm}
+        type="button"
+      >
+        {text.confirm}
+      </button>
+    </>
+  );
+
+  if (reducedMotion) {
+    return open && !dismissed ? (
+      <aside aria-label={text.title} className={styles.confirmationSheet}>
+        {content}
+      </aside>
+    ) : null;
+  }
 
   return (
     <AnimatePresence initial={false} mode="wait">
@@ -66,23 +97,7 @@ export function ReadingConfirmation({
           initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
           transition={{ bounce: 0, duration: 0.34, type: 'spring' }}
         >
-          <div className={styles.sheetHeader}>
-            <p className={styles.sheetKicker}>{data.confidence}</p>
-            <h3>{text.title}</h3>
-          </div>
-          <p className={styles.confirmQuestion}>{text.intro}</p>
-          <div className={styles.readingCard}>
-            <span>{text.readingLabel}</span>
-            <strong>{data.interpretedReading}</strong>
-          </div>
-          <p className={styles.sheetReason}>{text.reason}</p>
-          <button
-            className={`${styles.controlButton} ${styles.primaryControl}`}
-            onClick={handleConfirm}
-            type="button"
-          >
-            {text.confirm}
-          </button>
+          {content}
         </motion.aside>
       ) : null}
     </AnimatePresence>

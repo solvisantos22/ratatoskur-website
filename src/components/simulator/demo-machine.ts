@@ -23,6 +23,7 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       return state.stage === 'idle' ? { ...state, stage: 'writing' } : state;
     case 'ADVANCE': {
       if (state.paused) return state;
+      if (state.stage === 'confirming') return state;
 
       const index = sequence.indexOf(state.stage);
       if (index === -1) return state;
@@ -42,7 +43,7 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       return { ...state, paused: false };
     case 'CONFIRM_READING':
       return state.stage === 'confirming'
-        ? { ...state, stage: 'responding' }
+        ? { ...state, stage: 'responding', paused: false }
         : state;
     case 'SKIP':
       return {

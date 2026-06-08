@@ -16,7 +16,6 @@ type DrawingPolicyAction = 'replay' | 'skip';
 export const stageDuration: Partial<Record<DemoStage, number>> = {
   writing: 2400,
   'checking-reading': 900,
-  confirming: 2200,
   responding: 2200,
 };
 
