@@ -1,9 +1,6 @@
-import type { Metadata } from 'next';
+import { createRootMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Ratatoskur',
-  description: 'AI math coach in Icelandic',
-};
+export const metadata = createRootMetadata();
 
 /**
  * Root layout — minimal passthrough.

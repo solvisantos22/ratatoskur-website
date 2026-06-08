@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import styles from '@/components/content/ContentPages.module.css';
 import { type Locale } from '@/i18n/routing';
 import { isSupportedLocale } from '@/lib/locales';
+import { createArticleMetadata } from '@/lib/metadata';
 
 function loadResearch(locale: Locale) {
   const dir = path.join(process.cwd(), 'content', 'research');
@@ -13,6 +14,17 @@ function loadResearch(locale: Locale) {
   const fallback = path.join(dir, 'en.mdx');
   const target = fs.existsSync(file) ? file : fallback;
   return matter(fs.readFileSync(target, 'utf8'));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: rawLocale } = await params;
+  if (!isSupportedLocale(rawLocale)) notFound();
+
+  const { data } = loadResearch(rawLocale);
+  return createArticleMetadata(rawLocale, {
+    title: String(data.title ?? 'Research and approach'),
+    description: String(data.summary ?? 'How Ratatoskur evaluates handwriting and useful math feedback.'),
+  });
 }
 
 export default async function ResearchPage({ params }: { params: Promise<{ locale: string }> }) {

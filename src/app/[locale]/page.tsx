@@ -9,6 +9,14 @@ import { ProductDemoSection } from '@/components/home/ProductDemoSection';
 import { TeamSection } from '@/components/home/TeamSection';
 import { routing } from '@/i18n/routing';
 import type { Locale } from '@/i18n/routing';
+import { createPageMetadata } from '@/lib/metadata';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!routing.locales.includes(locale as Locale)) notFound();
+
+  return createPageMetadata(locale as Locale, 'home');
+}
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

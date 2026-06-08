@@ -4,6 +4,7 @@ import { Link } from '@/i18n/navigation';
 import { type Locale } from '@/i18n/routing';
 import styles from '@/components/content/ContentPages.module.css';
 import { isSupportedLocale } from '@/lib/locales';
+import { createArticleMetadata } from '@/lib/metadata';
 import { getPostBySlug } from '@/lib/updates';
 
 const copy: Record<Locale, { back: string; label: string; noteLabel: string; note: string }> = {
@@ -20,6 +21,19 @@ const copy: Record<Locale, { back: string; label: string; noteLabel: string; not
     note: 'Þessar færslur útskýra vöru- og rannsóknarákvarðanir þegar þær eru orðnar nógu skýrar til birtingar.',
   },
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale: rawLocale, slug } = await params;
+  if (!isSupportedLocale(rawLocale)) notFound();
+
+  const post = getPostBySlug(slug);
+  if (!post || post.locale !== rawLocale) notFound();
+
+  return createArticleMetadata(rawLocale, {
+    title: post.title,
+    description: post.summary,
+  });
+}
 
 export default async function PostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale: rawLocale, slug } = await params;

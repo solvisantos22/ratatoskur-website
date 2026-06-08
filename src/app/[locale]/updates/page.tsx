@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation';
 import { type Locale } from '@/i18n/routing';
 import { getAllPosts } from '@/lib/updates';
 import { isSupportedLocale } from '@/lib/locales';
+import { createPageMetadata } from '@/lib/metadata';
 import styles from '@/components/content/ContentPages.module.css';
 
 const copy: Record<
@@ -42,6 +43,13 @@ const copy: Record<
     emptyLead: 'Þegar gagnleg prófunarniðurstaða eða vöruákvörðun liggur fyrir birtist hún hér.',
   },
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: rawLocale } = await params;
+  if (!isSupportedLocale(rawLocale)) notFound();
+
+  return createPageMetadata(rawLocale, 'updates');
+}
 
 export default async function UpdatesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: rawLocale } = await params;
