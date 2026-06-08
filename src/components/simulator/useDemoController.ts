@@ -69,6 +69,10 @@ export function useDemoController() {
     dispatch({ type: 'SELECT_MODE', mode });
   }, []);
 
+  const dismissResponse = useCallback(() => {
+    dispatch({ type: 'DISMISS_RESPONSE' });
+  }, []);
+
   const confirmReading = useCallback(() => {
     manualPausedRef.current = false;
     dispatch({ type: 'CONFIRM_READING' });
@@ -214,6 +218,7 @@ export function useDemoController() {
     replay,
     skip,
     confirmReading,
+    dismissResponse,
     selectMode,
     clearDrawingSignal,
     clearDrawing,

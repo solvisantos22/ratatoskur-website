@@ -1,5 +1,6 @@
 import type { Locale } from '@/i18n/routing';
 import { AppSimulator } from '@/components/simulator/AppSimulator';
+import { Reveal } from '@/components/motion/Reveal';
 import styles from './Home.module.css';
 
 const copy: Record<
@@ -14,7 +15,7 @@ const copy: Record<
   en: {
     title: 'Try the notebook Ratatoskur students see',
     lead:
-      'The demo starts when it enters view and pauses for reading confirmation, matching the app flow.',
+      'Watch the guided example, draw on the page, or choose a feedback mode to see how the app responds.',
     modeIntro: 'One written solution can become three kinds of help.',
     modes: [
       {
@@ -34,7 +35,7 @@ const copy: Record<
   is: {
     title: 'Prófaðu vinnubókina sem nemendur sjá',
     lead:
-      'Sýnið byrjar þegar það kemur í sjónmál og stoppar við staðfestingu á lestri eins og appið.',
+      'Skoðaðu leiðsagða dæmið, skrifaðu á síðuna eða veldu ham til að sjá hvernig appið svarar.',
     modeIntro: 'Ein skrifuð lausn getur orðið að þrenns konar aðstoð.',
     modes: [
       {
@@ -62,14 +63,19 @@ export function ProductDemoSection({ locale }: ProductDemoSectionProps) {
 
   return (
     <section className={styles.demoSection} id="demo">
-      <div className={styles.demoIntro}>
+      <Reveal className={styles.demoIntro}>
         <h2>{text.title}</h2>
         <p>{text.lead}</p>
-      </div>
-      <div className={styles.demoStage}>
+      </Reveal>
+      <Reveal className={styles.demoStage} delay={80} variant="sheet">
         <AppSimulator locale={locale} />
-      </div>
-      <div className={styles.modeExplanation} id="how" aria-label={text.modeIntro}>
+      </Reveal>
+      <Reveal
+        className={styles.modeExplanation}
+        delay={120}
+        id="how"
+        aria-label={text.modeIntro}
+      >
         <p>{text.modeIntro}</p>
         <ul>
           {text.modes.map((mode) => (
@@ -79,7 +85,7 @@ export function ProductDemoSection({ locale }: ProductDemoSectionProps) {
             </li>
           ))}
         </ul>
-      </div>
+      </Reveal>
     </section>
   );
 }

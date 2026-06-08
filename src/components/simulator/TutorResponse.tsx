@@ -12,6 +12,7 @@ type Locale = 'en' | 'is';
 type TutorResponseProps = {
   locale: Locale;
   mode: DemoMode;
+  onDismiss: () => void;
   open: boolean;
 };
 
@@ -36,6 +37,7 @@ const copy: Record<
     helpful: string;
     notHelpful: string;
     selected: string;
+    close: string;
   }
 > = {
   en: {
@@ -44,6 +46,7 @@ const copy: Record<
     helpful: 'Helpful',
     notHelpful: 'Not helpful',
     selected: 'Selected',
+    close: 'Close response',
   },
   is: {
     verdict: 'Niðurstaða: rétt hingað til',
@@ -51,10 +54,16 @@ const copy: Record<
     helpful: 'Gagnlegt',
     notHelpful: 'Ekki gagnlegt',
     selected: 'Valið',
+    close: 'Loka svari',
   },
 };
 
-export function TutorResponse({ locale, mode, open }: TutorResponseProps) {
+export function TutorResponse({
+  locale,
+  mode,
+  onDismiss,
+  open,
+}: TutorResponseProps) {
   const [selectedFeedback, setSelectedFeedback] = useState<
     'up' | 'down' | null
   >(null);
@@ -66,7 +75,17 @@ export function TutorResponse({ locale, mode, open }: TutorResponseProps) {
     <>
       <div className={styles.responseTopline}>
         <span>{text.verdict}</span>
-        <strong>{modeLabels[locale][mode]}</strong>
+        <div className={styles.responseActions}>
+          <strong>{modeLabels[locale][mode]}</strong>
+          <button
+            aria-label={text.close}
+            className={styles.responseClose}
+            onClick={onDismiss}
+            type="button"
+          >
+            x
+          </button>
+        </div>
       </div>
       <h3>{data.title}</h3>
       <p>{data.body}</p>

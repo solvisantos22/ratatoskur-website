@@ -19,10 +19,12 @@ describe('demo machine', () => {
 
     state = reduceDemo(state, { type: 'CONFIRM_READING' });
     expect(state.stage).toBe('responding');
+    expect(state.responseOpen).toBe(true);
 
     state = reduceDemo(state, { type: 'ADVANCE' });
     expect(state.stage).toBe('interactive');
     expect(state.guidedRunComplete).toBe(true);
+    expect(state.responseOpen).toBe(false);
   });
 
   test('pause blocks ADVANCE until RESUME', () => {
@@ -44,6 +46,7 @@ describe('demo machine', () => {
     expect(skipped.stage).toBe('interactive');
     expect(skipped.paused).toBe(false);
     expect(skipped.guidedRunComplete).toBe(true);
+    expect(skipped.responseOpen).toBe(false);
   });
 
   test('REPLAY starts writing and increments runId', () => {
@@ -60,13 +63,29 @@ describe('demo machine', () => {
     expect(replayed.runId).toBe(8);
   });
 
-  test('SELECT_MODE before interactive keeps mode hint', () => {
+  test('SELECT_MODE before work is visible keeps the idle state', () => {
     const selected = reduceDemo(initialDemoState, {
       type: 'SELECT_MODE',
       mode: 'reveal',
     });
 
     expect(selected.mode).toBe('hint');
+    expect(selected.stage).toBe('idle');
+    expect(selected.responseOpen).toBe(false);
+  });
+
+  test('SELECT_MODE during the guided writing opens an interactive response', () => {
+    const writing = reduceDemo(initialDemoState, { type: 'START' });
+
+    const selected = reduceDemo(writing, {
+      type: 'SELECT_MODE',
+      mode: 'reveal',
+    });
+
+    expect(selected.stage).toBe('interactive');
+    expect(selected.mode).toBe('reveal');
+    expect(selected.guidedRunComplete).toBe(true);
+    expect(selected.responseOpen).toBe(true);
   });
 
   test('ADVANCE ignores malformed runtime stages', () => {
@@ -111,12 +130,30 @@ describe('demo machine', () => {
       mode: 'check_solution',
     });
     expect(checkSolution.mode).toBe('check_solution');
+    expect(checkSolution.responseOpen).toBe(true);
 
     const reveal = reduceDemo(checkSolution, {
       type: 'SELECT_MODE',
       mode: 'reveal',
     });
     expect(reveal.mode).toBe('reveal');
+    expect(reveal.responseOpen).toBe(true);
+  });
+
+  test('DISMISS_RESPONSE closes the response without changing selected mode', () => {
+    const interactive = reduceDemo(initialDemoState, { type: 'SKIP' });
+    const withResponse = reduceDemo(interactive, {
+      type: 'SELECT_MODE',
+      mode: 'reveal',
+    });
+
+    const dismissed = reduceDemo(withResponse, {
+      type: 'DISMISS_RESPONSE',
+    } as never);
+
+    expect(dismissed.stage).toBe('interactive');
+    expect(dismissed.mode).toBe('reveal');
+    expect(dismissed.responseOpen).toBe(false);
   });
 
   test('CONFIRM_READING advances the guided confirmation to response', () => {
@@ -133,6 +170,7 @@ describe('demo machine', () => {
 
     expect(confirmed.stage).toBe('responding');
     expect(confirmed.guidedRunComplete).toBe(false);
+    expect(confirmed.responseOpen).toBe(true);
   });
 
   test('ADVANCE from confirmation waits for user confirmation', () => {

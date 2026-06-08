@@ -14,6 +14,7 @@ export type DemoState = {
   paused: boolean;
   guidedRunComplete: boolean;
   runId: number;
+  responseOpen: boolean;
 };
 
 export type DemoAction =
@@ -22,6 +23,7 @@ export type DemoAction =
   | { type: 'PAUSE' }
   | { type: 'RESUME' }
   | { type: 'CONFIRM_READING' }
+  | { type: 'DISMISS_RESPONSE' }
   | { type: 'SKIP' }
   | { type: 'REPLAY' }
   | { type: 'SELECT_MODE'; mode: DemoMode };

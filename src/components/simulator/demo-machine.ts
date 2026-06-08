@@ -15,6 +15,7 @@ export const initialDemoState: DemoState = {
   paused: false,
   guidedRunComplete: false,
   runId: 0,
+  responseOpen: false,
 };
 
 export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
@@ -33,6 +34,7 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       return {
         ...state,
         stage,
+        responseOpen: stage === 'responding',
         guidedRunComplete:
           stage === 'interactive' || state.guidedRunComplete,
       };
@@ -43,14 +45,17 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       return { ...state, paused: false };
     case 'CONFIRM_READING':
       return state.stage === 'confirming'
-        ? { ...state, stage: 'responding', paused: false }
+        ? { ...state, stage: 'responding', paused: false, responseOpen: true }
         : state;
+    case 'DISMISS_RESPONSE':
+      return { ...state, responseOpen: false };
     case 'SKIP':
       return {
         ...state,
         stage: 'interactive',
         paused: false,
         guidedRunComplete: true,
+        responseOpen: false,
       };
     case 'REPLAY':
       return {
@@ -59,9 +64,16 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
         runId: state.runId + 1,
       };
     case 'SELECT_MODE':
-      return state.stage === 'interactive'
-        ? { ...state, mode: action.mode }
-        : state;
+      if (state.stage === 'idle') return state;
+
+      return {
+        ...state,
+        stage: 'interactive',
+        mode: action.mode,
+        paused: false,
+        guidedRunComplete: true,
+        responseOpen: true,
+      };
   }
 
   return assertNever(action);

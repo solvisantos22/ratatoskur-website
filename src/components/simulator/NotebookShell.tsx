@@ -22,6 +22,8 @@ type NotebookShellProps = {
   clearSignal: number;
   onModeChange: (mode: DemoMode) => void;
   onConfirm?: () => void;
+  onDismissResponse: () => void;
+  responseOpen: boolean;
 };
 
 const modeLabels: Record<Locale, Record<DemoMode, string>> = {
@@ -52,6 +54,7 @@ const copy: Record<
     ruler: string;
     actions: string;
     locked: string;
+    chooseModeHint: string;
     canvasLabel: string;
     privacy: string;
     keyboardHelp: string;
@@ -70,7 +73,8 @@ const copy: Record<
     eraser: 'Eraser',
     ruler: 'Ruler',
     actions: 'Choose feedback mode',
-    locked: 'Mode controls unlock after the guided reading.',
+    locked: 'Mode controls unlock once work is on the page.',
+    chooseModeHint: 'Choose a mode to request a fresh response.',
     canvasLabel: 'Practice canvas for the Ratatoskur demo',
     privacy: 'Custom drawing stays on this device.',
     keyboardHelp:
@@ -89,7 +93,8 @@ const copy: Record<
     eraser: 'Strokleður',
     ruler: 'Reglustika',
     actions: 'Veldu endurgjöf',
-    locked: 'Hamir opnast eftir staðfestingu á lestri.',
+    locked: 'Hamir opnast þegar vinna birtist á síðunni.',
+    chooseModeHint: 'Veldu ham til að biðja um nýtt svar.',
     canvasLabel: 'Æfingaflötur fyrir Ratatoskur prufu',
     privacy: 'Eigin teikning helst á þessu tæki.',
     keyboardHelp:
@@ -119,12 +124,13 @@ export function NotebookShell({
   clearSignal,
   onModeChange,
   onConfirm,
+  onDismissResponse,
+  responseOpen,
 }: NotebookShellProps) {
   const reducedMotion = useReducedMotion();
   const text = copy[locale];
   const data = demoCopy[locale];
-  const modeControlsLocked = stage !== 'interactive';
-  const responseOpen = stage === 'responding' || stage === 'interactive';
+  const modeControlsLocked = stage === 'idle';
   const confirmationOpen = stage === 'confirming';
   const activeModeLabel = modeLabels[locale][mode];
 
@@ -192,21 +198,19 @@ export function NotebookShell({
               key={`${locale}-${mode}`}
               locale={locale}
               mode={mode}
+              onDismiss={onDismissResponse}
               open={responseOpen}
             />
           </div>
 
-          <div aria-label={text.toolbar} className={styles.toolbar} role="toolbar">
+          <div aria-label={text.toolbar} className={styles.toolbar}>
             {toolbarItems.map((item, index) => (
-              <button
-                aria-pressed={index === 0}
+              <span
                 className={index === 0 ? styles.toolActive : undefined}
-                disabled
                 key={item}
-                type="button"
               >
                 {item}
-              </button>
+              </span>
             ))}
           </div>
         </section>
@@ -214,7 +218,7 @@ export function NotebookShell({
         <section aria-label={text.actions} className={styles.modePanel}>
           <div className={styles.modePanelHeader}>
             <strong>{text.actions}</strong>
-            {modeControlsLocked ? <span>{text.locked}</span> : null}
+            <span>{modeControlsLocked ? text.locked : text.chooseModeHint}</span>
           </div>
           <div className={styles.modeButtons}>
             {orderedModes.map((candidate) => (

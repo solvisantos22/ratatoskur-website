@@ -25,7 +25,7 @@ const copy: Record<
 > = {
   en: {
     sectionLabel: 'Interactive Ratatoskur app demo',
-    caption: 'Illustrative demo. Custom drawing stays on this device.',
+    caption: 'Interactive illustration. Draw if you want, then choose Hint, Check, or Reveal.',
     stageLabels: {
       idle: 'Ready to begin',
       writing: 'Writing the student solution',
@@ -42,7 +42,7 @@ const copy: Record<
   },
   is: {
     sectionLabel: 'Gagnvirk Ratatoskur prufa',
-    caption: 'Sýnishorn. Eigin teikning helst á þessu tæki.',
+    caption: 'Gagnvirk skýring. Skrifaðu ef þú vilt og veldu svo Vísbendingu, Yfirferð eða Lausn.',
     stageLabels: {
       idle: 'Tilbúið að byrja',
       writing: 'Sýnir lausn nemanda',
@@ -69,6 +69,7 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
     replay,
     skip,
     confirmReading,
+    dismissResponse,
     selectMode,
     clearDrawingSignal,
     clearDrawing,
@@ -105,7 +106,9 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
           locale={locale}
           mode={state.mode}
           onConfirm={confirmReading}
+          onDismissResponse={dismissResponse}
           onModeChange={handleModeChange}
+          responseOpen={state.responseOpen}
           runId={state.runId}
           stage={state.stage}
         />

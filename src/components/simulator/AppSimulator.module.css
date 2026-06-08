@@ -16,8 +16,8 @@
 .simulatorLayout {
   align-items: start;
   display: grid;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+  gap: clamp(0.9rem, 1.8vw, 1.25rem);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .deviceFrame {
@@ -26,7 +26,7 @@
     var(--brand-espresso);
   border-radius: clamp(1.5rem, 5vw, var(--radius-device));
   box-shadow: 0 18px 48px color-mix(in oklch, var(--brand-espresso) 26%, transparent);
-  max-width: clamp(21rem, 46vw, 29rem);
+  max-width: min(100%, 64rem);
   padding: clamp(0.55rem, 1.4vw, 0.8rem);
   width: 100%;
 }
@@ -38,8 +38,10 @@
   border: 1px solid color-mix(in oklch, white 24%, transparent);
   border-radius: calc(clamp(1.5rem, 5vw, var(--radius-device)) - 0.45rem);
   display: grid;
-  gap: 0.75rem;
-  min-height: clamp(41rem, 78vw, 49rem);
+  gap: clamp(0.72rem, 1.4vw, 0.95rem);
+  grid-template-columns: minmax(0, 1.35fr) minmax(15rem, 0.72fr);
+  grid-template-rows: auto auto 1fr;
+  min-height: clamp(34rem, 54vw, 43rem);
   overflow: hidden;
   padding: clamp(0.85rem, 2.5vw, 1.1rem);
   position: relative;
@@ -49,18 +51,19 @@
   background: #2c160e;
   border-radius: 999px;
   content: "";
-  height: 0.34rem;
+  height: 0.42rem;
   left: 50%;
   opacity: 0.55;
   position: absolute;
-  top: 0.42rem;
+  top: 0.48rem;
   transform: translateX(-50%);
-  width: 4.6rem;
+  width: 0.42rem;
 }
 
 .appTopBar {
   align-items: center;
   display: flex;
+  grid-column: 1 / -1;
   justify-content: space-between;
   min-height: 3.4rem;
   padding-top: 0.45rem;
@@ -111,6 +114,8 @@
 .problemPanel {
   display: grid;
   gap: 0.4rem;
+  grid-column: 2;
+  grid-row: 2;
   padding: 0.85rem;
 }
 
@@ -125,6 +130,8 @@
 .paperPanel {
   display: grid;
   gap: 0.7rem;
+  grid-column: 1;
+  grid-row: 2 / span 2;
   padding: 0.85rem;
 }
 
@@ -157,7 +164,7 @@
   background-size: 24px 24px;
   border-radius: var(--radius-md);
   box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 13%, transparent);
-  min-height: clamp(22rem, 53vw, 29rem);
+  min-height: clamp(24rem, 38vw, 31rem);
   overflow: hidden;
   padding: clamp(0.7rem, 2vw, 0.95rem);
   position: relative;
@@ -198,10 +205,10 @@
   gap: 0.45rem;
 }
 
-.toolbar button,
 .modeButtons button,
 .controlButton,
-.feedbackButton {
+.feedbackButton,
+.responseClose {
   border: 0;
   border-radius: 999px;
   cursor: pointer;
@@ -215,11 +222,15 @@
     transform var(--duration-fast) var(--ease-out);
 }
 
-.toolbar button {
+.toolbar span {
+  align-items: center;
   background: color-mix(in oklch, var(--paper-deep) 62%, white);
+  border-radius: 999px;
   color: var(--ink-soft);
-  cursor: not-allowed;
+  display: inline-flex;
   font-size: 0.78rem;
+  font-weight: 800;
+  min-height: 44px;
   padding: 0.55rem 0.68rem;
 }
 
@@ -232,6 +243,9 @@
 .modePanel {
   display: grid;
   gap: 0.65rem;
+  grid-column: 2;
+  grid-row: 3;
+  align-self: start;
   padding: 0.85rem;
 }
 
@@ -284,7 +298,7 @@
   display: grid;
   gap: 0.72rem;
   left: clamp(0.65rem, 3vw, 1rem);
-  max-width: min(21rem, calc(100% - 1.3rem));
+  max-width: min(24rem, calc(100% - 1.3rem));
   padding: 0.9rem;
   position: absolute;
   right: clamp(0.65rem, 3vw, 1rem);
@@ -348,13 +362,35 @@
   justify-content: space-between;
 }
 
-.responseTopline strong {
+.responseActions {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.45rem;
+}
+
+.responseActions strong {
   background: color-mix(in oklch, var(--brand-orange) 18%, white);
   border-radius: 999px;
   color: var(--brand-espresso);
   font-size: 0.76rem;
   padding: 0.32rem 0.5rem;
   white-space: nowrap;
+}
+
+.responseClose {
+  align-items: center;
+  background: color-mix(in oklch, var(--paper-deep) 62%, white);
+  border: 0;
+  border-radius: 999px;
+  color: var(--brand-espresso);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.08rem;
+  font-weight: 850;
+  height: 1.8rem;
+  justify-content: center;
+  line-height: 1;
+  width: 1.8rem;
 }
 
 .feedbackControls {
@@ -387,15 +423,17 @@
   background: color-mix(in oklch, var(--brand-espresso) 88%, black);
   border-radius: var(--radius-lg);
   color: var(--reading);
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.8rem;
   padding: 0.9rem;
-  position: sticky;
-  top: 5rem;
+  width: min(100%, 64rem);
 }
 
 .controlRow {
-  display: grid;
+  display: flex;
+  flex: 1 1 18rem;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
@@ -439,27 +477,30 @@
 @media (hover: hover) and (pointer: fine) {
   .modeButtons button:not(:disabled):hover,
   .controlButton:not(:disabled):hover,
-  .feedbackButton:hover {
+  .feedbackButton:hover,
+  .responseClose:hover {
     transform: translateY(-1px);
   }
 }
 
-@media (max-width: 48rem) {
-  .simulatorLayout {
-    grid-template-columns: 1fr;
-  }
-
+@media (max-width: 58rem) {
   .deviceFrame {
     margin-inline: auto;
     max-width: min(100%, 27rem);
   }
 
   .deviceScreen {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
     min-height: 42rem;
   }
 
-  .demoControls {
-    position: static;
+  .appTopBar,
+  .problemPanel,
+  .paperPanel,
+  .modePanel {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .controlRow {
@@ -476,19 +517,21 @@
     transform: none;
   }
 
-  .toolbar button,
   .modeButtons button,
   .controlButton,
-  .feedbackButton {
+  .feedbackButton,
+  .responseClose {
     transition: none;
   }
 
   .modeButtons button:not(:disabled):hover,
   .controlButton:not(:disabled):hover,
   .feedbackButton:hover,
+  .responseClose:hover,
   .modeButtons button:not(:disabled):active,
   .controlButton:not(:disabled):active,
-  .feedbackButton:active {
+  .feedbackButton:active,
+  .responseClose:active {
     transform: none;
   }
 }
@@ -508,9 +551,10 @@
   }
 
   .controlButton,
+  .responseClose,
   .feedbackButton,
   .modeButtons button,
-  .toolbar button {
+  .toolbar span {
     border: 1px solid ButtonText;
   }
 }

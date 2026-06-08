@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/routing';
+import { Reveal } from '@/components/motion/Reveal';
 import styles from './Home.module.css';
 
 const copy: Record<
@@ -45,18 +46,18 @@ export function IcelandicContext({ locale }: IcelandicContextProps) {
 
   return (
     <section className={styles.contextSection} aria-labelledby="icelandic-context-title">
-      <div className={styles.contextPanel}>
+      <Reveal className={styles.contextPanel} variant="sheet">
         <h2 id="icelandic-context-title">{text.title}</h2>
         <p>{text.lead}</p>
-      </div>
-      <div className={styles.contextNotes}>
+      </Reveal>
+      <Reveal className={styles.contextNotes} delay={90}>
         <ul>
           {text.points.map((point) => (
             <li key={point}>{point}</li>
           ))}
         </ul>
         <p>{text.closing}</p>
-      </div>
+      </Reveal>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/routing';
+import { Reveal } from '@/components/motion/Reveal';
 import styles from './Home.module.css';
 
 const copy: Record<
@@ -74,23 +75,23 @@ export function MethodSection({ locale }: MethodSectionProps) {
 
   return (
     <section className={styles.methodSection} id="method" aria-labelledby="method-title">
-      <div className={styles.methodCopy}>
+      <Reveal className={styles.methodCopy}>
         <h2 id="method-title">{text.title}</h2>
         <p>{text.lead}</p>
         <aside className={styles.futureCallout}>
           <h3>{text.calloutTitle}</h3>
           <p>{text.calloutBody}</p>
         </aside>
-      </div>
+      </Reveal>
       <ol className={styles.methodSteps}>
-        {text.steps.map((step) => (
-          <li key={step.title}>
+        {text.steps.map((step, index) => (
+          <Reveal as="li" delay={index * 65} key={step.title}>
             <span aria-hidden="true" />
             <div>
               <h3>{step.title}</h3>
               <p>{step.body}</p>
             </div>
-          </li>
+          </Reveal>
         ))}
       </ol>
     </section>

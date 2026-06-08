@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { Locale } from '@/i18n/routing';
+import { Reveal } from '@/components/motion/Reveal';
 import styles from './Home.module.css';
 
 const copy: Record<
@@ -83,13 +84,18 @@ export function TeamSection({ locale }: TeamSectionProps) {
 
   return (
     <section className={styles.teamSection} id="team" aria-labelledby="team-title">
-      <div className={styles.sectionHeader}>
+      <Reveal className={styles.sectionHeader}>
         <h2 id="team-title">{text.title}</h2>
         <p>{text.lead}</p>
-      </div>
+      </Reveal>
       <div className={styles.teamGrid}>
-        {text.people.map((person) => (
-          <article className={styles.teamCard} key={person.name}>
+        {text.people.map((person, index) => (
+          <Reveal
+            as="article"
+            className={styles.teamCard}
+            delay={index * 80}
+            key={person.name}
+          >
             <Image
               src={person.image}
               width={person.width}
@@ -103,7 +109,7 @@ export function TeamSection({ locale }: TeamSectionProps) {
               <p className={styles.teamRole}>{person.role}</p>
               <p>{person.body}</p>
             </div>
-          </article>
+          </Reveal>
         ))}
       </div>
     </section>

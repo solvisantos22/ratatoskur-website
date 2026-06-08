@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/routing';
+import { Reveal } from '@/components/motion/Reveal';
 import styles from './Home.module.css';
 
 const copy: Record<
@@ -81,18 +82,23 @@ export function ModeStories({ locale }: ModeStoriesProps) {
 
   return (
     <section className={styles.storySection} aria-labelledby="mode-stories-title">
-      <div className={styles.sectionHeader}>
+      <Reveal className={styles.sectionHeader}>
         <h2 id="mode-stories-title">{text.title}</h2>
         <p>{text.lead}</p>
-      </div>
+      </Reveal>
       <div className={styles.modeStoriesGrid}>
-        {text.stories.map((story) => (
-          <article className={styles.modeStory} key={story.label}>
+        {text.stories.map((story, index) => (
+          <Reveal
+            as="article"
+            className={styles.modeStory}
+            delay={index * 70}
+            key={story.label}
+          >
             <span>{story.label}</span>
             <h3>{story.title}</h3>
             <p>{story.body}</p>
             <small>{story.note}</small>
-          </article>
+          </Reveal>
         ))}
       </div>
     </section>
