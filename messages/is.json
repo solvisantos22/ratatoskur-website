@@ -1,12 +1,12 @@
 {
   "nav": {
-    "demo": "Prófaðu",
+    "demo": "Prófa",
     "how": "Hvernig það virkar",
-    "why": "Af hverju",
+    "why": "Af hverju það skiptir máli",
     "research": "Rannsóknir",
-    "team": "Teymi",
+    "team": "Teymið",
     "updates": "Fréttir",
-    "contact": "Hafðu samband",
+    "contact": "Hafa samband",
     "primaryLabel": "Aðalvalmynd",
     "openMenu": "Opna valmynd",
     "closeMenu": "Loka valmynd"
@@ -16,13 +16,6 @@
     "en": "Enska",
     "is": "Íslenska"
   },
-  "hero": {
-    "eyebrow": "Stærðfræðiaðstoð með gervigreind, á íslensku",
-    "title": "Aðstoðin sem les skriftina þína",
-    "subtitle": "Hladdu upp dæmi, leystu það með skrift og fáðu rétta hjálp: vísbendingu, yfirferð eða fulla lausn. Aldrei svarið of snemma.",
-    "ctaContact": "Hafðu samband",
-    "ctaHow": "Sjá hvernig það virkar"
-  },
   "footer": {
     "rights": "Ratatoskur",
     "github": "GitHub",
@@ -31,54 +24,5 @@
     "repositoriesLabel": "Frumkóði",
     "backend": "Bakendi á GitHub",
     "ios": "iOS app á GitHub"
-  },
-  "how": {
-    "title": "Hvernig það virkar",
-    "lead": "Þrjú skref, í eigin bók nemandans.",
-    "s1Title": "Hladdu upp dæminu",
-    "s1Body": "Taktu mynd af verkefninu eða veldu það úr safninu þínu.",
-    "s2Title": "Leystu það með skrift",
-    "s2Body": "Skrifaðu alla lausnina með Apple Pencil. Margar síður, þinn eigin ferill.",
-    "s3Title": "Fáðu rétta hjálp",
-    "s3Body": "Veldu vísbendingu, yfirferð eða birtingu. Ef skriftin er óskýr, spyr Ratatoskur áður en hann giskar."
-  },
-  "why": {
-    "title": "Endurgjöf meðan þú leysir, ekki á eftir",
-    "p1": "Flestar lausnir leysa dæmið fyrir þig. Ratatoskur fylgir ferlinu þínu: hann les dæmið og handskrifaða lausnina þína, og svarar á þeim stigi sem þú biður um.",
-    "p2": "Vísbendingar hreyfa án þess að spilla. Yfirferðir grípa ranga beygju snemma. Birting er til staðar þegar þú vilt fulla leiðina. Nemandinn heldur eignarrétti á lausninni.",
-    "p3": "Og það virkar á íslensku, þar sem góð stærðfræðikennsluhjálp er af skornum skammti."
-  },
-  "hood": {
-    "title": "Undir hettunni",
-    "lead": "Byggt fyrir raunverulegar skólastofur, með friðhelgi í huga.",
-    "i1Title": "Les dæmi og handskrift",
-    "i1Body": "Líkanið sér bæði mynd af verkefninu og fjölsíðulausnina frá nemandanum.",
-    "i2Title": "Stillingsmiðuð endurgjöf",
-    "i2Body": "Vísbending, yfirferð og birting eru aðskilin hegðun, ekki ein fyrirspurn með mismunandi merki.",
-    "i3Title": "Samþykkismeðvituð gögn",
-    "i3Body": "Nemendur velja hvað má nota í greiningar og gagnasafnsvinnu við skráningu.",
-    "i4Title": "Framtíðarsýn fyrir kennara",
-    "i4Body": "Með samþykki geta tilraunir og endurgjöf stutt þróun framtíðarverkfæra fyrir kennara og rannsakendur."
-  },
-  "team": {
-    "title": "Teymið",
-    "lead": "Tveir hönnuðir sem vinna að Ratatoskur.",
-    "m1Name": "Sölvi Santos",
-    "m1Role": "Vara og verkfræði",
-    "m2Name": "Jóhannes Reykdal Einarsson",
-    "m2Role": "Vara og verkfræði"
-  },
-  "contact": {
-    "title": "Kynstu Ratatoskur í skólanum þínum",
-    "lead": "Við erum að keyra snemmbærar tilraunir með skóla og kennara. Ef þetta á við þig, hafðu samband.",
-    "name": "Nafn",
-    "email": "Tölvupóstur",
-    "organization": "Skóli eða hlutverk",
-    "message": "Skilaboð",
-    "send": "Senda skilaboð",
-    "sending": "Sending…",
-    "success": "Takk. Við höfum samband.",
-    "error": "Eitthvað fór úrskeiðis. Vinsamlegast sendu okkur tölvupóst beint.",
-    "mailto": "Eða sendu okkur tölvupóst á"
   }
 }
