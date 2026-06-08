@@ -35,7 +35,7 @@ const copy: Record<
     ],
     calloutTitle: 'Teacher analytics are a future layer',
     calloutBody:
-      'The current website should explain the student experience first. Classroom analytics can be discussed as a future direction, not as a shipped capability.',
+      'Ratatoskur starts with the student notebook. Classroom analytics can come later as a consent-aware layer, not as a shipped capability.',
   },
   is: {
     title: 'Ferli sem byggir á vinnu nemandans',
@@ -61,7 +61,7 @@ const copy: Record<
     ],
     calloutTitle: 'Yfirsýn kennara er framtíðarlag',
     calloutBody:
-      'Síðan á fyrst að útskýra upplifun nemandans. Yfirsýn fyrir kennara má nefna sem framtíðarátt, ekki sem núverandi eiginleika.',
+      'Ratatoskur byrjar á vinnubók nemandans. Yfirsýn fyrir kennara getur komið síðar sem samþykkismeðvitað lag, ekki sem núverandi eiginleiki.',
   },
 };
 

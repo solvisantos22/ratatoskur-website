@@ -263,12 +263,6 @@
   opacity: 0.58;
 }
 
-.modeButtons button:not(:disabled):hover,
-.controlButton:not(:disabled):hover,
-.feedbackButton:hover {
-  transform: translateY(-1px);
-}
-
 .modeButtons button:not(:disabled):active,
 .controlButton:not(:disabled):active,
 .feedbackButton:active {
@@ -442,6 +436,14 @@
   width: 1px;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .modeButtons button:not(:disabled):hover,
+  .controlButton:not(:disabled):hover,
+  .feedbackButton:hover {
+    transform: translateY(-1px);
+  }
+}
+
 @media (max-width: 48rem) {
   .simulatorLayout {
     grid-template-columns: 1fr;
@@ -479,6 +481,15 @@
   .controlButton,
   .feedbackButton {
     transition: none;
+  }
+
+  .modeButtons button:not(:disabled):hover,
+  .controlButton:not(:disabled):hover,
+  .feedbackButton:hover,
+  .modeButtons button:not(:disabled):active,
+  .controlButton:not(:disabled):active,
+  .feedbackButton:active {
+    transform: none;
   }
 }
 
