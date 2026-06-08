@@ -70,6 +70,11 @@ export function useDemoController() {
     dispatch({ type: 'SELECT_MODE', mode });
   }, []);
 
+  const confirmReading = useCallback(() => {
+    manualPausedRef.current = false;
+    dispatch({ type: 'CONFIRM_READING' });
+  }, []);
+
   useEffect(() => {
     reducedMotionRef.current = reducedMotion;
   }, [reducedMotion]);
@@ -209,6 +214,7 @@ export function useDemoController() {
     resume,
     replay,
     skip,
+    confirmReading,
     selectMode,
     clearDrawingSignal,
     clearDrawing,

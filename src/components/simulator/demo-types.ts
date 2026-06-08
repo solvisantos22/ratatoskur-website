@@ -21,6 +21,7 @@ export type DemoAction =
   | { type: 'ADVANCE' }
   | { type: 'PAUSE' }
   | { type: 'RESUME' }
+  | { type: 'CONFIRM_READING' }
   | { type: 'SKIP' }
   | { type: 'REPLAY' }
   | { type: 'SELECT_MODE'; mode: DemoMode };

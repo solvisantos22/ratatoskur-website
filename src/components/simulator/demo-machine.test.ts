@@ -115,4 +115,26 @@ describe('demo machine', () => {
     });
     expect(reveal.mode).toBe('reveal');
   });
+
+  test('CONFIRM_READING advances the guided confirmation to response', () => {
+    const confirming = reduceDemo(
+      reduceDemo(reduceDemo(initialDemoState, { type: 'START' }), {
+        type: 'ADVANCE',
+      }),
+      { type: 'ADVANCE' },
+    );
+
+    const confirmed = reduceDemo(confirming, {
+      type: 'CONFIRM_READING',
+    });
+
+    expect(confirmed.stage).toBe('responding');
+    expect(confirmed.guidedRunComplete).toBe(false);
+  });
+
+  test('CONFIRM_READING outside the confirmation stage preserves state', () => {
+    const writing = reduceDemo(initialDemoState, { type: 'START' });
+
+    expect(reduceDemo(writing, { type: 'CONFIRM_READING' })).toEqual(writing);
+  });
 });

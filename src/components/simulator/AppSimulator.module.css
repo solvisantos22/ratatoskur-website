@@ -182,6 +182,7 @@
 .inkPath {
   fill: none;
   stroke: var(--brand-espresso);
+  stroke-dasharray: 1;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 7;

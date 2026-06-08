@@ -68,6 +68,7 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
     resume,
     replay,
     skip,
+    confirmReading,
     selectMode,
     clearDrawingSignal,
     clearDrawing,
@@ -103,6 +104,7 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
           drawingMode={drawingMode}
           locale={locale}
           mode={state.mode}
+          onConfirm={confirmReading}
           onModeChange={handleModeChange}
           runId={state.runId}
           stage={state.stage}

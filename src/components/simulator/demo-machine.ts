@@ -40,6 +40,10 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       return { ...state, paused: true };
     case 'RESUME':
       return { ...state, paused: false };
+    case 'CONFIRM_READING':
+      return state.stage === 'confirming'
+        ? { ...state, stage: 'responding' }
+        : state;
     case 'SKIP':
       return {
         ...state,

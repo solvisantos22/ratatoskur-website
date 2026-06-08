@@ -30,25 +30,32 @@ export function ScriptedInk({
       focusable="false"
       viewBox="0 0 470 340"
     >
-      {paths.map((path, index) => (
-        <motion.path
-          key={`${runId}-${index}`}
-          animate={
-            shouldAnimate
-              ? { strokeDashoffset: 0 }
-              : { strokeDashoffset: 0 }
-          }
-          className={styles.inkPath}
-          d={path}
-          initial={shouldAnimate ? { strokeDashoffset: 1 } : false}
-          pathLength="1"
-          transition={{
-            delay: index * 0.42,
-            duration: 0.78,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        />
-      ))}
+      {paths.map((path, index) =>
+        shouldAnimate ? (
+          <motion.path
+            key={`${runId}-${index}`}
+            animate={{ strokeDashoffset: 0 }}
+            className={styles.inkPath}
+            d={path}
+            initial={{ strokeDashoffset: 1 }}
+            pathLength="1"
+            style={{ strokeDasharray: 1 }}
+            transition={{
+              delay: index * 0.42,
+              duration: 0.78,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          />
+        ) : (
+          <path
+            className={styles.inkPath}
+            d={path}
+            key={`${runId}-${index}`}
+            pathLength="1"
+            style={{ strokeDasharray: 1, strokeDashoffset: 0 }}
+          />
+        ),
+      )}
     </svg>
   );
 }
