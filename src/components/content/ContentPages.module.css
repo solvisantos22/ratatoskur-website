@@ -233,10 +233,6 @@
     color-mix(in oklch, var(--paper-deep) 28%, var(--reading));
 }
 
-.updateLink:hover {
-  transform: translateY(-2px);
-}
-
 .updateDate {
   display: grid;
   align-content: space-between;
@@ -314,6 +310,12 @@
   text-decoration-color: color-mix(in oklch, var(--brand-orange) 58%, transparent);
   text-decoration-thickness: 0.12em;
   text-underline-offset: 0.18em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .updateLink:hover {
+    transform: translateY(-2px);
+  }
 }
 
 @media (max-width: 900px) {
