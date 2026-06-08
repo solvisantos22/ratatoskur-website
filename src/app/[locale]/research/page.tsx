@@ -2,8 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import { notFound } from 'next/navigation';
+import styles from '@/components/content/ContentPages.module.css';
+import { type Locale } from '@/i18n/routing';
+import { isSupportedLocale } from '@/lib/locales';
 
-function loadResearch(locale: string) {
+function loadResearch(locale: Locale) {
   const dir = path.join(process.cwd(), 'content', 'research');
   const file = path.join(dir, `${locale}.mdx`);
   const fallback = path.join(dir, 'en.mdx');
@@ -12,15 +16,54 @@ function loadResearch(locale: string) {
 }
 
 export default async function ResearchPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+  const { locale: rawLocale } = await params;
+  if (!isSupportedLocale(rawLocale)) notFound();
+
+  const locale = rawLocale;
   const { data, content } = loadResearch(locale);
+  const title = String(data.title ?? 'Research and approach');
+  const summary = data.summary ? String(data.summary) : undefined;
+
   return (
-    <main style={{ maxWidth: 720, margin: '0 auto', padding: '80px 22px' }}>
-      <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', margin: '0 0 12px', lineHeight: 1.1 }}>{String(data.title)}</h1>
-      {data.summary && <p style={{ color: 'var(--ink-2)', fontSize: '1.1rem', marginBottom: 28 }}>{String(data.summary)}</p>}
-      <article style={{ color: 'var(--ink-2)', lineHeight: 1.7 }}>
-        <MDXRemote source={content} />
-      </article>
+    <main className={styles.page}>
+      <div className={styles.shell}>
+        <header className={styles.hero}>
+          <div className={styles.heroCopy}>
+            <p className={styles.sectionLabel}>{locale === 'is' ? 'Rannsókn' : 'Research'}</p>
+            <h1 className={styles.title}>{title}</h1>
+            {summary ? <p className={styles.lead}>{summary}</p> : null}
+          </div>
+          <div className={styles.heroNote} aria-label={locale === 'is' ? 'Nálgun' : 'Approach'}>
+            <span>{locale === 'is' ? 'Vinnubók, ekki auglýsing' : 'Notebook, not a brochure'}</span>
+            <p>
+              {locale === 'is'
+                ? 'Sönnunargögnin þurfa að passa við hvernig nemendur leysa dæmi.'
+                : 'The evidence has to match how students actually solve problems.'}
+            </p>
+          </div>
+        </header>
+
+        <div className={styles.layout}>
+          <article className={styles.article} aria-labelledby="research-title">
+            <p className={styles.articleMeta}>{locale === 'is' ? 'Aðferð og mat' : 'Method and evaluation'}</p>
+            <h2 id="research-title" className={styles.sectionLabel}>
+              {locale === 'is' ? 'Lesefni' : 'Reading notes'}
+            </h2>
+            <div className={styles.body}>
+              <MDXRemote source={content} />
+            </div>
+          </article>
+
+          <aside className={styles.aside} aria-label={locale === 'is' ? 'Áherslur' : 'Editorial note'}>
+            <strong>{locale === 'is' ? 'Hvað skiptir máli' : 'What matters'}</strong>
+            <p>
+              {locale === 'is'
+                ? 'Handskrift, staðfesting og gagnleg endurgjöf eru metin sem aðskildir hlutar.'
+                : 'Handwriting, confirmation, and useful feedback are evaluated as separate parts.'}
+            </p>
+          </aside>
+        </div>
+      </div>
     </main>
   );
 }

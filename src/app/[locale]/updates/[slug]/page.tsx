@@ -1,18 +1,61 @@
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import { Link } from '@/i18n/navigation';
+import { type Locale } from '@/i18n/routing';
+import styles from '@/components/content/ContentPages.module.css';
+import { isSupportedLocale } from '@/lib/locales';
 import { getPostBySlug } from '@/lib/updates';
 
-export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+const copy: Record<Locale, { back: string; label: string; noteLabel: string; note: string }> = {
+  en: {
+    back: 'Back to updates',
+    label: 'Update',
+    noteLabel: 'Notebook entry',
+    note: 'These notes explain product and research choices as they become concrete enough to share.',
+  },
+  is: {
+    back: 'Til baka í fréttir',
+    label: 'Frétt',
+    noteLabel: 'Vinnubókarfærsla',
+    note: 'Þessar færslur útskýra vöru- og rannsóknarákvarðanir þegar þær eru orðnar nógu skýrar til birtingar.',
+  },
+};
+
+export default async function PostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale: rawLocale, slug } = await params;
+  if (!isSupportedLocale(rawLocale)) notFound();
+
+  const locale = rawLocale;
   const post = getPostBySlug(slug);
-  if (!post) notFound();
+  if (!post || post.locale !== locale) notFound();
+  const pageCopy = copy[locale];
+
   return (
-    <main style={{ maxWidth: 680, margin: '0 auto', padding: '80px 22px' }}>
-      <time style={{ color: 'var(--muted)', fontSize: 13 }}>{post.date}</time>
-      <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', margin: '6px 0 24px', lineHeight: 1.1 }}>{post.title}</h1>
-      <article style={{ color: 'var(--ink-2)', lineHeight: 1.7 }}>
-        <MDXRemote source={post.content} />
-      </article>
+    <main className={styles.page}>
+      <div className={styles.shell}>
+        <article className={styles.layout}>
+          <div className={styles.article}>
+            <nav aria-label={pageCopy.back}>
+              <Link href="/updates" className={styles.backLink}>
+                {pageCopy.back}
+              </Link>
+            </nav>
+            <p className={styles.postMeta}>
+              <span>{pageCopy.label}</span>
+              <time dateTime={post.date}>{post.date}</time>
+            </p>
+            <h1 className={styles.title}>{post.title}</h1>
+            <div className={styles.body}>
+              <MDXRemote source={post.content} />
+            </div>
+          </div>
+
+          <aside className={styles.aside} aria-label={pageCopy.noteLabel}>
+            <strong>{pageCopy.noteLabel}</strong>
+            <p>{pageCopy.note}</p>
+          </aside>
+        </article>
+      </div>
     </main>
   );
 }
