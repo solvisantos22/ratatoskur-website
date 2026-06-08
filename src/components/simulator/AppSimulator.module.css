@@ -1,0 +1,504 @@
+.simulatorSection {
+  color: var(--ink);
+  display: grid;
+  gap: 1rem;
+  isolation: isolate;
+  width: 100%;
+}
+
+.caption {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.simulatorLayout {
+  align-items: start;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+}
+
+.deviceFrame {
+  background:
+    linear-gradient(145deg, #2c160e, #4c2514 58%, #21100a),
+    var(--brand-espresso);
+  border-radius: clamp(1.5rem, 5vw, var(--radius-device));
+  box-shadow: 0 18px 48px color-mix(in oklch, var(--brand-espresso) 26%, transparent);
+  max-width: clamp(21rem, 46vw, 29rem);
+  padding: clamp(0.55rem, 1.4vw, 0.8rem);
+  width: 100%;
+}
+
+.deviceScreen {
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--paper) 84%, white 16%), var(--paper)),
+    var(--paper);
+  border: 1px solid color-mix(in oklch, white 24%, transparent);
+  border-radius: calc(clamp(1.5rem, 5vw, var(--radius-device)) - 0.45rem);
+  display: grid;
+  gap: 0.75rem;
+  min-height: clamp(41rem, 78vw, 49rem);
+  overflow: hidden;
+  padding: clamp(0.85rem, 2.5vw, 1.1rem);
+  position: relative;
+}
+
+.deviceScreen::before {
+  background: #2c160e;
+  border-radius: 999px;
+  content: "";
+  height: 0.34rem;
+  left: 50%;
+  opacity: 0.55;
+  position: absolute;
+  top: 0.42rem;
+  transform: translateX(-50%);
+  width: 4.6rem;
+}
+
+.appTopBar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-height: 3.4rem;
+  padding-top: 0.45rem;
+}
+
+.appTopBar div {
+  display: grid;
+  gap: 0.05rem;
+}
+
+.appTopBar strong {
+  color: var(--brand-espresso);
+  font-family: var(--font-display-stack);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.appTopBar span,
+.problemPanel span,
+.paperHeader span,
+.modePanelHeader span,
+.readingCard span,
+.responseTopline span {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.modeStatus {
+  background: color-mix(in oklch, var(--brand-orange) 18%, white);
+  border-radius: 999px;
+  color: var(--brand-espresso) !important;
+  min-height: 2rem;
+  padding: 0.5rem 0.72rem;
+}
+
+.problemPanel,
+.paperPanel,
+.modePanel {
+  background: var(--reading);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklch, var(--brand-espresso) 10%, transparent),
+    0 6px 14px color-mix(in oklch, var(--brand-espresso) 7%, transparent);
+}
+
+.problemPanel {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem;
+}
+
+.problemPanel p {
+  color: var(--brand-espresso);
+  font-size: clamp(1.05rem, 2vw, 1.22rem);
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.paperPanel {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.85rem;
+}
+
+.paperHeader {
+  align-items: start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.paperHeader div {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.paperHeader strong {
+  color: var(--brand-espresso);
+  font-size: 0.94rem;
+}
+
+.paperCount {
+  text-align: right;
+}
+
+.writingSurface {
+  background:
+    linear-gradient(color-mix(in oklch, var(--brand-espresso) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, var(--brand-espresso) 7%, transparent) 1px, transparent 1px),
+    #fffaf1;
+  background-size: 24px 24px;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 13%, transparent);
+  min-height: clamp(22rem, 53vw, 29rem);
+  overflow: hidden;
+  padding: clamp(0.7rem, 2vw, 0.95rem);
+  position: relative;
+}
+
+.scriptedInkWrap {
+  align-items: center;
+  display: grid;
+  inset: 0;
+  min-height: 19rem;
+  padding: clamp(0.2rem, 2vw, 0.8rem);
+  position: absolute;
+}
+
+.scriptedInk {
+  display: block;
+  height: auto;
+  transform: rotate(-1.2deg);
+  width: 100%;
+}
+
+.inkPath {
+  fill: none;
+  stroke: var(--brand-espresso);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
+.emptyPaper {
+  min-height: 18rem;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.toolbar button,
+.modeButtons button,
+.controlButton,
+.feedbackButton {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 800;
+  min-height: 44px;
+  touch-action: manipulation;
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.toolbar button {
+  background: color-mix(in oklch, var(--paper-deep) 62%, white);
+  color: var(--ink-soft);
+  cursor: not-allowed;
+  font-size: 0.78rem;
+  padding: 0.55rem 0.68rem;
+}
+
+.toolbar .toolActive {
+  background: var(--brand-espresso);
+  color: var(--reading);
+  opacity: 1;
+}
+
+.modePanel {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.85rem;
+}
+
+.modePanelHeader {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.modePanelHeader strong {
+  color: var(--brand-espresso);
+  font-size: 0.95rem;
+}
+
+.modeButtons {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.modeButtons button {
+  background: color-mix(in oklch, var(--paper-deep) 68%, white);
+  color: var(--brand-espresso);
+  font-size: 0.86rem;
+  padding: 0.62rem 0.5rem;
+}
+
+.modeButtons button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.modeButtons button:not(:disabled):hover,
+.controlButton:not(:disabled):hover,
+.feedbackButton:hover {
+  transform: translateY(-1px);
+}
+
+.modeButtons button:not(:disabled):active,
+.controlButton:not(:disabled):active,
+.feedbackButton:active {
+  transform: scale(0.98);
+}
+
+.modeButtons .modeActive {
+  background: var(--brand-orange);
+  color: var(--brand-espresso);
+}
+
+.confirmationSheet,
+.responseCard {
+  background: color-mix(in oklch, var(--reading) 94%, white);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklch, var(--brand-espresso) 12%, transparent),
+    0 12px 28px color-mix(in oklch, var(--brand-espresso) 18%, transparent);
+  display: grid;
+  gap: 0.72rem;
+  left: clamp(0.65rem, 3vw, 1rem);
+  max-width: min(21rem, calc(100% - 1.3rem));
+  padding: 0.9rem;
+  position: absolute;
+  right: clamp(0.65rem, 3vw, 1rem);
+  top: clamp(0.65rem, 3vw, 1rem);
+  z-index: 2;
+}
+
+.sheetHeader {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.sheetKicker {
+  color: var(--brand-rust);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.sheetHeader h3,
+.responseCard h3 {
+  color: var(--brand-espresso);
+  font-family: var(--font-body-stack);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.confirmQuestion,
+.sheetReason,
+.responseCard p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.readingCard {
+  background: color-mix(in oklch, var(--paper) 76%, white);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: 0.22rem;
+  padding: 0.72rem;
+}
+
+.readingCard strong {
+  color: var(--brand-espresso);
+  font-size: 1.1rem;
+}
+
+.primaryControl {
+  background: var(--brand-espresso) !important;
+  color: var(--reading) !important;
+}
+
+.responseTopline {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+}
+
+.responseTopline strong {
+  background: color-mix(in oklch, var(--brand-orange) 18%, white);
+  border-radius: 999px;
+  color: var(--brand-espresso);
+  font-size: 0.76rem;
+  padding: 0.32rem 0.5rem;
+  white-space: nowrap;
+}
+
+.feedbackControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.feedbackButton {
+  align-items: center;
+  background: color-mix(in oklch, var(--paper-deep) 62%, white);
+  color: var(--brand-espresso);
+  display: inline-flex;
+  gap: 0.35rem;
+  padding: 0.54rem 0.68rem;
+}
+
+.feedbackButton[aria-pressed="true"] {
+  background: var(--brand-espresso);
+  color: var(--reading);
+}
+
+.selectedFeedback {
+  font-size: 0.72rem;
+  opacity: 0.76;
+}
+
+.demoControls {
+  align-content: start;
+  background: color-mix(in oklch, var(--brand-espresso) 88%, black);
+  border-radius: var(--radius-lg);
+  color: var(--reading);
+  display: grid;
+  gap: 0.8rem;
+  padding: 0.9rem;
+  position: sticky;
+  top: 5rem;
+}
+
+.controlRow {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.controlButton {
+  background: color-mix(in oklch, var(--reading) 12%, var(--brand-espresso));
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--reading) 18%, transparent);
+  color: var(--reading);
+  padding: 0.66rem 0.85rem;
+  text-align: left;
+}
+
+.controlButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.activeControl {
+  background: var(--brand-orange);
+  color: var(--brand-espresso);
+}
+
+.reducedMotionNote {
+  color: color-mix(in oklch, var(--reading) 78%, transparent);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.srOnly {
+  clip: rect(0 0 0 0);
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (max-width: 48rem) {
+  .simulatorLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .deviceFrame {
+    margin-inline: auto;
+    max-width: min(100%, 27rem);
+  }
+
+  .deviceScreen {
+    min-height: 42rem;
+  }
+
+  .demoControls {
+    position: static;
+  }
+
+  .controlRow {
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  }
+
+  .modeButtons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scriptedInk {
+    transform: none;
+  }
+
+  .toolbar button,
+  .modeButtons button,
+  .controlButton,
+  .feedbackButton {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .deviceFrame,
+  .problemPanel,
+  .paperPanel,
+  .modePanel,
+  .confirmationSheet,
+  .responseCard,
+  .demoControls,
+  .writingSurface,
+  .readingCard {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+
+  .controlButton,
+  .feedbackButton,
+  .modeButtons button,
+  .toolbar button {
+    border: 1px solid ButtonText;
+  }
+}
