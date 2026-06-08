@@ -17,6 +17,7 @@ type NotebookShellProps = {
   stage: DemoStage;
   mode: DemoMode;
   runId: number;
+  visibleLineCount: number;
   onModeChange: (mode: DemoMode) => void;
   onConfirm?: () => void;
   onDismissResponse: () => void;
@@ -106,6 +107,7 @@ export function NotebookShell({
   stage,
   mode,
   runId,
+  visibleLineCount,
   onModeChange,
   onConfirm,
   onDismissResponse,
@@ -159,6 +161,7 @@ export function NotebookShell({
                   animate={stage === 'writing'}
                   reducedMotion={Boolean(reducedMotion)}
                   runId={runId}
+                  visibleLineCount={visibleLineCount}
                 />
               </div>
             ) : (

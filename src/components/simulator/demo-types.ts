@@ -12,6 +12,7 @@ export type DemoState = {
   stage: DemoStage;
   mode: DemoMode;
   timelineIndex: number;
+  visibleLineCount: number;
   paused: boolean;
   guidedRunComplete: boolean;
   runId: number;

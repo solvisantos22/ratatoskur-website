@@ -3,6 +3,7 @@ import type { DemoAction, DemoMode, DemoStage, DemoState } from './demo-types';
 type DemoTimelineStep = {
   stage: DemoStage;
   mode: DemoMode;
+  visibleLineCount: number;
   responseOpen: boolean;
   guidedRunComplete: boolean;
 };
@@ -11,63 +12,86 @@ export const demoTimeline: DemoTimelineStep[] = [
   {
     stage: 'idle',
     mode: 'hint',
+    visibleLineCount: 0,
     responseOpen: false,
     guidedRunComplete: false,
   },
   {
     stage: 'writing',
     mode: 'hint',
+    visibleLineCount: 1,
+    responseOpen: false,
+    guidedRunComplete: false,
+  },
+  {
+    stage: 'responding',
+    mode: 'hint',
+    visibleLineCount: 1,
+    responseOpen: true,
+    guidedRunComplete: false,
+  },
+  {
+    stage: 'writing',
+    mode: 'hint',
+    visibleLineCount: 2,
+    responseOpen: false,
+    guidedRunComplete: false,
+  },
+  {
+    stage: 'writing',
+    mode: 'hint',
+    visibleLineCount: 3,
     responseOpen: false,
     guidedRunComplete: false,
   },
   {
     stage: 'checking-reading',
-    mode: 'hint',
+    mode: 'check_solution',
+    visibleLineCount: 3,
     responseOpen: false,
     guidedRunComplete: false,
   },
   {
     stage: 'confirming',
-    mode: 'hint',
+    mode: 'check_solution',
+    visibleLineCount: 3,
     responseOpen: false,
     guidedRunComplete: false,
   },
   {
     stage: 'responding',
-    mode: 'hint',
-    responseOpen: true,
-    guidedRunComplete: false,
-  },
-  {
-    stage: 'responding',
     mode: 'check_solution',
+    visibleLineCount: 3,
     responseOpen: true,
     guidedRunComplete: true,
   },
   {
     stage: 'responding',
     mode: 'reveal',
+    visibleLineCount: 3,
     responseOpen: true,
     guidedRunComplete: true,
   },
   {
     stage: 'interactive',
     mode: 'reveal',
+    visibleLineCount: 3,
     responseOpen: false,
     guidedRunComplete: true,
   },
 ];
 
 const modeTimelineIndex: Record<DemoMode, number> = {
-  hint: 4,
-  check_solution: 5,
-  reveal: 6,
+  hint: 2,
+  check_solution: 7,
+  reveal: 8,
 };
 
 export const initialDemoState: DemoState = {
   stage: 'idle',
   mode: 'hint',
   timelineIndex: 0,
+  visibleLineCount: 0,
   paused: false,
   guidedRunComplete: false,
   runId: 0,
@@ -80,10 +104,17 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       return state.stage === 'idle'
         ? applyTimelineStep(state, 1, { paused: false })
         : state;
-    case 'NEXT_STEP':
     case 'ADVANCE': {
       if (state.paused) return state;
       if (state.stage === 'confirming') return state;
+
+      const index = getTimelineIndex(state);
+      if (index === -1) return state;
+
+      return applyTimelineStep(state, index + 1);
+    }
+    case 'NEXT_STEP': {
+      if (state.paused) return state;
 
       const index = getTimelineIndex(state);
       if (index === -1) return state;
@@ -102,7 +133,7 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       return { ...state, paused: false };
     case 'CONFIRM_READING':
       return state.stage === 'confirming'
-        ? applyTimelineStep(state, 4, { paused: false })
+        ? applyTimelineStep(state, 7, { paused: false })
         : state;
     case 'DISMISS_RESPONSE':
       return { ...state, responseOpen: false };
@@ -115,6 +146,7 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
         ...initialDemoState,
         stage: 'writing',
         timelineIndex: 1,
+        visibleLineCount: 1,
         runId: state.runId + 1,
       };
     case 'SELECT_MODE':
@@ -160,12 +192,19 @@ function getTimelineIndex(state: DemoState): number {
     state.timelineIndex < demoTimeline.length
   ) {
     const step = demoTimeline[state.timelineIndex];
-    if (step.stage === state.stage && step.mode === state.mode) {
+    if (
+      step.stage === state.stage &&
+      step.mode === state.mode &&
+      step.visibleLineCount === state.visibleLineCount
+    ) {
       return state.timelineIndex;
     }
   }
 
   return demoTimeline.findIndex(
-    (step) => step.stage === state.stage && step.mode === state.mode,
+    (step) =>
+      step.stage === state.stage &&
+      step.mode === state.mode &&
+      step.visibleLineCount === state.visibleLineCount,
   );
 }

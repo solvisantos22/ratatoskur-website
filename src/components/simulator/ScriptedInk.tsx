@@ -8,6 +8,7 @@ type ScriptedInkProps = {
   animate: boolean;
   reducedMotion: boolean;
   runId: number;
+  visibleLineCount: number;
 };
 
 const solutionLines = [
@@ -20,8 +21,13 @@ export function ScriptedInk({
   animate,
   reducedMotion,
   runId,
+  visibleLineCount,
 }: ScriptedInkProps) {
   const shouldAnimate = animate && !reducedMotion;
+  const visibleLines = solutionLines.slice(
+    0,
+    Math.max(0, Math.min(solutionLines.length, visibleLineCount)),
+  );
 
   return (
     <svg
@@ -35,7 +41,7 @@ export function ScriptedInk({
         <line x1="58" x2="540" y1="200" y2="200" />
         <line x1="58" x2="540" y1="278" y2="278" />
       </g>
-      {solutionLines.map((line, index) =>
+      {visibleLines.map((line, index) =>
         shouldAnimate ? (
           <motion.text
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}

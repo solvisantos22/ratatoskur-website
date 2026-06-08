@@ -17,7 +17,7 @@ export const demoCopy: Record<'en' | 'is', DemoCopy> = {
     responses: {
       hint: {
         title: 'You are on the right track.',
-        body: 'Your subtraction step is right. The final move is to divide both sides by 2 to isolate x.',
+        body: 'Start by subtracting 3 from both sides so the x-term is alone.',
       },
       check_solution: {
         title: 'The solution is correct.',
@@ -37,7 +37,7 @@ export const demoCopy: Record<'en' | 'is', DemoCopy> = {
     responses: {
       hint: {
         title: 'Þú ert á réttri leið.',
-        body: 'Frádráttarskrefið er rétt. Síðasta skrefið er að deila báðum megin með 2 til að einangra x.',
+        body: 'Byrjaðu á að draga 3 frá báðum megin svo x-liðurinn standi eftir.',
       },
       check_solution: {
         title: 'Lausnin er rétt.',

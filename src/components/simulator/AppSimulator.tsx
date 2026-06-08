@@ -108,6 +108,7 @@ export function AppSimulator({ locale = 'en' }: AppSimulatorProps) {
           responseOpen={state.responseOpen}
           runId={state.runId}
           stage={state.stage}
+          visibleLineCount={state.visibleLineCount}
         />
         <DemoControls
           canGoNext={canGoNext}

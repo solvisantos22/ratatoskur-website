@@ -4,27 +4,39 @@ import { initialDemoState, reduceDemo } from './demo-machine';
 import type { DemoState } from './demo-types';
 
 describe('demo machine', () => {
-  test('guided sequence walks through confirmation, hint, check, reveal, then ends', () => {
+  test('guided sequence writes progressively, asks for hint, then checks and reveals', () => {
     let state = reduceDemo(initialDemoState, { type: 'START' });
     expect(state.stage).toBe('writing');
+    expect(state.visibleLineCount).toBe(1);
+
+    state = reduceDemo(state, { type: 'ADVANCE' });
+    expect(state.stage).toBe('responding');
+    expect(state.mode).toBe('hint');
+    expect(state.visibleLineCount).toBe(1);
+    expect(state.responseOpen).toBe(true);
+
+    state = reduceDemo(state, { type: 'ADVANCE' });
+    expect(state.stage).toBe('writing');
+    expect(state.visibleLineCount).toBe(2);
+    expect(state.responseOpen).toBe(false);
+
+    state = reduceDemo(state, { type: 'ADVANCE' });
+    expect(state.stage).toBe('writing');
+    expect(state.visibleLineCount).toBe(3);
+    expect(state.responseOpen).toBe(false);
 
     state = reduceDemo(state, { type: 'ADVANCE' });
     expect(state.stage).toBe('checking-reading');
-
-    state = reduceDemo(state, { type: 'ADVANCE' });
-    expect(state.stage).toBe('confirming');
+    expect(state.mode).toBe('check_solution');
+    expect(state.visibleLineCount).toBe(3);
 
     state = reduceDemo(state, { type: 'ADVANCE' });
     expect(state.stage).toBe('confirming');
 
     state = reduceDemo(state, { type: 'CONFIRM_READING' });
     expect(state.stage).toBe('responding');
-    expect(state.mode).toBe('hint');
-    expect(state.responseOpen).toBe(true);
-
-    state = reduceDemo(state, { type: 'ADVANCE' });
-    expect(state.stage).toBe('responding');
     expect(state.mode).toBe('check_solution');
+    expect(state.visibleLineCount).toBe(3);
     expect(state.responseOpen).toBe(true);
 
     state = reduceDemo(state, { type: 'ADVANCE' });
@@ -44,7 +56,8 @@ describe('demo machine', () => {
     expect(writing.timelineIndex).toBe(1);
 
     const checking = reduceDemo(writing, { type: 'NEXT_STEP' } as never);
-    expect(checking.stage).toBe('checking-reading');
+    expect(checking.stage).toBe('responding');
+    expect(checking.mode).toBe('hint');
     expect(checking.timelineIndex).toBe(2);
 
     const rewound = reduceDemo(checking, { type: 'PREVIOUS_STEP' } as never);
@@ -60,9 +73,8 @@ describe('demo machine', () => {
 
     const resumed = reduceDemo(paused, { type: 'RESUME' });
     expect(resumed.paused).toBe(false);
-    expect(reduceDemo(resumed, { type: 'ADVANCE' }).stage).toBe(
-      'checking-reading',
-    );
+    expect(reduceDemo(resumed, { type: 'ADVANCE' }).stage).toBe('responding');
+    expect(reduceDemo(resumed, { type: 'ADVANCE' }).mode).toBe('hint');
   });
 
   test('SKIP unlocks interactive', () => {
@@ -87,6 +99,7 @@ describe('demo machine', () => {
     expect(replayed.guidedRunComplete).toBe(false);
     expect(replayed.runId).toBe(8);
     expect(replayed.timelineIndex).toBe(1);
+    expect(replayed.visibleLineCount).toBe(1);
   });
 
   test('SELECT_MODE before work is visible keeps the idle state', () => {
@@ -110,6 +123,7 @@ describe('demo machine', () => {
 
     expect(selected.stage).toBe('responding');
     expect(selected.mode).toBe('reveal');
+    expect(selected.visibleLineCount).toBe(3);
     expect(selected.guidedRunComplete).toBe(true);
     expect(selected.responseOpen).toBe(true);
   });
@@ -183,31 +197,47 @@ describe('demo machine', () => {
   });
 
   test('CONFIRM_READING advances the guided confirmation to response', () => {
-    const confirming = reduceDemo(
-      reduceDemo(reduceDemo(initialDemoState, { type: 'START' }), {
-        type: 'ADVANCE',
-      }),
-      { type: 'ADVANCE' },
-    );
+    let confirming = reduceDemo(initialDemoState, { type: 'START' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
 
     const confirmed = reduceDemo(confirming, {
       type: 'CONFIRM_READING',
     });
 
     expect(confirmed.stage).toBe('responding');
-    expect(confirmed.guidedRunComplete).toBe(false);
+    expect(confirmed.mode).toBe('check_solution');
+    expect(confirmed.guidedRunComplete).toBe(true);
     expect(confirmed.responseOpen).toBe(true);
   });
 
   test('ADVANCE from confirmation waits for user confirmation', () => {
-    const confirming = reduceDemo(
-      reduceDemo(reduceDemo(initialDemoState, { type: 'START' }), {
-        type: 'ADVANCE',
-      }),
-      { type: 'ADVANCE' },
-    );
+    let confirming = reduceDemo(initialDemoState, { type: 'START' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
 
     expect(reduceDemo(confirming, { type: 'ADVANCE' })).toEqual(confirming);
+  });
+
+  test('NEXT_STEP from confirmation acts like accepting the reading', () => {
+    let confirming = reduceDemo(initialDemoState, { type: 'START' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+    confirming = reduceDemo(confirming, { type: 'ADVANCE' });
+
+    const next = reduceDemo(confirming, { type: 'NEXT_STEP' });
+
+    expect(next.stage).toBe('responding');
+    expect(next.mode).toBe('check_solution');
+    expect(next.responseOpen).toBe(true);
   });
 
   test('CONFIRM_READING outside the confirmation stage preserves state', () => {
