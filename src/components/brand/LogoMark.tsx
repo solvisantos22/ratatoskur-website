@@ -8,7 +8,7 @@ export function LogoMark({
   compact?: boolean;
   priority?: boolean;
 }) {
-  const size = compact ? 42 : 54;
+  const size = compact ? 54 : 66;
 
   return (
     <span className={styles.logo}>

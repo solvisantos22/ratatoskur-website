@@ -13,25 +13,25 @@ const copy: Record<
   }
 > = {
   en: {
-    title: 'How feedback stays tied to the work',
+    title: 'How a student actually moves through a problem',
     lead:
-      'Ratatoskur starts with the problem image and the handwritten page. The selected mode shapes the response, and the app pauses when it needs the student to read before moving on.',
+      'The app follows the rhythm of the notebook: write a line, ask for help when stuck, keep working, then check or reveal after an attempt.',
     steps: [
       {
-        title: 'Problem image',
-        body: 'The app begins with the exercise, so the model has the same prompt the student sees.',
+        title: 'Write what is known',
+        body: 'The student starts from the problem and puts the first useful line on the page.',
       },
       {
-        title: 'Handwritten work',
-        body: 'The student solves with Apple Pencil. The page stays visible while feedback is requested.',
+        title: 'Ask at the right moment',
+        body: 'A hint can respond to the partial attempt without taking ownership of the solution.',
       },
       {
-        title: 'Mode-specific feedback',
-        body: 'Hint, Check, and Reveal change the kind of response without changing the notebook habit.',
+        title: 'Keep the work visible',
+        body: 'The next lines stay on the same page, so feedback is always connected to the written attempt.',
       },
       {
-        title: 'Reading confirmation',
-        body: 'When the response needs attention, the app waits for the student to confirm before continuing.',
+        title: 'Check before moving on',
+        body: 'When the app is uncertain, it asks the student to confirm the reading before judging the answer.',
       },
     ],
     calloutTitle: 'Teacher analytics are a future layer',
@@ -39,25 +39,25 @@ const copy: Record<
       'Ratatoskur starts with the student notebook. Classroom analytics can come later as a consent-aware layer, not as a shipped capability.',
   },
   is: {
-    title: 'Ferli sem byggir á vinnu nemandans',
+    title: 'Hvernig nemandi vinnur raunverulega í gegnum dæmi',
     lead:
-      'Varan byrjar á því sem nemendur búa þegar til: mynd af dæmi og handskrifaðri vinnu. Endurgjöfin ræðst af völdum ham og Ratatoskur biður um staðfestingu þegar mikilvægt er að vita að nemandinn hafi lesið svarið.',
+      'Appið fylgir takti vinnubókarinnar: skrifa línu, biðja um hjálp þegar maður festist, halda áfram og fara svo yfir eða sjá lausn eftir tilraun.',
     steps: [
       {
-        title: 'Mynd af dæmi',
-        body: 'Appið byrjar á verkefninu, svo líkanið hafi sömu spurningu og nemandinn sér.',
+        title: 'Skrifa það sem er vitað',
+        body: 'Nemandinn byrjar á dæminu og setur fyrstu gagnlegu línuna á síðuna.',
       },
       {
-        title: 'Handskrifuð vinna',
-        body: 'Nemandinn leysir með Apple Pencil. Síðan helst sýnileg á meðan beðið er um endurgjöf.',
+        title: 'Spyrja á réttu augnabliki',
+        body: 'Vísbending getur svarað ókláraðri tilraun án þess að taka lausnina af nemandanum.',
       },
       {
-        title: 'Endurgjöf eftir ham',
-        body: 'Vísbending, Fara yfir lausn og Sýna lausn breyta svarinu án þess að breyta vinnubókarvenjunni.',
+        title: 'Halda vinnunni sýnilegri',
+        body: 'Næstu línur haldast á sömu síðu, svo endurgjöfin tengist alltaf handskrifuðu tilrauninni.',
       },
       {
-        title: 'Staðfesting á lestri',
-        body: 'Þegar svarið þarf athygli bíður appið eftir staðfestingu nemandans áður en haldið er áfram.',
+        title: 'Yfirfara áður en haldið er áfram',
+        body: 'Þegar appið er óvisst biður það nemandann um að staðfesta lesturinn áður en svarið er metið.',
       },
     ],
     calloutTitle: 'Yfirsýn kennara er framtíðarlag',

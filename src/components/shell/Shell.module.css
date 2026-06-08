@@ -8,14 +8,15 @@
   z-index: var(--z-header);
   top: 0;
   border-bottom: 1px solid var(--line);
-  background: var(--paper);
+  background: color-mix(in oklch, var(--paper) 92%, white);
+  box-shadow: 0 1px 0 color-mix(in oklch, white 28%, transparent);
 }
 
 .headerInner {
   position: relative;
   display: flex;
   width: min(100%, var(--content-max));
-  min-height: 4.5rem;
+  min-height: 5.25rem;
   align-items: center;
   gap: clamp(0.8rem, 1.8vw, 1.6rem);
   margin: 0 auto;
@@ -31,8 +32,8 @@
 
 .brandLink {
   display: inline-flex;
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 54px;
+  min-height: 54px;
   align-items: center;
   justify-content: flex-start;
 }
