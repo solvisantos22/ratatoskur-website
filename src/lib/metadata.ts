@@ -77,6 +77,12 @@ function socialMetadata(locale: Locale, text: MetadataText, type: 'website' | 'a
   };
 }
 
+export function stripSiteNamePrefix(title: string) {
+  const stripped = title.replace(/^Ratatoskur\s*[:\-–—]?\s+/i, '').trim();
+  if (!stripped) return title;
+  return `${stripped.charAt(0).toLocaleUpperCase()}${stripped.slice(1)}`;
+}
+
 export function createRootMetadata(): Metadata {
   return {
     title: {
@@ -113,10 +119,15 @@ export function createPageMetadata(locale: Locale, page: PageKey): Metadata {
 }
 
 export function createArticleMetadata(locale: Locale, text: MetadataText): Metadata {
+  const articleText = {
+    ...text,
+    title: stripSiteNamePrefix(text.title),
+  };
+
   return {
-    title: text.title,
-    description: text.description,
-    ...socialMetadata(locale, text, 'article'),
+    title: articleText.title,
+    description: articleText.description,
+    ...socialMetadata(locale, articleText, 'article'),
   };
 }
 

@@ -5,6 +5,7 @@ import {
   createRootMetadata,
   createSafeNoIndexMetadata,
   localizedMetadata,
+  stripSiteNamePrefix,
 } from './metadata';
 import { routing, type Locale } from '@/i18n/routing';
 
@@ -89,6 +90,21 @@ describe('metadata helpers', () => {
       title: 'Notebook entry',
       description: 'A short note about validation work.',
       type: 'article',
+    });
+  });
+
+  test('article metadata avoids repeating the site name in templated titles', () => {
+    expect(stripSiteNamePrefix('Ratatoskur enters validation')).toBe('Enters validation');
+    expect(stripSiteNamePrefix('Ratatoskur: validation notes')).toBe('Validation notes');
+
+    const metadata = createArticleMetadata('en', {
+      title: 'Ratatoskur enters validation',
+      description: 'A short note about validation work.',
+    });
+
+    expect(metadata.title).toBe('Enters validation');
+    expect(metadata.openGraph).toMatchObject({
+      title: 'Enters validation',
     });
   });
 
