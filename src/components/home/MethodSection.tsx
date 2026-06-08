@@ -75,7 +75,7 @@ export function MethodSection({ locale }: MethodSectionProps) {
 
   return (
     <section className={styles.methodSection} id="method" aria-labelledby="method-title">
-      <Reveal className={styles.methodCopy}>
+      <Reveal className={styles.methodCopy} variant="focus">
         <h2 id="method-title">{text.title}</h2>
         <p>{text.lead}</p>
         <aside className={styles.futureCallout}>
@@ -85,7 +85,7 @@ export function MethodSection({ locale }: MethodSectionProps) {
       </Reveal>
       <ol className={styles.methodSteps}>
         {text.steps.map((step, index) => (
-          <Reveal as="li" delay={index * 65} key={step.title}>
+          <Reveal as="li" delay={index * 65} key={step.title} variant="trace">
             <span aria-hidden="true" />
             <div>
               <h3>{step.title}</h3>

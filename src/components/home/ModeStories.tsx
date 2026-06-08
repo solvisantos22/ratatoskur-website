@@ -93,11 +93,16 @@ export function ModeStories({ locale }: ModeStoriesProps) {
             className={styles.modeStory}
             delay={index * 70}
             key={story.label}
+            variant={index === 0 ? 'focus' : 'rise'}
           >
-            <span>{story.label}</span>
-            <h3>{story.title}</h3>
-            <p>{story.body}</p>
-            <small>{story.note}</small>
+            <div className={styles.modeStoryIndex}>
+              <span>{story.label}</span>
+            </div>
+            <div className={styles.modeStoryCopy}>
+              <h3>{story.title}</h3>
+              <p>{story.body}</p>
+              <small>{story.note}</small>
+            </div>
           </Reveal>
         ))}
       </div>

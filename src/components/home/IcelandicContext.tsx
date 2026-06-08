@@ -46,11 +46,11 @@ export function IcelandicContext({ locale }: IcelandicContextProps) {
 
   return (
     <section className={styles.contextSection} aria-labelledby="icelandic-context-title">
-      <Reveal className={styles.contextPanel} variant="sheet">
+      <Reveal className={styles.contextPanel} variant="focus">
         <h2 id="icelandic-context-title">{text.title}</h2>
         <p>{text.lead}</p>
       </Reveal>
-      <Reveal className={styles.contextNotes} delay={90}>
+      <Reveal className={styles.contextNotes} delay={90} variant="lift">
         <ul>
           {text.points.map((point) => (
             <li key={point}>{point}</li>

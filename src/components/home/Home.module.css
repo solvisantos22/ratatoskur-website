@@ -334,39 +334,73 @@
 
 .modeStoriesGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.5rem);
-  margin-top: clamp(1.35rem, 3vw, 2.25rem);
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: clamp(0.85rem, 2vw, 1.15rem);
+  margin-top: clamp(1.55rem, 4vw, 2.75rem);
 }
 
 .modeStory {
   position: relative;
   display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(0.85rem, 2vw, 1.15rem);
+  min-height: clamp(12rem, 22vw, 16rem);
+  padding: clamp(1rem, 2.4vw, 1.45rem);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklch, var(--reading) 86%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 9%, transparent);
+}
+
+.modeStory:first-child {
+  grid-row: span 2;
+  align-content: end;
+  background:
+    radial-gradient(circle at 82% 12%, color-mix(in oklch, var(--brand-orange) 34%, transparent), transparent 13rem),
+    var(--brand-espresso);
+  color: var(--reading);
+}
+
+.modeStory:not(:first-child)::before {
+  position: absolute;
+  top: 50%;
+  left: calc(clamp(0.85rem, 2vw, 1.15rem) * -1);
+  width: clamp(0.85rem, 2vw, 1.15rem);
+  height: 1px;
+  background: color-mix(in oklch, var(--brand-espresso) 22%, transparent);
+  content: "";
+}
+
+.modeStoryIndex {
+  display: grid;
   align-content: start;
-  gap: 0.72rem;
-  min-height: 0;
-  padding-top: clamp(1rem, 2vw, 1.25rem);
-  border-top: 1px solid var(--line);
 }
 
-.modeStory:nth-child(2) {
-  margin-top: 0;
-}
-
-.modeStory span {
+.modeStoryIndex span {
   width: fit-content;
-  padding: 0.42rem 0.7rem;
+  min-width: 4.1rem;
+  padding: 0.46rem 0.7rem;
   border-radius: 999px;
   background: var(--brand-espresso);
   color: var(--reading);
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 850;
   line-height: 1;
+  text-align: center;
 }
 
-.modeStory:first-child span {
+.modeStory:first-child .modeStoryIndex span {
   background: var(--brand-orange);
   color: var(--brand-espresso);
+}
+
+.modeStoryCopy {
+  display: grid;
+  align-content: start;
+  gap: 0.72rem;
+}
+
+.modeStory:first-child .modeStoryCopy {
+  align-content: end;
 }
 
 .modeStory h3,
@@ -402,27 +436,42 @@
   line-height: 1.35;
 }
 
+.modeStory:first-child h3,
+.modeStory:first-child p {
+  color: var(--reading);
+}
+
+.modeStory:first-child p {
+  color: color-mix(in oklch, var(--reading) 86%, transparent);
+}
+
+.modeStory:first-child small {
+  color: color-mix(in oklch, var(--brand-orange) 76%, white);
+}
+
 .methodSection {
   display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(20rem, 1fr);
+  grid-template-columns: minmax(0, 0.82fr) minmax(20rem, 1.05fr);
   align-items: start;
-  gap: clamp(2rem, 5vw, 4.5rem);
+  gap: clamp(2.2rem, 5.4vw, 5rem);
   scroll-margin-top: 6rem;
 }
 
 .methodCopy {
   position: sticky;
-  top: 7rem;
+  top: 6.8rem;
   display: grid;
-  gap: 1rem;
+  gap: 1.05rem;
 }
 
 .futureCallout {
   display: grid;
-  gap: 0.55rem;
-  margin-top: 0.45rem;
-  padding: 0.95rem 0 0;
-  border-top: 1px solid color-mix(in oklch, var(--brand-rust) 24%, transparent);
+  gap: 0.5rem;
+  margin-top: clamp(0.45rem, 1.4vw, 0.9rem);
+  padding: clamp(0.85rem, 2vw, 1.05rem);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklch, var(--reading) 54%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-rust) 18%, transparent);
 }
 
 .futureCallout h3 {
@@ -434,23 +483,29 @@
 .methodSteps {
   position: relative;
   display: grid;
-  gap: 0;
+  gap: 0.15rem;
   margin: 0;
-  padding: 0;
+  padding: 0.25rem 0;
   list-style: none;
   counter-reset: method-step;
 }
 
 .methodSteps::before {
   position: absolute;
-  top: 1.4rem;
-  bottom: 1.4rem;
+  top: 1.55rem;
+  bottom: 1.55rem;
   left: 1.02rem;
-  width: 2px;
+  width: 0.18rem;
   border-radius: 999px;
-  background: color-mix(in oklch, var(--brand-orange) 70%, var(--brand-rust));
+  background:
+    linear-gradient(
+      180deg,
+      var(--brand-orange),
+      color-mix(in oklch, var(--brand-rust) 62%, var(--brand-orange)),
+      color-mix(in oklch, var(--brand-espresso) 72%, var(--brand-rust))
+    );
   content: "";
-  opacity: 0.6;
+  opacity: 0.46;
   transform-origin: top;
 }
 
@@ -458,10 +513,10 @@
   position: relative;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(0.8rem, 1.8vw, 1rem);
-  min-height: clamp(7rem, 13vw, 10rem);
-  padding: clamp(1.1rem, 2.3vw, 1.6rem) 0;
-  border-top: 1px solid var(--line);
+  gap: clamp(0.9rem, 2vw, 1.15rem);
+  min-height: clamp(7.4rem, 12vw, 9.6rem);
+  padding: clamp(1.15rem, 2.5vw, 1.7rem) 0 clamp(1.15rem, 2.5vw, 1.7rem);
+  border-top: 1px solid color-mix(in oklch, var(--brand-espresso) 15%, transparent);
   counter-increment: method-step;
 }
 
@@ -477,13 +532,26 @@
   height: 2.05rem;
   place-items: center;
   border-radius: 999px;
-  background: var(--brand-espresso);
-  color: var(--reading);
+  background: color-mix(in oklch, var(--reading) 72%, white);
+  color: var(--brand-espresso);
   font-weight: 880;
+  box-shadow:
+    0 0 0 0.32rem var(--paper),
+    inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 20%, transparent);
+  transition:
+    background var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out),
+    transform var(--duration-ui) var(--ease-out);
 }
 
 .methodSteps li > span::before {
   content: counter(method-step);
+}
+
+.methodSteps li[data-visible="true"] > span {
+  background: var(--brand-orange);
+  color: var(--brand-espresso);
+  transform: scale(1.04);
 }
 
 @keyframes methodTrace {
@@ -513,36 +581,43 @@
 
 .contextSection {
   display: grid;
-  grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1fr);
-  gap: clamp(1.25rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(1.4rem, 5vw, 4.2rem);
+  align-items: start;
 }
 
 .contextPanel {
+  position: relative;
   display: grid;
   align-content: start;
   gap: 0.9rem;
-  min-height: clamp(17rem, 28vw, 20rem);
-  padding: clamp(1.15rem, 2.6vw, 1.55rem);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 0% 100%, color-mix(in oklch, var(--brand-orange) 28%, transparent), transparent 16rem),
-    var(--brand-espresso);
+  padding-top: clamp(0.9rem, 2vw, 1.25rem);
+  border-top: 2px solid var(--brand-espresso);
 }
 
-.contextPanel h2,
-.contextPanel p {
-  color: var(--reading);
+.contextPanel::before {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: min(42%, 10rem);
+  height: 2px;
+  background: var(--brand-orange);
+  content: "";
+}
+
+.contextPanel h2 {
+  color: var(--brand-espresso);
 }
 
 .contextPanel p {
-  color: color-mix(in oklch, var(--reading) 84%, transparent);
+  color: var(--ink-soft);
 }
 
 .contextNotes {
   display: grid;
   align-content: start;
-  gap: clamp(1rem, 2vw, 1.4rem);
-  padding-top: clamp(0.4rem, 2vw, 1.3rem);
+  gap: clamp(1rem, 2.4vw, 1.55rem);
+  padding-top: clamp(0.2rem, 1vw, 0.55rem);
 }
 
 .contextNotes ul {
@@ -554,12 +629,15 @@
 }
 
 .contextNotes li {
-  padding: 0.9rem 0;
-  border-top: 1px solid var(--line);
+  padding: 0.85rem 0;
+  border-top: 1px solid color-mix(in oklch, var(--brand-espresso) 14%, transparent);
+  color: var(--ink-soft);
+  font-weight: 560;
+  line-height: 1.52;
 }
 
 .contextNotes li:last-child {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid color-mix(in oklch, var(--brand-espresso) 14%, transparent);
 }
 
 .contextNotes > p {
@@ -584,11 +662,11 @@
 
 .teamCard {
   display: grid;
-  grid-template-columns: minmax(7.5rem, 9.5rem) minmax(0, 1fr);
+  grid-template-columns: minmax(7rem, 8.5rem) minmax(0, 1fr);
   gap: clamp(0.9rem, 2vw, 1.2rem);
   align-items: center;
   min-height: 0;
-  padding: clamp(0.75rem, 1.6vw, 1rem);
+  padding: clamp(0.65rem, 1.4vw, 0.9rem);
   border-radius: var(--radius-lg);
   background: var(--reading);
   box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 10%, transparent);
@@ -597,9 +675,10 @@
 .teamImage {
   width: 100%;
   height: auto;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 5;
   border-radius: var(--radius-md);
   object-fit: cover;
+  object-position: center 38%;
   filter: saturate(0.94) contrast(1.04);
 }
 
@@ -617,7 +696,14 @@
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(20rem, 1fr);
   align-items: start;
-  gap: clamp(1.2rem, 4vw, 3rem);
+  gap: clamp(1.4rem, 4vw, 3.4rem);
+  padding-block: clamp(2rem, 5vw, 3.2rem);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 10% 12%, color-mix(in oklch, var(--brand-orange) 24%, transparent), transparent 18rem),
+    radial-gradient(circle at 92% 88%, color-mix(in oklch, var(--brand-rust) 32%, transparent), transparent 20rem),
+    var(--brand-espresso);
+  color: var(--reading);
   scroll-margin-top: 6rem;
 }
 
@@ -627,10 +713,14 @@
   padding-top: clamp(0.2rem, 1vw, 0.8rem);
 }
 
+.contactCopy .kicker {
+  color: var(--brand-orange);
+}
+
 .contactCopy h2 {
   max-width: 10em;
   margin: 0;
-  color: var(--brand-espresso);
+  color: var(--reading);
   font-size: clamp(2.2rem, 5vw, 4.4rem);
   font-weight: 740;
   letter-spacing: -0.035em;
@@ -641,7 +731,7 @@
 .contactCopy > p {
   max-width: 42rem;
   margin: 0;
-  color: var(--ink-soft);
+  color: color-mix(in oklch, var(--reading) 84%, transparent);
   font-size: clamp(1rem, 1.35vw, 1.16rem);
   font-weight: 560;
   line-height: 1.58;
@@ -655,10 +745,7 @@
   margin-top: 0.6rem;
   padding: clamp(1rem, 2vw, 1.25rem);
   border-radius: var(--radius-lg);
-  background:
-    linear-gradient(135deg, color-mix(in oklch, var(--brand-orange) 18%, transparent), transparent),
-    var(--reading);
-  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 10%, transparent);
+  background: color-mix(in oklch, var(--reading) 92%, white);
 }
 
 .contactNote h3 {
@@ -687,35 +774,30 @@
 .contactForm {
   position: relative;
   display: grid;
-  gap: 1rem;
-  padding: clamp(1rem, 2.5vw, 1.45rem);
+  gap: clamp(0.95rem, 1.8vw, 1.15rem);
+  padding: clamp(1rem, 2.5vw, 1.6rem);
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(color-mix(in oklch, var(--brand-espresso) 6%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in oklch, var(--brand-espresso) 6%, transparent) 1px, transparent 1px),
-    color-mix(in oklch, var(--paper-deep) 74%, white);
-  background-size: 26px 26px;
-  box-shadow:
-    inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 12%, transparent),
-    0 20px 42px color-mix(in oklch, var(--brand-espresso) 10%, transparent);
+    radial-gradient(circle at 100% 0%, color-mix(in oklch, var(--brand-orange) 16%, transparent), transparent 14rem),
+    color-mix(in oklch, var(--reading) 94%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 12%, transparent);
 }
 
 .contactForm::before {
   position: absolute;
-  top: 1rem;
-  bottom: 1rem;
-  left: clamp(0.85rem, 2vw, 1.25rem);
-  width: 2px;
-  border-radius: 999px;
-  background: color-mix(in oklch, var(--brand-orange) 74%, var(--brand-rust));
+  top: 0;
+  right: clamp(1rem, 2.5vw, 1.6rem);
+  left: clamp(1rem, 2.5vw, 1.6rem);
+  height: 0.22rem;
+  border-radius: 0 0 999px 999px;
+  background: var(--brand-orange);
   content: "";
-  opacity: 0.7;
 }
 
 .formField,
 .formFooter,
 .contactMailto {
-  margin-left: clamp(0.9rem, 2.5vw, 1.35rem);
+  margin-left: 0;
 }
 
 .formField {
@@ -987,6 +1069,14 @@
     margin-top: 0;
   }
 
+  .modeStory {
+    grid-template-columns: 1fr;
+  }
+
+  .modeStory:not(:first-child)::before {
+    display: none;
+  }
+
   .methodSteps li {
     min-height: 0;
   }
@@ -1049,6 +1139,7 @@
   .futureCallout,
   .contextPanel,
   .teamCard,
+  .contactSection,
   .contactNote,
   .contactForm,
   .formField input,
