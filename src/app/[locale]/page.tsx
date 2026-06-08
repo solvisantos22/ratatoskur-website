@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { ContactSection } from '@/components/home/ContactSection';
 import { Hero } from '@/components/home/Hero';
 import { IcelandicContext } from '@/components/home/IcelandicContext';
 import { MethodSection } from '@/components/home/MethodSection';
@@ -22,6 +23,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <MethodSection locale={validatedLocale} />
       <IcelandicContext locale={validatedLocale} />
       <TeamSection locale={validatedLocale} />
+      <ContactSection locale={validatedLocale} />
     </main>
   );
 }

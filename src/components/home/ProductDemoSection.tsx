@@ -9,9 +9,6 @@ const copy: Record<
     lead: string;
     modeIntro: string;
     modes: Array<{ name: string; body: string }>;
-    contactTitle: string;
-    contactBody: string;
-    contactCta: string;
   }
 > = {
   en: {
@@ -33,10 +30,6 @@ const copy: Record<
         body: 'A full explanation for review after the attempt.',
       },
     ],
-    contactTitle: 'Bring Ratatoskur to your school',
-    contactBody:
-      'This temporary handoff keeps the redesign navigable while the full contact form is rebuilt.',
-    contactCta: 'Email hello@ratatoskur.is',
   },
   is: {
     title: 'Prófaðu vinnubókina sem nemendur sjá',
@@ -57,10 +50,6 @@ const copy: Record<
         body: 'Heildarskýring til að rifja upp eftir tilraunina.',
       },
     ],
-    contactTitle: 'Komdu Ratatoskur í skólann þinn',
-    contactBody:
-      'Þessi bráðabirgðaleið heldur síðunni nothæfri á meðan sambandseyðublaðið er endurbyggt.',
-    contactCta: 'Senda póst á hello@ratatoskur.is',
   },
 };
 
@@ -90,13 +79,6 @@ export function ProductDemoSection({ locale }: ProductDemoSectionProps) {
             </li>
           ))}
         </ul>
-      </div>
-      <div className={styles.contactHandoff} id="contact">
-        <div>
-          <h2>{text.contactTitle}</h2>
-          <p>{text.contactBody}</p>
-        </div>
-        <a href="mailto:hello@ratatoskur.is">{text.contactCta}</a>
       </div>
     </section>
   );

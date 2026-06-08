@@ -13,7 +13,8 @@
 .storySection,
 .methodSection,
 .contextSection,
-.teamSection {
+.teamSection,
+.contactSection {
   width: min(100%, var(--home-max));
   margin: 0 auto;
   padding-inline: var(--page-gutter);
@@ -293,71 +294,11 @@
   line-height: 1.45;
 }
 
-.contactHandoff {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(1rem, 3vw, 2rem);
-  scroll-margin-top: 6rem;
-  max-width: 58rem;
-  padding: clamp(1rem, 2.5vw, 1.35rem);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(135deg, color-mix(in oklch, var(--brand-espresso) 94%, black), var(--brand-espresso)),
-    var(--brand-espresso);
-  color: var(--reading);
-}
-
-.contactHandoff div {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.contactHandoff h2 {
-  margin: 0;
-  color: inherit;
-  font-family: var(--font-body-stack);
-  font-size: clamp(1.15rem, 2vw, 1.55rem);
-  font-weight: 850;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
-}
-
-.contactHandoff p {
-  max-width: 34rem;
-  margin: 0;
-  color: color-mix(in oklch, var(--reading) 82%, transparent);
-  font-size: 0.96rem;
-  line-height: 1.45;
-}
-
-.contactHandoff a {
-  display: inline-flex;
-  flex: none;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: 0.7rem 1rem;
-  border-radius: var(--radius-md);
-  background: var(--brand-orange);
-  color: var(--brand-espresso);
-  font-weight: 850;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background-color var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
-}
-
-.contactHandoff a:active {
-  transform: scale(0.98);
-}
-
 .storySection,
 .methodSection,
 .contextSection,
-.teamSection {
+.teamSection,
+.contactSection {
   padding-block: clamp(3.8rem, 8vw, 7.4rem);
 }
 
@@ -645,9 +586,225 @@
   font-weight: 850;
 }
 
+.contactSection {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(20rem, 1fr);
+  align-items: start;
+  gap: clamp(1.2rem, 4vw, 3rem);
+  scroll-margin-top: 6rem;
+}
+
+.contactCopy {
+  display: grid;
+  gap: 1rem;
+  padding-top: clamp(0.2rem, 1vw, 0.8rem);
+}
+
+.contactCopy h2 {
+  max-width: 10em;
+  margin: 0;
+  color: var(--brand-espresso);
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  font-weight: 740;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.contactCopy > p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
+  font-weight: 560;
+  line-height: 1.58;
+  text-wrap: pretty;
+}
+
+.contactNote {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 39rem;
+  margin-top: 0.6rem;
+  padding: clamp(1rem, 2vw, 1.25rem);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, color-mix(in oklch, var(--brand-orange) 18%, transparent), transparent),
+    var(--reading);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 10%, transparent);
+}
+
+.contactNote h3 {
+  margin: 0;
+  color: var(--brand-espresso);
+  font-family: var(--font-body-stack);
+  font-size: 1.02rem;
+  font-weight: 860;
+  letter-spacing: -0.01em;
+}
+
+.contactNote ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contactNote li {
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.contactForm {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2.5vw, 1.45rem);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(color-mix(in oklch, var(--brand-espresso) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, var(--brand-espresso) 6%, transparent) 1px, transparent 1px),
+    color-mix(in oklch, var(--paper-deep) 74%, white);
+  background-size: 26px 26px;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 12%, transparent),
+    0 20px 42px color-mix(in oklch, var(--brand-espresso) 10%, transparent);
+}
+
+.contactForm::before {
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: clamp(0.85rem, 2vw, 1.25rem);
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--brand-orange) 74%, var(--brand-rust));
+  content: "";
+  opacity: 0.7;
+}
+
+.formField,
+.formFooter,
+.contactMailto {
+  margin-left: clamp(0.9rem, 2.5vw, 1.35rem);
+}
+
+.formField {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.formField label {
+  color: var(--brand-espresso);
+  font-size: 0.92rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.formField input,
+.formField textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid color-mix(in oklch, var(--brand-espresso) 16%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklch, white 66%, var(--paper));
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.formField textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.formField input::placeholder,
+.formField textarea::placeholder {
+  color: color-mix(in oklch, var(--ink-soft) 64%, transparent);
+}
+
+.formField input[aria-invalid="true"],
+.formField textarea[aria-invalid="true"] {
+  border-color: var(--brand-rust);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--brand-orange) 28%, transparent);
+}
+
+.fieldError,
+.formStatus {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.fieldError {
+  color: var(--brand-rust);
+  font-weight: 760;
+}
+
+.honeypotField {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.formFooter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.3rem;
+}
+
+.formStatus {
+  color: var(--ink-soft);
+  font-weight: 650;
+}
+
+.contactSubmit {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.1rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--brand-orange);
+  color: var(--brand-espresso);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 880;
+  line-height: 1;
+}
+
+.contactSubmit:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.contactMailto {
+  width: fit-content;
+  color: var(--brand-rust);
+  font-size: 0.94rem;
+  font-weight: 820;
+  line-height: 1.35;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .contactHandoff a:hover {
-    background: var(--reading);
+  .contactSubmit:hover {
+    background: color-mix(in oklch, var(--brand-orange) 88%, white);
+  }
+
+  .contactMailto:hover {
+    color: var(--brand-espresso);
   }
 }
 
@@ -657,7 +814,9 @@
   .modeStory,
   .methodSteps li,
   .contextPanel,
-  .teamCard {
+  .teamCard,
+  .contactCopy,
+  .contactForm {
     transition:
       opacity 520ms var(--ease-out),
       transform 520ms var(--ease-out);
@@ -681,7 +840,9 @@
     .modeStory,
     .methodSteps li,
     .contextPanel,
-    .teamCard {
+    .teamCard,
+    .contactCopy,
+    .contactForm {
       opacity: 0;
       transform: translateY(14px);
     }
@@ -708,7 +869,8 @@
   }
 
   .methodSection,
-  .contextSection {
+  .contextSection,
+  .contactSection {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -781,26 +943,18 @@
     grid-template-columns: 1fr;
   }
 
-  .contactHandoff {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .contactHandoff a {
-    width: 100%;
-    white-space: normal;
-  }
-
   .storySection,
   .methodSection,
   .contextSection,
-  .teamSection {
+  .teamSection,
+  .contactSection {
     padding-block: 3.2rem 4.2rem;
   }
 
   .sectionHeader h2,
   .methodCopy h2,
-  .contextPanel h2 {
+  .contextPanel h2,
+  .contactCopy h2 {
     font-size: clamp(2.05rem, 10vw, 3.25rem);
   }
 
@@ -830,6 +984,14 @@
   .teamImage {
     max-width: 18rem;
   }
+
+  .formFooter {
+    grid-template-columns: 1fr;
+  }
+
+  .contactSubmit {
+    width: 100%;
+  }
 }
 
 @media (max-width: 25rem) {
@@ -838,7 +1000,8 @@
   .storySection,
   .methodSection,
   .contextSection,
-  .teamSection {
+  .teamSection,
+  .contactSection {
     padding-inline: 1rem;
   }
 
@@ -861,14 +1024,22 @@
   .previewPaper,
   .previewModes,
   .previewFeedback,
-  .contactHandoff,
   .demoStage,
   .modeStory,
   .methodSteps li,
   .futureCallout,
   .contextPanel,
-  .teamCard {
+  .teamCard,
+  .contactNote,
+  .contactForm,
+  .formField input,
+  .formField textarea,
+  .contactSubmit {
     border: 1px solid CanvasText;
     box-shadow: none;
+  }
+
+  .contactSubmit {
+    color: ButtonText;
   }
 }
