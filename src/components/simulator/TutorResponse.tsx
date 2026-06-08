@@ -73,6 +73,13 @@ export function TutorResponse({
       </div>
       <h3>{data.title}</h3>
       <p>{data.body}</p>
+      {data.steps ? (
+        <ol className={styles.derivationSteps}>
+          {data.steps.map((step) => (
+            <li key={step}>{step}</li>
+          ))}
+        </ol>
+      ) : null}
     </>
   );
 

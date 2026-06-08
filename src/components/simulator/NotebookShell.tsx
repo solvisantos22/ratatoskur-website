@@ -47,7 +47,6 @@ const copy: Record<
     pageCount: string;
     toolbar: string;
     pen: string;
-    highlighter: string;
     eraser: string;
     ruler: string;
     actions: string;
@@ -64,7 +63,6 @@ const copy: Record<
     pageCount: 'Page 1 of 1',
     toolbar: 'Notebook tools',
     pen: 'Pen selected',
-    highlighter: 'Highlighter',
     eraser: 'Eraser',
     ruler: 'Ruler',
     actions: 'Choose feedback mode',
@@ -80,7 +78,6 @@ const copy: Record<
     pageCount: 'Blað 1 af 1',
     toolbar: 'Verkfæri í vinnubók',
     pen: 'Penni valinn',
-    highlighter: 'Yfirstrikari',
     eraser: 'Strokleður',
     ruler: 'Reglustika',
     actions: 'Veldu endurgjöf',
@@ -91,6 +88,12 @@ const copy: Record<
 };
 
 const orderedModes: DemoMode[] = ['hint', 'check_solution', 'reveal'];
+
+export function getNotebookToolbarItems(locale: Locale) {
+  const text = copy[locale];
+
+  return [text.pen, text.eraser, text.ruler];
+}
 
 function shouldShowInk(stage: DemoStage) {
   return (
@@ -120,10 +123,7 @@ export function NotebookShell({
   const confirmationOpen = stage === 'confirming';
   const activeModeLabel = modeLabels[locale][mode];
 
-  const toolbarItems = useMemo(
-    () => [text.pen, text.highlighter, text.eraser, text.ruler],
-    [text.eraser, text.highlighter, text.pen, text.ruler],
-  );
+  const toolbarItems = useMemo(() => getNotebookToolbarItems(locale), [locale]);
 
   return (
     <div className={styles.deviceFrame}>

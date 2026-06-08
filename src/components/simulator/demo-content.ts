@@ -5,7 +5,7 @@ export type DemoCopy = {
   interpretedReading: string;
   confidence: string;
   handwritingLines: string[];
-  responses: Record<DemoMode, { title: string; body: string }>;
+  responses: Record<DemoMode, { title: string; body: string; steps?: string[] }>;
 };
 
 export const demoCopy: Record<'en' | 'is', DemoCopy> = {
@@ -25,7 +25,12 @@ export const demoCopy: Record<'en' | 'is', DemoCopy> = {
       },
       reveal: {
         title: 'Full solution',
-        body: 'Subtract 3 from both sides to get 2x = 8, then divide by 2 to get x = 4.',
+        body: 'One way to derive the answer is to undo the operations around x in reverse order.',
+        steps: [
+          'Start with 2x + 3 = 11.',
+          'Subtract 3 from both sides: 2x = 8.',
+          'Divide both sides by 2: x = 4.',
+        ],
       },
     },
   },
@@ -45,7 +50,12 @@ export const demoCopy: Record<'en' | 'is', DemoCopy> = {
       },
       reveal: {
         title: 'Full lausn',
-        body: 'Dragðu 3 frá báðum megin til að fá 2x = 8 og deildu síðan með 2 til að fá x = 4.',
+        body: 'Ein leið til að leiða svarið út er að vinda ofan af aðgerðunum í kringum x í öfugri röð.',
+        steps: [
+          'Byrjaðu með 2x + 3 = 11.',
+          'Dragðu 3 frá báðum megin: 2x = 8.',
+          'Deildu báðum megin með 2: x = 4.',
+        ],
       },
     },
   },

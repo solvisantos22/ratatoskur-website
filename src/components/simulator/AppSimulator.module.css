@@ -350,6 +350,23 @@
   margin: 0;
 }
 
+.derivationSteps {
+  background: color-mix(in oklch, var(--paper) 78%, white);
+  border-radius: var(--radius-md);
+  color: var(--brand-espresso);
+  display: grid;
+  gap: 0.42rem;
+  font-size: 0.9rem;
+  line-height: 1.38;
+  margin: 0;
+  padding: 0.72rem 0.72rem 0.72rem 1.9rem;
+}
+
+.derivationSteps li::marker {
+  color: var(--brand-rust);
+  font-weight: 900;
+}
+
 .readingCard {
   background: color-mix(in oklch, var(--paper) 76%, white);
   border-radius: var(--radius-md);
