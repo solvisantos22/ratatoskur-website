@@ -49,7 +49,7 @@ const copy: Record<
         body: 'Lítil vísbending sem heldur hugsuninni hjá nemandanum.',
       },
       {
-        name: 'Fara yfir',
+        name: 'Fara yfir lausn',
         body: 'Bein endurgjöf um hvort skrifaða lausnin sé á réttri leið.',
       },
       {

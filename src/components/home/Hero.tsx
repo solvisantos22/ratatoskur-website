@@ -40,7 +40,7 @@ const copy: Record<
     previewProblem: 'Leystu 2x + 5 = 17',
     previewWorkLabel: 'Vinnubók nemanda',
     previewModeLabel: 'Hamir',
-    previewModes: ['Vísbending', 'Fara yfir', 'Sýna'],
+    previewModes: ['Vísbending', 'Fara yfir lausn', 'Sýna lausn'],
     previewFeedback: 'Prófaðu fyrst að draga 5 frá báðum megin.',
   },
 };
