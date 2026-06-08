@@ -1,0 +1,426 @@
+.home {
+  --home-max: 88rem;
+  background:
+    radial-gradient(circle at 86% 8%, color-mix(in oklch, var(--brand-orange) 20%, transparent), transparent 24rem),
+    linear-gradient(180deg, color-mix(in oklch, var(--reading) 42%, transparent), transparent 36rem),
+    var(--paper);
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.hero,
+.demoSection {
+  width: min(100%, var(--home-max));
+  margin: 0 auto;
+  padding-inline: var(--page-gutter);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(20rem, 0.78fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  min-height: min(760px, calc(100dvh - 4.5rem));
+  padding-block: clamp(3rem, 7vw, 5.6rem);
+}
+
+.heroCopy {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  max-width: 46rem;
+}
+
+.kicker {
+  width: fit-content;
+  margin: 0;
+  color: var(--brand-rust);
+  font-size: clamp(0.82rem, 1.1vw, 0.95rem);
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.heroCopy h1 {
+  max-width: 9em;
+  margin: 0;
+  color: var(--brand-espresso);
+  font-size: clamp(3rem, 6.4vw, 5.6rem);
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  line-height: 0.96;
+}
+
+.heroLead {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(1.05rem, 1.55vw, 1.32rem);
+  font-weight: 560;
+  line-height: 1.45;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+}
+
+.heroAppPreview {
+  justify-self: center;
+  width: min(100%, 27rem);
+  transform: rotate(1.4deg);
+}
+
+.previewDevice {
+  border-radius: var(--radius-device);
+  background:
+    linear-gradient(145deg, #2c160e, #4b2414 58%, #21100a),
+    var(--brand-espresso);
+  box-shadow: 0 24px 58px color-mix(in oklch, var(--brand-espresso) 24%, transparent);
+  padding: clamp(0.55rem, 1.2vw, 0.72rem);
+}
+
+.previewScreen {
+  position: relative;
+  display: grid;
+  gap: 0.8rem;
+  overflow: hidden;
+  min-height: clamp(31rem, 54vw, 39rem);
+  padding: clamp(0.9rem, 2vw, 1.05rem);
+  border: 1px solid color-mix(in oklch, white 24%, transparent);
+  border-radius: calc(var(--radius-device) - 0.45rem);
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--paper) 86%, white), var(--paper)),
+    var(--paper);
+}
+
+.previewScreen::before {
+  position: absolute;
+  top: 0.42rem;
+  left: 50%;
+  width: 4.5rem;
+  height: 0.34rem;
+  border-radius: 999px;
+  background: var(--ink);
+  content: "";
+  opacity: 0.58;
+  transform: translateX(-50%);
+}
+
+.previewTopBar {
+  display: grid;
+  gap: 0.2rem;
+  padding-top: 0.9rem;
+}
+
+.previewTopBar strong {
+  color: var(--brand-espresso);
+  font-family: var(--font-display-stack);
+  font-size: clamp(1.45rem, 3vw, 1.95rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.previewTopBar span,
+.previewPaper span,
+.previewModes span {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.previewPaper {
+  display: grid;
+  gap: 0.75rem;
+  min-height: 16rem;
+  padding: 0.86rem;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(color-mix(in oklch, var(--brand-espresso) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklch, var(--brand-espresso) 7%, transparent) 1px, transparent 1px),
+    #fffaf1;
+  background-size: 24px 24px;
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 12%, transparent);
+}
+
+.previewEquation {
+  display: grid;
+  gap: 0.5rem;
+  align-content: center;
+  min-height: 11rem;
+  color: var(--brand-espresso);
+  font-family: var(--font-display-stack);
+  font-size: clamp(1.45rem, 5vw, 2.1rem);
+  font-weight: 680;
+  line-height: 1.1;
+  transform: rotate(-2deg);
+}
+
+.previewEquation i {
+  font-style: italic;
+}
+
+.previewModes {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.8rem;
+  border-radius: var(--radius-lg);
+  background: var(--reading);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 9%, transparent);
+}
+
+.previewModes div {
+  display: grid;
+  gap: 0.42rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.previewModes b {
+  display: inline-grid;
+  min-height: 2.35rem;
+  place-items: center;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--paper-deep) 58%, white);
+  color: var(--brand-espresso);
+  font-size: 0.78rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.previewModes b:first-child {
+  background: var(--brand-orange);
+}
+
+.previewFeedback {
+  margin: 0;
+  padding: 0.8rem 0.85rem;
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklch, var(--brand-espresso) 92%, black);
+  color: var(--reading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.demoSection {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(3.8rem, 8vw, 7rem);
+}
+
+.demoIntro {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 50rem;
+}
+
+.demoIntro h2 {
+  margin: 0;
+  color: var(--brand-espresso);
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+  font-weight: 740;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.demoIntro p {
+  max-width: 44rem;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+  font-weight: 560;
+  line-height: 1.55;
+}
+
+.demoStage {
+  min-height: clamp(48rem, 74vw, 56rem);
+  padding: clamp(0.8rem, 2vw, 1.15rem);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in oklch, var(--brand-orange) 18%, transparent), transparent 18rem),
+    color-mix(in oklch, var(--reading) 72%, var(--paper));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklch, var(--brand-espresso) 9%, transparent),
+    0 18px 34px color-mix(in oklch, var(--brand-espresso) 9%, transparent);
+}
+
+.modeExplanation {
+  display: grid;
+  gap: 1rem;
+  max-width: 58rem;
+}
+
+.modeExplanation p {
+  margin: 0;
+  color: var(--brand-espresso);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 830;
+  line-height: 1.25;
+}
+
+.modeExplanation ul {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modeExplanation li {
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.modeExplanation strong {
+  color: var(--brand-espresso);
+  font-size: 1rem;
+}
+
+.modeExplanation span {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .heroCopy,
+  .heroAppPreview {
+    transition:
+      opacity 520ms var(--ease-out),
+      transform 520ms var(--ease-out);
+  }
+
+  .heroAppPreview {
+    transition-delay: 80ms;
+  }
+
+  @starting-style {
+    .heroCopy {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .heroAppPreview {
+      opacity: 0;
+      transform: translateY(18px) rotate(1.4deg);
+    }
+  }
+}
+
+@media (max-width: 64rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .heroCopy h1 {
+    max-width: 9em;
+  }
+
+  .heroAppPreview {
+    justify-self: start;
+    width: min(100%, 24rem);
+  }
+
+  .demoStage {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 48rem) {
+  .hero {
+    gap: 2.25rem;
+    padding-block: 2.7rem 3.6rem;
+  }
+
+  .heroCopy h1 {
+    max-width: 9em;
+    font-size: clamp(2.35rem, 11vw, 3.2rem);
+  }
+
+  .heroLead {
+    max-width: 31rem;
+  }
+
+  .heroActions {
+    align-items: stretch;
+    flex-direction: column;
+    max-width: 18rem;
+  }
+
+  .heroAppPreview {
+    width: min(100%, 21.5rem);
+    transform: none;
+  }
+
+  .previewScreen {
+    min-height: 29rem;
+  }
+
+  .previewPaper {
+    min-height: 12.5rem;
+  }
+
+  .previewEquation {
+    min-height: 8.5rem;
+    font-size: clamp(1.25rem, 8vw, 1.7rem);
+  }
+
+  .previewModes div {
+    grid-template-columns: 1fr;
+  }
+
+  .demoSection {
+    padding-block: 3.2rem 4rem;
+  }
+
+  .demoIntro h2 {
+    font-size: clamp(2.15rem, 11vw, 3.4rem);
+  }
+
+  .demoStage {
+    margin-inline: calc(var(--page-gutter) * -0.35);
+    padding: 0.7rem;
+  }
+
+  .modeExplanation ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 25rem) {
+  .hero,
+  .demoSection {
+    padding-inline: 1rem;
+  }
+
+  .heroActions {
+    max-width: none;
+  }
+
+  .previewDevice {
+    border-radius: 1.7rem;
+  }
+
+  .previewScreen {
+    border-radius: 1.25rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .previewDevice,
+  .previewScreen,
+  .previewPaper,
+  .previewModes,
+  .previewFeedback,
+  .demoStage {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+}
