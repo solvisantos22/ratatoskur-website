@@ -1,5 +1,6 @@
 import type { Locale } from '@/i18n/routing';
 import { ButtonLink } from '@/components/ui/ButtonLink';
+import { CinematicNotebookScene } from './CinematicNotebookScene';
 import styles from './Home.module.css';
 
 const copy: Record<
@@ -68,33 +69,13 @@ export function Hero({ locale }: HeroProps) {
         </div>
       </div>
 
-      <div aria-hidden="true" className={styles.heroAppPreview}>
-        <div className={styles.previewDevice}>
-          <div className={styles.previewScreen}>
-            <div className={styles.previewTopBar}>
-              <strong>Ratatoskur</strong>
-              <span>{text.previewProblem}</span>
-            </div>
-            <div className={styles.previewPaper}>
-              <span>{text.previewWorkLabel}</span>
-              <div className={styles.previewEquation}>
-                <i>2x + 5 = 17</i>
-                <i>2x = 12</i>
-                <i>x = 6</i>
-              </div>
-            </div>
-            <div className={styles.previewModes}>
-              <span>{text.previewModeLabel}</span>
-              <div>
-                {text.previewModes.map((mode) => (
-                  <b key={mode}>{mode}</b>
-                ))}
-              </div>
-            </div>
-            <p className={styles.previewFeedback}>{text.previewFeedback}</p>
-          </div>
-        </div>
-      </div>
+      <CinematicNotebookScene
+        feedback={text.previewFeedback}
+        modeLabel={text.previewModeLabel}
+        modes={text.previewModes}
+        problem={text.previewProblem}
+        workLabel={text.previewWorkLabel}
+      />
     </section>
   );
 }

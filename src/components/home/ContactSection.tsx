@@ -55,7 +55,7 @@ const copy: Record<
       organization: { label: 'School or role', placeholder: 'Menntaskóli, teacher, parent...' },
       message: {
         label: 'What should we know?',
-        placeholder: 'Tell us about the class, topic, or pilot you want to discuss.',
+        placeholder: 'Tell us about the students, topic, or pilot you want to discuss.',
       },
     },
     honeypot: 'Website',

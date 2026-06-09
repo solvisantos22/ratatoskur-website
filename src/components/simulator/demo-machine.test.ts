@@ -48,6 +48,7 @@ describe('demo machine', () => {
     expect(state.stage).toBe('interactive');
     expect(state.guidedRunComplete).toBe(true);
     expect(state.responseOpen).toBe(false);
+    expect(state.paused).toBe(true);
   });
 
   test('timeline controls move backward and forward one step at a time', () => {
@@ -59,10 +60,23 @@ describe('demo machine', () => {
     expect(checking.stage).toBe('responding');
     expect(checking.mode).toBe('hint');
     expect(checking.timelineIndex).toBe(2);
+    expect(checking.paused).toBe(true);
 
     const rewound = reduceDemo(checking, { type: 'PREVIOUS_STEP' } as never);
     expect(rewound.stage).toBe('writing');
     expect(rewound.timelineIndex).toBe(1);
+    expect(rewound.paused).toBe(true);
+  });
+
+  test('timeline controls keep working while manually paused', () => {
+    const writing = reduceDemo(initialDemoState, { type: 'START' });
+    const paused = reduceDemo(writing, { type: 'PAUSE' });
+
+    const next = reduceDemo(paused, { type: 'NEXT_STEP' });
+
+    expect(next.stage).toBe('responding');
+    expect(next.timelineIndex).toBe(2);
+    expect(next.paused).toBe(true);
   });
 
   test('pause blocks ADVANCE until RESUME', () => {
@@ -126,6 +140,7 @@ describe('demo machine', () => {
     expect(selected.visibleLineCount).toBe(3);
     expect(selected.guidedRunComplete).toBe(true);
     expect(selected.responseOpen).toBe(true);
+    expect(selected.paused).toBe(true);
   });
 
   test('ADVANCE ignores malformed runtime stages', () => {
@@ -238,6 +253,7 @@ describe('demo machine', () => {
     expect(next.stage).toBe('responding');
     expect(next.mode).toBe('check_solution');
     expect(next.responseOpen).toBe(true);
+    expect(next.paused).toBe(true);
   });
 
   test('CONFIRM_READING outside the confirmation stage preserves state', () => {

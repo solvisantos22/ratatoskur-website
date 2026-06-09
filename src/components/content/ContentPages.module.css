@@ -55,7 +55,7 @@
   color: var(--brand-espresso);
   font-size: clamp(2.7rem, 6vw, 5.5rem);
   font-weight: 760;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 0.98;
 }
 
@@ -90,7 +90,7 @@
   font-family: var(--font-display-stack);
   font-size: clamp(1.28rem, 2.2vw, 1.9rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1.06;
 }
 
@@ -156,7 +156,7 @@
   font-family: var(--font-display-stack);
   font-size: clamp(1.7rem, 3.3vw, 2.75rem);
   font-weight: 740;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1;
   text-wrap: balance;
 }
@@ -289,7 +289,7 @@
   color: var(--brand-espresso);
   font-size: clamp(1.75rem, 3vw, 2.55rem);
   font-weight: 740;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
   line-height: 1.05;
 }
 
@@ -437,7 +437,7 @@
   color: var(--brand-espresso);
   font-size: clamp(1.55rem, 3vw, 2.35rem);
   font-weight: 740;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
   line-height: 1.05;
 }
 

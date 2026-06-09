@@ -1,8 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-
 import { demoCopy } from './demo-content';
 import styles from './AppSimulator.module.css';
 
@@ -45,13 +42,10 @@ export function ReadingConfirmation({
   open,
   onConfirm,
 }: ReadingConfirmationProps) {
-  const [dismissed, setDismissed] = useState(false);
-  const reducedMotion = useReducedMotion();
   const text = copy[locale];
   const data = demoCopy[locale];
 
   const handleConfirm = () => {
-    setDismissed(true);
     onConfirm?.();
   };
 
@@ -77,29 +71,9 @@ export function ReadingConfirmation({
     </>
   );
 
-  if (reducedMotion) {
-    return open && !dismissed ? (
-      <aside aria-label={text.title} className={styles.confirmationSheet}>
-        {content}
-      </aside>
-    ) : null;
-  }
-
-  return (
-    <AnimatePresence initial={false} mode="wait">
-      {open && !dismissed ? (
-        <motion.aside
-          key={`${locale}-reading-confirmation`}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          aria-label={text.title}
-          className={styles.confirmationSheet}
-          exit={{ opacity: 0, y: -10, filter: 'blur(3px)' }}
-          initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
-          transition={{ bounce: 0, duration: 0.34, type: 'spring' }}
-        >
-          {content}
-        </motion.aside>
-      ) : null}
-    </AnimatePresence>
-  );
+  return open ? (
+    <aside aria-label={text.title} className={styles.confirmationSheet}>
+      {content}
+    </aside>
+  ) : null;
 }

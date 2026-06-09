@@ -28,6 +28,7 @@ export function Reveal({
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = Boolean(shouldReduceMotion);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const setNodeRef = useCallback((node: HTMLElement | null) => {
@@ -35,7 +36,7 @@ export function Reveal({
   }, []);
 
   useEffect(() => {
-    if (shouldReduceMotion) return;
+    if (reduceMotion) return;
 
     const node = ref.current;
     if (!node) return;
@@ -61,7 +62,7 @@ export function Reveal({
       window.cancelAnimationFrame(readyFrame);
       observer.disconnect();
     };
-  }, [shouldReduceMotion]);
+  }, [reduceMotion]);
 
   const style = {
     '--reveal-delay': `${delay}ms`,
@@ -70,9 +71,9 @@ export function Reveal({
   const revealProps = {
     ...props,
     className: [styles.reveal, className].filter(Boolean).join(' '),
-    'data-ready': ready && !shouldReduceMotion,
+    'data-ready': ready && !reduceMotion,
     'data-variant': variant,
-    'data-visible': visible || shouldReduceMotion,
+    'data-visible': visible || reduceMotion,
     style,
   };
 

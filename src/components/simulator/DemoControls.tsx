@@ -71,7 +71,8 @@ export function DemoControls({
   onNextStep,
 }: DemoControlsProps) {
   const text = copy[locale];
-  const progress = Math.max(0, Math.min(100, (currentStep / totalSteps) * 100));
+  const progress =
+    totalSteps > 0 ? Math.max(0, Math.min(1, currentStep / totalSteps)) : 0;
 
   return (
     <div aria-label={text.label} className={styles.demoControls} role="group">
@@ -81,7 +82,7 @@ export function DemoControls({
       <div className={styles.timelineStatus}>
         <span>{text.step(currentStep, totalSteps)}</span>
         <div aria-hidden="true" className={styles.timelineRail}>
-          <span style={{ width: `${progress}%` }} />
+          <span style={{ transform: `scaleX(${progress})` }} />
         </div>
       </div>
       <div className={styles.controlRow}>

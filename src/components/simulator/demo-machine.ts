@@ -110,22 +110,24 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
 
       const index = getTimelineIndex(state);
       if (index === -1) return state;
+      if (index >= demoTimeline.length - 1) return state;
+      const targetIndex = index + 1;
 
-      return applyTimelineStep(state, index + 1);
+      return applyTimelineStep(state, targetIndex, {
+        paused: targetIndex >= demoTimeline.length - 1,
+      });
     }
     case 'NEXT_STEP': {
-      if (state.paused) return state;
-
       const index = getTimelineIndex(state);
       if (index === -1) return state;
 
-      return applyTimelineStep(state, index + 1);
+      return applyTimelineStep(state, index + 1, { paused: true });
     }
     case 'PREVIOUS_STEP': {
       const index = getTimelineIndex(state);
       if (index === -1) return state;
 
-      return applyTimelineStep(state, index - 1, { paused: false });
+      return applyTimelineStep(state, index - 1, { paused: true });
     }
     case 'PAUSE':
       return { ...state, paused: true };
@@ -153,7 +155,7 @@ export function reduceDemo(state: DemoState, action: DemoAction): DemoState {
       if (state.stage === 'idle') return state;
 
       return applyTimelineStep(state, modeTimelineIndex[action.mode], {
-        paused: false,
+        paused: true,
         guidedRunComplete: true,
       });
   }

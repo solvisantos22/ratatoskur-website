@@ -61,6 +61,7 @@ export function useDemoController() {
   }, []);
 
   const selectMode = useCallback((mode: DemoMode) => {
+    manualPausedRef.current = true;
     dispatch({ type: 'SELECT_MODE', mode });
   }, []);
 

@@ -168,6 +168,7 @@
   overflow: hidden;
   padding: clamp(0.7rem, 2vw, 0.95rem);
   position: relative;
+  isolation: isolate;
 }
 
 .scriptedInkWrap {
@@ -198,7 +199,7 @@
   font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
   font-size: clamp(3rem, 7.2vw, 4.35rem);
   font-weight: 700;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
 }
 
 .inkPath {
@@ -212,6 +213,79 @@
 
 .emptyPaper {
   min-height: 18rem;
+}
+
+.recognitionLens {
+  position: absolute;
+  inset: clamp(0.85rem, 3vw, 1.25rem) clamp(0.7rem, 3vw, 1.1rem);
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklch, white 52%, transparent);
+  border-radius: calc(var(--radius-md) + 0.3rem);
+  background:
+    linear-gradient(135deg, color-mix(in oklch, white 22%, transparent), color-mix(in oklch, var(--reading) 8%, transparent)),
+    color-mix(in oklch, var(--reading) 12%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklch, white 62%, transparent),
+    inset 0 -1px 0 color-mix(in oklch, var(--brand-espresso) 10%, transparent),
+    0 16px 34px color-mix(in oklch, var(--brand-espresso) 12%, transparent);
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(0.8px) saturate(1.18);
+  backdrop-filter: blur(0.8px) saturate(1.18);
+}
+
+.recognitionLens::before,
+.recognitionLens::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.recognitionLens::before {
+  inset: -30% -45%;
+  background: linear-gradient(
+    105deg,
+    transparent 34%,
+    color-mix(in oklch, white 46%, transparent) 49%,
+    color-mix(in oklch, var(--brand-orange) 18%, transparent) 56%,
+    transparent 68%
+  );
+  transform: translate3d(-18%, 0, 0);
+}
+
+.recognitionLens::after {
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent, color-mix(in oklch, var(--brand-orange) 14%, transparent), transparent),
+    repeating-linear-gradient(
+      180deg,
+      color-mix(in oklch, white 18%, transparent) 0 1px,
+      transparent 1px 18px
+  );
+  background-position: 0 0, 0 0;
+  opacity: 0.35;
+}
+
+@keyframes recognitionLensSweep {
+  from {
+    opacity: 0.26;
+    transform: translate3d(-28%, 0, 0);
+  }
+
+  to {
+    opacity: 0.78;
+    transform: translate3d(28%, 0, 0);
+  }
+}
+
+@keyframes recognitionLensTrace {
+  from {
+    background-position: 0 -42px, 0 0;
+  }
+
+  to {
+    background-position: 0 42px, 0 0;
+  }
 }
 
 .toolbar {
@@ -301,12 +375,17 @@
   color: var(--brand-espresso);
 }
 
+.readingStatus,
 .confirmationSheet,
 .responseCard {
-  background: color-mix(in oklch, var(--reading) 94%, white);
+  background:
+    linear-gradient(135deg, color-mix(in oklch, white 52%, transparent), color-mix(in oklch, var(--reading) 80%, transparent)),
+    color-mix(in oklch, var(--reading) 92%, white);
+  border: 1px solid color-mix(in oklch, white 54%, var(--brand-espresso) 12%);
   border-radius: var(--radius-lg);
   box-shadow:
-    0 0 0 1px color-mix(in oklch, var(--brand-espresso) 12%, transparent),
+    inset 0 1px 0 color-mix(in oklch, white 62%, transparent),
+    inset 0 -1px 0 color-mix(in oklch, var(--brand-espresso) 9%, transparent),
     0 12px 28px color-mix(in oklch, var(--brand-espresso) 18%, transparent);
   display: grid;
   gap: 0.72rem;
@@ -317,6 +396,41 @@
   right: clamp(0.65rem, 3vw, 1rem);
   top: clamp(0.65rem, 3vw, 1rem);
   z-index: 2;
+  -webkit-backdrop-filter: blur(18px) saturate(1.32) contrast(1.03);
+  backdrop-filter: blur(18px) saturate(1.32) contrast(1.03);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .readingStatus,
+  .confirmationSheet,
+  .responseCard {
+    background: color-mix(in oklch, var(--reading) 96%, white);
+  }
+}
+
+.readingStatus {
+  align-content: start;
+}
+
+.readingStatus span {
+  color: var(--brand-rust);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.readingStatus strong {
+  color: var(--brand-espresso);
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.readingStatus p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  margin: 0;
 }
 
 .sheetHeader {
@@ -459,7 +573,9 @@
   border-radius: inherit;
   display: block;
   height: 100%;
-  transition: width var(--duration-ui) var(--ease-out);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-ui) var(--ease-out);
 }
 
 .controlRow {
@@ -509,6 +625,16 @@
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .recognitionLens::before {
+    animation: recognitionLensSweep 1.8s var(--ease-out) both;
+  }
+
+  .recognitionLens::after {
+    animation: recognitionLensTrace 2.8s var(--ease-standard) infinite alternate;
+  }
+}
+
 @media (max-width: 58rem) {
   .deviceFrame {
     margin-inline: auto;
@@ -545,8 +671,14 @@
 
   .modeButtons button,
   .controlButton,
-  .responseClose {
+  .responseClose,
+  .timelineRail span {
     transition: none;
+  }
+
+  .recognitionLens::before,
+  .recognitionLens::after {
+    animation: none;
   }
 
   .modeButtons button:not(:disabled):hover,
@@ -564,8 +696,10 @@
   .problemPanel,
   .paperPanel,
   .modePanel,
+  .readingStatus,
   .confirmationSheet,
   .responseCard,
+  .recognitionLens,
   .demoControls,
   .writingSurface,
   .readingCard {

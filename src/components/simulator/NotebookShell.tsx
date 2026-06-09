@@ -53,6 +53,8 @@ const copy: Record<
     locked: string;
     chooseModeHint: string;
     scriptedLabel: string;
+    readingStatusTitle: string;
+    readingStatusBody: string;
   }
 > = {
   en: {
@@ -69,6 +71,8 @@ const copy: Record<
     locked: 'Mode controls unlock once work is on the page.',
     chooseModeHint: 'Choose a mode to request a fresh response.',
     scriptedLabel: 'Scripted handwritten solution',
+    readingStatusTitle: 'Reading handwriting',
+    readingStatusBody: 'Matching the written work before showing feedback.',
   },
   is: {
     appTitle: 'Ratatoskur',
@@ -84,6 +88,8 @@ const copy: Record<
     locked: 'Hamir opnast þegar vinna birtist á síðunni.',
     chooseModeHint: 'Veldu ham til að biðja um nýtt svar.',
     scriptedLabel: 'Handskrifuð sýnilausn',
+    readingStatusTitle: 'Les rithönd',
+    readingStatusBody: 'Ber handskrifuðu vinnuna saman áður en endurgjöf birtist.',
   },
 };
 
@@ -102,6 +108,14 @@ function shouldShowInk(stage: DemoStage) {
     stage === 'confirming' ||
     stage === 'responding' ||
     stage === 'interactive'
+  );
+}
+
+function shouldShowRecognitionLens(stage: DemoStage) {
+  return (
+    stage === 'checking-reading' ||
+    stage === 'confirming' ||
+    stage === 'responding'
   );
 }
 
@@ -167,6 +181,18 @@ export function NotebookShell({
             ) : (
               <div className={styles.emptyPaper} />
             )}
+
+            {shouldShowRecognitionLens(stage) ? (
+              <div aria-hidden="true" className={styles.recognitionLens} />
+            ) : null}
+
+            {stage === 'checking-reading' ? (
+              <aside className={styles.readingStatus} aria-label={text.readingStatusTitle}>
+                <span>{data.confidence}</span>
+                <strong>{text.readingStatusTitle}</strong>
+                <p>{text.readingStatusBody}</p>
+              </aside>
+            ) : null}
 
             <ReadingConfirmation
               key={runId}
